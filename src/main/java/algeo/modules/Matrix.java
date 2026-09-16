@@ -9,16 +9,14 @@ package algeo.modules;
  *  <li>{@link Matrix#add(Matrix, Matrix) static Matrix.add}</li>
  *  <li>{@link Matrix#mul(Matrix, Matrix) static Matrix.mul}</li>
  *  <li>{@link Matrix#tr(Matrix) static Matrix.tr}</li>
- *  <li>static Matrix.sb: 
- *   <ul>
- *    <li>2 parameter: {@link Matrix#sb(Matrix, int, int)}</li>
- *    <li>4 parameter: {@link Matrix#sb(Matrix, int, int, int, int)}</li>
- *   </ul>
- *  </li>
+ *  <li>{@link Matrix#sb(Matrix, int, int) static Matrix.sb (2 param)}</li>
+ *  <li>{@link Matrix#sb(Matrix, int, int, int, int) static Matrix.sb (4 param)}</li>
  *  <li>{@link Matrix#det(Matrix) static Matrix.det}</li>
  *  <li>{@link Matrix#cof(Matrix) static Matrix.cof}</li>
  *  <li>{@link Matrix#adj(Matrix) static Matrix.adj}</li>
  *  <li>{@link Matrix#inv(Matrix) static Matrix.inv}</li>
+ *  <li>{@link Matrix#idt(int) static Matrix.idt}</li>
+ *  <li>{@link Matrix#aug(Matrix, Matrix) static Matrix.aug}</li>
  *  <li>{@link Matrix#swapR(int, int) Matrix.swapR}</li>
  *  <li>{@link Matrix#mulR(int, double) Matrix.mulR}</li>
  *  <li>{@link Matrix#addR(int, int, double) Matrix.addR}</li>
@@ -44,6 +42,9 @@ public class Matrix {
     /** Jumlah kolom dalam matriks. */
     final public int cols;
 
+    /** Menunjukkan apakah matriks sebuah matriks persegi */
+    final public boolean isSquare;
+
     /** Sumber berbentuk array of array bertipe {@code double}. */
     final public double[][] src;
 
@@ -56,6 +57,7 @@ public class Matrix {
     public Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
+        this.isSquare = rows == cols;
         this.src = new double[rows][cols];
     }
 
@@ -225,7 +227,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static double det(Matrix m) {
-        if(m.rows != m.cols)
+        if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
 
         // basis rekursi (nggak juga sih)
@@ -300,7 +302,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static Matrix cof(Matrix m) {
-        if(m.rows != m.cols)
+        if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.cof: matriks yang diberikan bukanlah matriks persegi!");
 
         Matrix r = new Matrix(m.rows, m.cols);
@@ -322,7 +324,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static Matrix adj(Matrix m) {
-        if(m.rows != m.cols)
+        if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.adj: matriks yang diberikan bukanlah matriks persegi!");
 
         return Matrix.tr(Matrix.cof(m));
@@ -336,7 +338,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika determinan matriks persegi bernilai 0
     */
     public static Matrix inv(Matrix m) {
-        if(m.rows != m.cols)
+        if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.inv: matriks yang diberikan bukanlah matriks persegi!");
         double det = Matrix.det(m);
         if(det == 0)
@@ -346,6 +348,41 @@ public class Matrix {
         for(int i = 0; i < m.rows; ++i)
             for(int j = 0; j < m.cols; ++j)
                 r.src[i][j] = 1/det * r.src[i][j];
+        
+        return r;
+    }
+
+    /**
+     * Membentuk matriks identitas berordo {@code n} x {@code n}
+     * @param n ordo matriks
+     * @return matriks identitas
+     */
+    public static Matrix idt(int n) {
+        Matrix r = new Matrix(n, n);
+        for(int k = 0; k < n; ++k)
+            r.src[k][k] = 1;
+        
+        return r;
+    }
+
+    /**
+     * Membentuk matrix augmented dari 2 matriks.
+     * @param m1 matriks pertama
+     * @param m2 matriks kedua
+     * @return matriks augmented berbentuk {@code [m1|m2]}
+     * @throws IllegalArgumentException jumlah baris kedua matriks tidak sama
+     */
+    public static Matrix aug(Matrix m1, Matrix m2) {
+        if(m1.rows != m2.rows)
+            throw new IllegalArgumentException("Matrix.aug: jumlah baris kedua matriks tidak sama!");
+
+        Matrix r = new Matrix(m1.rows, m1.cols + m2.cols);
+        for(int i = 0; i < r.rows; ++i) {
+            for(int j = 0; j < r.cols; ++j) {
+                if(j < m1.cols) r.src[i][j] = m1.src[i][j];
+                else r.src[i][j] = m2.src[i][j - m1.cols];
+            }
+        }
         
         return r;
     }
@@ -498,7 +535,6 @@ public class Matrix {
         }
     }
 
-   
     /** 
      * Menghitung determinan matriks persegi dengan Eliminasi Gaussian.
      * @param m matriks sumber
@@ -506,7 +542,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static double detERO(Matrix m) {
-        if(m.rows != m.cols)
+        if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.detERO: matriks yang diberikan bukanlah matriks persegi!");
 
         // biar mempermudah hidup
@@ -541,22 +577,13 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks augmented tidak berbentuk {@code [I|A^-1]}
     */
     public static Matrix invERO(Matrix m) {
-        if(m.rows != m.cols)
+        if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.invERO: matriks yang diberikan bukanlah matriks persegi!");
 
         // Bikin matriks augmented
         // Bagian kanan matriksnya, bagian kiri matriks identitas seukuran
-        Matrix aug = new Matrix(m.rows, m.cols*2);
-        for(int i = 0; i < aug.rows; ++i) {
-            for(int j = 0; j < aug.cols; ++j) {
-                if(i < m.rows && j < m.cols)
-                    aug.src[i][j] = m.src[i][j];
-                else if(i == j - m.cols)
-                    aug.src[i][j] = 1;
-                else
-                    aug.src[i][j] = 0;
-            }
-        }
+        Matrix idt = Matrix.idt(m.rows);
+        Matrix aug = Matrix.aug(m, idt);
 
         // Lakukan RREF, lalu saring bagian kanannya
         aug.toRREF();
