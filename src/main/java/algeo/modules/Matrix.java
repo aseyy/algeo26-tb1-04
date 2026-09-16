@@ -10,17 +10,21 @@ public class Matrix {
      * Matrix.print(): Mencetak matriks secara rapih dengan padding
      */
     
+    /** Matrix.rows */
     public int rows;
+    /** Matrix.cols */
     public int cols;
+    /** Matrix.src */
     public double[][] src;
 
-
+    /** Konstruktor */
     public Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.src = new double[rows][cols];
     }
 
+    /** Matrix.print */
     public void print() {
         for (int i = 0; i < this.rows; i++) {
             System.out.print("[ ");
@@ -240,25 +244,30 @@ public class Matrix {
 
     /**
      * === Fungsi Operasi Baris Elementer (OBE) Matriks ===
-     * static Matrix.swapR(): menukar posisi 2 buah baris
-     * static Matrix.mulR(): mengali sebuah baris dengan sebuah konstanta tidak 0
-     * static Matrix.addR(): menambah suatu baris dengan kelipatan baris lainnya
+     * Matrix.swapR(): menukar posisi 2 buah baris
+     * Matrix.mulR(): mengali sebuah baris dengan sebuah konstanta tidak 0
+     * Matrix.addR(): menambah suatu baris dengan kelipatan baris lainnya
      */
-    // public int swapR(int r1, int r2) {}
+
+    public Matrix swapR(int r1, int r2) {
+        
+        return this;
+    }
     // public int mulR(int r, int c) {}
     // public int addR(int r1, int r2, int c) {}
 
     /**
-     * === Fungsi pembentuk Matrix Baris Eselon (dan tereduksinya) ===
-     * static Matrix.toREF(): Membentuk 
-     * static Matrix.toRREF(): Membentuk
+     * === Fungsi pembentuk Matriks Baris Eselon (dan tereduksinya) ===
+     * static Matrix.toREF(): Membentuk Matrix Baris Eselon (MBE)
+     * static Matrix.toRREF(): Membentuk Matriks Baris Eselon Reduksi (MBER)
      */
     // public Matrix toREF() {}
     // public Matrix toRREF() {}
 
     /**
      * === Fungsi determinan dan invers dengan OBE ===
-     * static Matrix.
+     * static Matrix.detERO(): Menghitung determinan matriks persegi dengan OBE
+     * static Matrix.invERO(): Mengonstruksi invers matriks persegi dengan OBE
      */
     // public int detERO() {}
     // public Matrix invERO() {}
