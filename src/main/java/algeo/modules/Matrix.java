@@ -9,21 +9,21 @@ package algeo.modules;
  *  <li>{@link Matrix#add(Matrix, Matrix) static Matrix.add}</li>
  *  <li>{@link Matrix#mul(Matrix, Matrix) static Matrix.mul}</li>
  *  <li>{@link Matrix#tr(Matrix) static Matrix.tr}</li>
- *  <li>{@link Matrix#sb(Matrix, int, int) static Matrix.sb (2 param)}</li>
- *  <li>{@link Matrix#sb(Matrix, int, int, int, int) static Matrix.sb (4 param)}</li>
+ *  <li>{@link Matrix#sub(Matrix, int, int) static Matrix.sub (2 param)}</li>
+ *  <li>{@link Matrix#sub(Matrix, int, int, int, int) static Matrix.sub (4 param)}</li>
  *  <li>{@link Matrix#det(Matrix) static Matrix.det}</li>
  *  <li>{@link Matrix#cof(Matrix) static Matrix.cof}</li>
  *  <li>{@link Matrix#adj(Matrix) static Matrix.adj}</li>
  *  <li>{@link Matrix#inv(Matrix) static Matrix.inv}</li>
  *  <li>{@link Matrix#idt(int) static Matrix.idt}</li>
  *  <li>{@link Matrix#aug(Matrix, Matrix) static Matrix.aug}</li>
- *  <li>{@link Matrix#swapR(int, int) Matrix.swapR}</li>
- *  <li>{@link Matrix#mulR(int, double) Matrix.mulR}</li>
- *  <li>{@link Matrix#addR(int, int, double) Matrix.addR}</li>
+ *  <li>{@link Matrix#rswp(int, int) Matrix.rswp}</li>
+ *  <li>{@link Matrix#rmul(int, double) Matrix.rmul}</li>
+ *  <li>{@link Matrix#radd(int, int, double) Matrix.radd}</li>
  *  <li>{@link Matrix#toREF() Matrix.toREF}</li>
  *  <li>{@link Matrix#toRREF() Matrix.toRREF}</li>
- *  <li>{@link Matrix#detERO(Matrix) static Matrix.detERO}</li>
- *  <li>{@link Matrix#invERO(Matrix) static Matrix.invERO}</li>
+ *  <li>{@link Matrix#gdet(Matrix) static Matrix.gdet}</li>
+ *  <li>{@link Matrix#ginv(Matrix) static Matrix.ginv}</li>
  * </ul>
  * 
  * @author Fachry Azriel Fajdwani (rabsed1)
@@ -34,7 +34,11 @@ public class Matrix {
     final static double EPSILON = 1e-10;
 
     /** Nilai koreksi untuk pencetakan matriks. */
-    final static double CORRECTION = 1e-3;
+    final static double CORRECTION = EPSILON * 1e-3;
+
+    private static boolean scalarIsWithin(double n, double r) {
+        return Math.abs(n) < r;
+    }
 
     /** Jumlah baris dalam matriks. */
     final public int rows;
@@ -78,9 +82,9 @@ public class Matrix {
                 double val = this.src[i][j];
                 double roundVal = Math.round(val);
 
-                if(Math.abs(val) >= (1/EPSILON*CORRECTION))
+                if(!Matrix.scalarIsWithin(val, CORRECTION))
                     System.out.printf("%12.4e ", val);
-                else if(Math.abs(val - roundVal) < EPSILON)
+                else if(Matrix.scalarIsWithin(val - roundVal, EPSILON))
                     System.out.printf("%12s ", val);
                 else
                     System.out.printf("%12.3f ", val);
@@ -164,11 +168,11 @@ public class Matrix {
      * @throws IllegalArgumentException ketika {@code in} tidak berada dalam {@code (0, m.rows]}
      * @throws IllegalArgumentException ketika {@code jn} tidak berada dalam {@code (0, m.cols]}
     */
-    public static Matrix sb(Matrix m, int in, int jn) {
+    public static Matrix sub(Matrix m, int in, int jn) {
         if(in < 0 || in >= m.rows)
-            throw new IllegalArgumentException("Matrix.sb: nilai i-n tidak valid!");
+            throw new IllegalArgumentException("Matrix.sub: nilai i-n tidak valid!");
         if(jn < 0 || jn >= m.cols )
-            throw new IllegalArgumentException("Matrix.sb: nilai j-n tidak valid!");
+            throw new IllegalArgumentException("Matrix.sub: nilai j-n tidak valid!");
 
         Matrix r = new Matrix(m.rows - 1, m.cols - 1);
         int sr = 0, sc = 0;
@@ -201,16 +205,16 @@ public class Matrix {
      * @throws IllegalArgumentException ketika {@code i0 > ip}
      * @throws IllegalArgumentException ketika {@code j0 > jp}
     */
-    public static Matrix sb(Matrix m, int i0, int j0, int ip, int jp) {
+    public static Matrix sub(Matrix m, int i0, int j0, int ip, int jp) {
         if(i0 < 0 || i0 >= m.rows || ip < 0 || ip >= m.rows)
-            throw new IllegalArgumentException("Matrix.sb: nilai i-nol atau i-prime tidak valid!");
+            throw new IllegalArgumentException("Matrix.sub: nilai i-nol atau i-prime tidak valid!");
         if(j0 < 0 || j0 >= m.cols || jp < 0 || jp >= m.cols)
-            throw new IllegalArgumentException("Matrix.sb: nilai j-nol atau j-prime tidak valid!");
+            throw new IllegalArgumentException("Matrix.sub: nilai j-nol atau j-prime tidak valid!");
 
         if(ip < i0)
-            throw new IllegalArgumentException("Matrix.sb: nilai i-prime kurang dari i-nol!");
+            throw new IllegalArgumentException("Matrix.sub: nilai i-prime kurang dari i-nol!");
         if(jp < j0)
-            throw new IllegalArgumentException("Matrix.sb: nilai j-prime kurang dari j-nol!");
+            throw new IllegalArgumentException("Matrix.sub: nilai j-prime kurang dari j-nol!");
 
         Matrix r = new Matrix(ip - i0 + 1, jp - j0 + 1);
         for(int i = i0; i <= ip; ++i)
@@ -274,7 +278,7 @@ public class Matrix {
                 if(m.src[locR][j] == 0)
                     continue;
                 
-                Matrix sub = Matrix.sb(m, locR, j);
+                Matrix sub = Matrix.sub(m, locR, j);
                 double c = m.src[locR][j];
                 double cf = (locR+j) % 2 == 0 ? 1 : -1;
                 val += Matrix.det(sub) * c * cf;
@@ -285,7 +289,7 @@ public class Matrix {
                 if(m.src[i][locC] == 0)
                     continue;
                 
-                Matrix sub = Matrix.sb(m, i, locC);
+                Matrix sub = Matrix.sub(m, i, locC);
                 double c = m.src[i][locC];
                 double cf = (i+locC) % 2 == 0 ? 1 : -1;
                 val += Matrix.det(sub) * c * cf;
@@ -308,7 +312,7 @@ public class Matrix {
         Matrix r = new Matrix(m.rows, m.cols);
         for(int i = 0; i < m.rows; ++i) {
             for(int j = 0; j < m.cols; ++j) {
-                Matrix sub = Matrix.sb(m, i, j);
+                Matrix sub = Matrix.sub(m, i, j);
                 double cf = (i+j) % 2 == 0 ? 1 : -1;
                 r.src[i][j] = Matrix.det(sub) * cf;
             }
@@ -393,9 +397,9 @@ public class Matrix {
      * @param r2 baris kedua
      * @throws IllegalArgumentException ketika {@code r1} atau {@code r2} tidak berada dalam {@code (0, rows]}
      */
-    public void swapR(int r1, int r2) {
+    public void rswp(int r1, int r2) {
         if(r1 < 0 || r1 >= this.rows || r2 < 0 || r2 >= this.rows)
-            throw new IllegalArgumentException("MatrixInstance.swapR: nilai r1 atau r2 tidak valid!");
+            throw new IllegalArgumentException("MatrixInstance.rswp: nilai r1 atau r2 tidak valid!");
 
         for(int j = 0; j < this.cols; ++j) {
             double buf = this.src[r1][j];
@@ -411,16 +415,16 @@ public class Matrix {
      * @throws IllegalArgumentException ketika {@code r} tidak berada dalam {@code (0, rows]}
      * @throws IllegalArgumentException ketika konstanta bernilai atau mendekati 0
      */
-    public void mulR(int r, double c) {
+    public void rmul(int r, double c) {
         if(r < 0 || r >= this.rows)
-            throw new IllegalArgumentException("MatrixInstance.mulR: nilai r tidak valid!");
-        if(Math.abs(c) < Matrix.EPSILON)
-            throw new IllegalArgumentException("MatrixInstance.mulR: konstanta bernilai 0 atau mendekati 0!");
+            throw new IllegalArgumentException("MatrixInstance.rmul: nilai r tidak valid!");
+        if(Matrix.scalarIsWithin(c, EPSILON))
+            throw new IllegalArgumentException("MatrixInstance.rmul: konstanta bernilai 0 atau mendekati 0!");
 
         for(int j = 0; j < this.cols; ++j) {
             double val = c * this.src[r][j];
             double roundVal = Math.round(val);
-            if(Math.abs(val - roundVal) < Matrix.EPSILON)
+            if(Matrix.scalarIsWithin(val - roundVal, EPSILON))
                 this.src[r][j] = roundVal;
             else
                 this.src[r][j] = val;
@@ -434,19 +438,19 @@ public class Matrix {
      * @throws IllegalArgumentException ketika {@code rs} atau {@code rm} tidak berada dalam {@code (0, rows]}
      * @throws IllegalArgumentException ketika {@code rs = rm}
      */
-    public void addR(int rs, int rm, double c) {
+    public void radd(int rs, int rm, double c) {
         if(rs < 0 || rs >= this.rows || rm < 0 || rm >= this.rows)
-            throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source atau r-modifier tidak valid!");
+            throw new IllegalArgumentException("MatrixInstance.radd: nilai r-source atau r-modifier tidak valid!");
         if(rs == rm)
-            throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source dan r-modifier sama!");
+            throw new IllegalArgumentException("MatrixInstance.radd: nilai r-source dan r-modifier sama!");
 
-        if(Math.abs(c) < Matrix.EPSILON)
+        if(Matrix.scalarIsWithin(c, EPSILON))
             return;
 
         for(int j = 0; j < this.cols; ++j) {
             double val = this.src[rs][j] + c * this.src[rm][j];
             double roundVal = Math.round(val);
-            if(Math.abs(val - roundVal) < Matrix.EPSILON)
+            if(Matrix.scalarIsWithin(val - roundVal, EPSILON))
                 this.src[rs][j] = roundVal;
             else
                 this.src[rs][j] = val;
@@ -473,7 +477,6 @@ public class Matrix {
                 int locVal = i;
                 for(int ip = i; ip < this.rows; ++ip) {
                     double val = Math.abs(this.src[ip][j]);
-                    // if val 
                     if(val > bestVal) {
                         bestVal = val;
                         locVal = ip;
@@ -482,7 +485,7 @@ public class Matrix {
 
                 // jika ada yang lebih besar, tukar-OBE dan henti
                 if(locVal != i) {
-                    this.swapR(i, locVal);
+                    this.rswp(i, locVal);
                     swapCount++;
                     break;
                 }
@@ -498,7 +501,7 @@ public class Matrix {
             // membentuk 0 semua di bawah [i][j] dengan membentuk partial pivoting
             for(int ip = i+1; ip < this.rows; ++ip) {
                 double c = -this.src[ip][j] / this.src[i][j];
-                this.addR(ip, i, c);
+                this.radd(ip, i, c);
             }
         }
 
@@ -525,12 +528,12 @@ public class Matrix {
 
             // membentuk 1-utama
             double c = 1/this.src[i][j];
-            this.mulR(i, c);
+            this.rmul(i, c);
 
             // membentuk 0 semua di atas [i][j] dengan membentuk partial pivoting
             for(int ip = i-1; ip >= 0; --ip) {
                 double cb = -this.src[ip][j];
-                this.addR(ip, i, cb);
+                this.radd(ip, i, cb);
             }
         }
     }
@@ -541,9 +544,9 @@ public class Matrix {
      * @return determinan matriks sumber
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
-    public static double detERO(Matrix m) {
+    public static double gdet(Matrix m) {
         if(!m.isSquare)
-            throw new IllegalArgumentException("Matrix.detERO: matriks yang diberikan bukanlah matriks persegi!");
+            throw new IllegalArgumentException("Matrix.gdet: matriks yang diberikan bukanlah matriks persegi!");
 
         // biar mempermudah hidup
         switch (m.rows) {
@@ -576,9 +579,9 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
      * @throws IllegalArgumentException ketika matriks augmented tidak berbentuk {@code [I|A^-1]}
     */
-    public static Matrix invERO(Matrix m) {
+    public static Matrix ginv(Matrix m) {
         if(!m.isSquare)
-            throw new IllegalArgumentException("Matrix.invERO: matriks yang diberikan bukanlah matriks persegi!");
+            throw new IllegalArgumentException("Matrix.ginv: matriks yang diberikan bukanlah matriks persegi!");
 
         // Bikin matriks augmented
         // Bagian kanan matriksnya, bagian kiri matriks identitas seukuran
@@ -595,8 +598,8 @@ public class Matrix {
         // cek apakah matriks identitas terbentuk di kiri
         // kalau nggak ada, brrti matriks nggak punya invers
         for(int k = 0; k < r.rows; ++k)
-            if(Math.abs(aug.src[k][k] - 1) > Matrix.EPSILON)
-                throw new RuntimeException("Matrix.invERO: Matriks tidak punya invers!");
+            if(!Matrix.scalarIsWithin(aug.src[k][k] - 1, EPSILON))
+                throw new RuntimeException("Matrix.ginv: Matriks tidak punya invers!");
 
         return r;
     }
