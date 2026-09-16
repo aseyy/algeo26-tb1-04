@@ -36,7 +36,7 @@ public class Matrix {
     /** Nilai koreksi untuk pencetakan matriks. */
     final static double CORRECTION = EPSILON * 1e-3;
 
-    private static boolean scalarIsWithin(double n, double r) {
+    private static boolean swithin(double n, double r) {
         return Math.abs(n) < r;
     }
 
@@ -82,9 +82,9 @@ public class Matrix {
                 double val = this.src[i][j];
                 double roundVal = Math.round(val);
 
-                if(!Matrix.scalarIsWithin(val, CORRECTION))
+                if(!swithin(val, CORRECTION))
                     System.out.printf("%12.4e ", val);
-                else if(Matrix.scalarIsWithin(val - roundVal, EPSILON))
+                else if(swithin(val - roundVal, EPSILON))
                     System.out.printf("%12s ", val);
                 else
                     System.out.printf("%12.3f ", val);
@@ -418,13 +418,14 @@ public class Matrix {
     public void rmul(int r, double c) {
         if(r < 0 || r >= this.rows)
             throw new IllegalArgumentException("MatrixInstance.rmul: nilai r tidak valid!");
-        if(Matrix.scalarIsWithin(c, EPSILON))
+        if(c == 0)
             throw new IllegalArgumentException("MatrixInstance.rmul: konstanta bernilai 0 atau mendekati 0!");
 
         for(int j = 0; j < this.cols; ++j) {
             double val = c * this.src[r][j];
             double roundVal = Math.round(val);
-            if(Matrix.scalarIsWithin(val - roundVal, EPSILON))
+            this.src[r][j] = val;
+            if(swithin(val - roundVal, EPSILON))
                 this.src[r][j] = roundVal;
             else
                 this.src[r][j] = val;
@@ -443,14 +444,14 @@ public class Matrix {
             throw new IllegalArgumentException("MatrixInstance.radd: nilai r-source atau r-modifier tidak valid!");
         if(rs == rm)
             throw new IllegalArgumentException("MatrixInstance.radd: nilai r-source dan r-modifier sama!");
-
-        if(Matrix.scalarIsWithin(c, EPSILON))
+        if(c == 0)
             return;
 
         for(int j = 0; j < this.cols; ++j) {
             double val = this.src[rs][j] + c * this.src[rm][j];
             double roundVal = Math.round(val);
-            if(Matrix.scalarIsWithin(val - roundVal, EPSILON))
+            this.src[rs][j] = val;
+            if(swithin(val - roundVal, EPSILON))
                 this.src[rs][j] = roundVal;
             else
                 this.src[rs][j] = val;
@@ -598,7 +599,7 @@ public class Matrix {
         // cek apakah matriks identitas terbentuk di kiri
         // kalau nggak ada, brrti matriks nggak punya invers
         for(int k = 0; k < r.rows; ++k)
-            if(!Matrix.scalarIsWithin(aug.src[k][k] - 1, EPSILON))
+            if(!swithin(aug.src[k][k] - 1, EPSILON))
                 throw new RuntimeException("Matrix.ginv: Matriks tidak punya invers!");
 
         return r;
