@@ -241,6 +241,8 @@ public class Matrix {
 
     /** Matrix.inverse */
     public static Matrix inv(Matrix m) {
+        if(m.rows != m.cols)
+            throw new IllegalArgumentException("Matrix.inv: matriks yang diberikan bukanlah matriks persegi!");
         double det = Matrix.det(m);
         if(det == 0)
             throw new IllegalArgumentException("Matrix.inv: determinan matriks bernilai 0");
@@ -395,9 +397,11 @@ public class Matrix {
      * static Matrix.detERO(): Menghitung determinan matriks persegi dengan OBE
      * static Matrix.invERO(): Mengonstruksi invers matriks persegi dengan OBE
      */
+    
+    /** Matrix.determinantWithElementaryRowOperations*/
     public static double detERO(Matrix m) {
         if(m.rows != m.cols)
-            throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
+            throw new IllegalArgumentException("Matrix.detERO: matriks yang diberikan bukanlah matriks persegi!");
 
         // biar mempermudah hidup
         switch (m.rows) {
@@ -422,5 +426,39 @@ public class Matrix {
 
         return val * (swapCount % 2 == 0 ? 1 : -1);
     }
-    // public Matrix invERO() {}
+
+    /** Matrix.inverseWithElementaryRowOperations */
+    public static Matrix invERO(Matrix m) {
+        if(m.rows != m.cols)
+            throw new IllegalArgumentException("Matrix.invERO: matriks yang diberikan bukanlah matriks persegi!");
+
+        // Bikin matriks augmented
+        // Bagian kanan matriksnya, bagian kiri matriks identitas seukuran
+        Matrix aug = new Matrix(m.rows, m.cols*2);
+        for(int i = 0; i < aug.rows; ++i) {
+            for(int j = 0; j < aug.cols; ++j) {
+                if(i < m.rows && j < m.cols)
+                    aug.src[i][j] = m.src[i][j];
+                else if(i == j - m.cols)
+                    aug.src[i][j] = 1;
+                else
+                    aug.src[i][j] = 0;
+            }
+        }
+
+        // Lakukan RREF, lalu saring bagian kanannya
+        aug.toRREF();
+        Matrix r = new Matrix(m.rows, m.cols);
+        for(int i = 0; i < r.rows; ++i)
+            for(int j = 0; j < r.cols; ++j)
+                r.src[i][j] = aug.src[i][j+r.cols];
+
+        // cek apakah matriks identitas terbentuk di kiri
+        // kalau nggak ada, brrti matriks nggak punya invers
+        for(int k = 0; k < r.rows; ++k)
+            if(Math.abs(aug.src[k][k] - 1) > Matrix.EPSILON)
+                throw new RuntimeException("Matrix.invERO: Matriks tidak punya invers!");
+
+        return r;
+    }
 }
