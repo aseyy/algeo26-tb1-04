@@ -1,7 +1,8 @@
 package algeo.modules;
 
 public class Matrix {
-    final static double EPSILON = 1e-9;
+    final static double EPSILON = 1e-10;
+    final static double CORRECTION = 1e-3;
 
     /**
      * === METODE DAN PROPERTI DASAR MATRIKS ===
@@ -11,7 +12,6 @@ public class Matrix {
      * Matrix.Matrix(): Konstuktor
      * MatrixInstance.print(): Mencetak matriks secara rapih dengan padding
      */
-    
     /** MatrixInstance.rows */
     public int rows;
     /** MatrixInstance.columnss */
@@ -32,7 +32,13 @@ public class Matrix {
             System.out.print("[ ");
             for (int j = 0; j < this.cols; j++) {
                 double val = this.src[i][j];
-                System.out.printf("%8.3f ", val);
+                double roundVal = Math.round(val);
+                if(Math.abs(val) >= (1/EPSILON*CORRECTION))
+                    System.out.printf("%12.4e ", val);
+                else if(Math.abs(val - roundVal) < EPSILON)
+                    System.out.printf("%12s ", val);
+                else
+                    System.out.printf("%12.3f ", val);
             }
             System.out.println("]");
         }
@@ -51,7 +57,6 @@ public class Matrix {
      * Matrix.adj(): Mengonstruksi matriks adjoint suatu matriks, yakni transpose dari matriks kofaktornya
      * Matrix.inv(): Mengonstruksi matriks inverse dengan perhitungan determinan ekspansi kofaktor
     */
-
     /** Matrix.add */
     public static Matrix add(Matrix m1, Matrix m2) {
         if(m1.rows != m2.rows || m1.cols != m2.cols)
@@ -261,7 +266,6 @@ public class Matrix {
      * MatrixInstance.mulR(): mengali sebuah baris dengan sebuah konstanta tidak 0
      * MatrixInstance.addR(): menambah suatu baris dengan kelipatan baris lainnya
      */
-
     /** MatrixInstance.swapRow */
     public void swapR(int r1, int r2) {
         if(r1 < 0 || r1 >= this.rows || r2 < 0 || r2 >= this.rows)
@@ -283,8 +287,9 @@ public class Matrix {
 
         for(int j = 0; j < this.cols; ++j) {
             double val = c * this.src[r][j];
-            if(Math.abs(val) < Matrix.EPSILON)
-                this.src[r][j] = 0;
+            double roundVal = Math.round(val);
+            if(Math.abs(val - roundVal) < Matrix.EPSILON)
+                this.src[r][j] = roundVal;
             else
                 this.src[r][j] = val;
         }
@@ -302,8 +307,9 @@ public class Matrix {
 
         for(int j = 0; j < this.cols; ++j) {
             double val = this.src[rs][j] + c * this.src[rm][j];
-            if(Math.abs(val) < Matrix.EPSILON)
-                this.src[rs][j] = 0;
+            double roundVal = Math.round(val);
+            if(Math.abs(val - roundVal) < Matrix.EPSILON)
+                this.src[rs][j] = roundVal;
             else
                 this.src[rs][j] = val;
         }
@@ -314,7 +320,6 @@ public class Matrix {
      * static Matrix.toREF(): Membentuk Matrix Baris Eselon (MBE)
      * static Matrix.toRREF(): Membentuk Matriks Baris Eselon Reduksi (MBER)
      */
-
     /** MatrixInstance.toRowEchelonForm */
     public int toREF() {
         int swapCount = 0;
@@ -397,7 +402,6 @@ public class Matrix {
      * static Matrix.detERO(): Menghitung determinan matriks persegi dengan OBE
      * static Matrix.invERO(): Mengonstruksi invers matriks persegi dengan OBE
      */
-    
     /** Matrix.determinantWithElementaryRowOperations*/
     public static double detERO(Matrix m) {
         if(m.rows != m.cols)
