@@ -1,38 +1,80 @@
 package algeo.modules;
 
+/**
+ * Representasi matriks matematika yang performant dan floating-point safe.
+ * Memuat fungsi dasar matriks, operasi baris elementer matriks, dan bentukan eselon. 
+ * Berikut adalah daftar fungsi dan metodenya:
+ * <ul>
+ *   <li>{@code static Matrix.add}: Menambahkan 2 buah matriks</li>
+ *   <li>{@code static Matrix.mul}: Mengalikan 2 buah matriks</li>
+ *   <li>{@code static Matrix.tr}: Mentranspose matriks, yakni menukar setiap baris menjadi kolom dan sebaliknya</li>
+ *   <li>{@code static Matrix.sb}: 
+ *     <ul>
+ *       <li>2 parameter: Membuat upamatriks dari m tanpa baris in dan kolom jn</li>
+ *       <li>4 parameter: Membuat upamatriks dari m, dari titik (i0,j0) sampai (ip,jp)</li>
+ *     </ul>
+ *   </li>
+ *   <li>{@code static Matrix.det}: Mencari determinan matriks persegi dengan ekspansi kofaktor</li>
+ *   <li>{@code static Matrix.cof}: Mengonstruksi matriks kofaktor suatu matriks</li>
+ *   <li>{@code static Matrix.adj}: Mengonstruksi matriks adjoint suatu matriks, yakni transpose dari matriks kofaktornya</li>
+ *   <li>{@code static Matrix.inv}: Mengonstruksi matriks inverse dengan perhitungan determinan ekspansi kofaktor</li>
+ *   <li>{@code Matrix.swapR}: Menukar posisi 2 buah baris</li>
+ *   <li>{@code Matrix.mulR}: Mengali sebuah baris dengan sebuah konstanta tidak 0</li>
+ *   <li>{@code Matrix.addR}: Menambah suatu baris dengan kelipatan baris lainnya</li>
+ *   <li>{@code Matrix.toREF}: Membentuk Matrix Baris Eselon (MBE)</li>
+ *   <li>{@code Matrix.toRREF}: Membentuk Matriks Baris Eselon Reduksi (MBER)</li>
+ *   <li>{@code static Matrix.detERO}: Menghitung determinan matriks persegi dengan Eliminasi Gaussian</li>
+ *   <li>{@code static Matrix.invERO}: Mengonstruksi invers matriks persegi dengan Eliminasi Gauss-Jordan pada matriks augmented</li>
+ * </ul>
+ * 
+ * @author Fachry Azriel Fajdwani (rabsed1)
+ * @since 16/09/2026
+ */
 public class Matrix {
+    /** Presisi angka; konstanta sebelum dianggap 0. */
     final static double EPSILON = 1e-10;
+
+    /** Nilai koreksi untuk pencetakan matriks. */
     final static double CORRECTION = 1e-3;
 
-    /**
-     * === METODE DAN PROPERTI DASAR MATRIKS ===
-     * MatrixInstance.rows: Memuat jumlah baris matriks
-     * MatrixInstance.cols: Memuat jumlah kolom matriks
-     * MatrixInstance.src: Tempat elemen disimpan, bertipe "double"
-     * Matrix.Matrix(): Konstuktor
-     * MatrixInstance.print(): Mencetak matriks secara rapih dengan padding
-     */
-    /** MatrixInstance.rows */
-    public int rows;
-    /** MatrixInstance.columnss */
-    public int cols;
-    /** MatrixInstance.source */
-    public double[][] src;
+    /** Jumlah baris dalam matriks. */
+    final public int rows;
 
-    /** Konstruktor */
+    /** Jumlah kolom dalam matriks. */
+    final public int cols;
+
+    /** Sumber berbentuk array of array bertipe {@code double}. */
+    final public double[][] src;
+
+    /** 
+     * Mengonstruksi matriks null (<i>semua elemen bernilai 0</i>) statis berordo {@code rows} x {@code cols}.
+     * @param rows jumlah baris matriks
+     * @param cols jumlah kolom matriks
+     * @return Matriks null berordo {@code rows} x {@code cols}
+    */
     public Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.src = new double[rows][cols];
     }
 
-    /** MatrixInstance.print */
+    /** 
+     * Mencetak matriks dengan format menyesuaikan {@code val}, 
+     * yakni nilai elemen di baris-{@code i} kolom-{@code j} 
+     * dengan ketentuan format sebagai berikut.
+     * <ul>
+     *  <li> {@code abs(val) >= 1/(EPSILON*CORRECTION)}: scientific notation
+     *  <li> {@code abs(val - round(val)) < EPSILON}: pembulatan menuju integer
+     *  <li> otherwise: pembulatan menuju 3 angka desimal
+     * </ul>
+     */
     public void print() {
         for (int i = 0; i < this.rows; i++) {
             System.out.print("[ ");
             for (int j = 0; j < this.cols; j++) {
                 double val = this.src[i][j];
                 double roundVal = Math.round(val);
+
                 if(Math.abs(val) >= (1/EPSILON*CORRECTION))
                     System.out.printf("%12.4e ", val);
                 else if(Math.abs(val - roundVal) < EPSILON)
@@ -45,19 +87,12 @@ public class Matrix {
     }
 
     /** 
-     * === FUNGSI DASAR MATRIKS ===
-     * Matrix.add(): Menambahkan 2 buah matriks
-     * Matrix.mul(): Mengalikan 2 buah matriks
-     * Matrix.tr(): Mentranspose matriks, yakni menukar setiap baris menjadi kolom dan sebaliknya
-     * Matrix.sb(): 
-        - 2 parameter: Membuat upamatriks dari m tanpa kolom in, dan jn
-        - 4 parameter: Membuat upamatriks dari m, dari titik (i0,j0) sampai (ip,jp)
-     * Matrix.det(): Mencari determinan matriks persegi dengan ekspansi kofaktor
-     * Matrix.cof(): Mengonstruksi matriks kofaktor suatu matriks
-     * Matrix.adj(): Mengonstruksi matriks adjoint suatu matriks, yakni transpose dari matriks kofaktornya
-     * Matrix.inv(): Mengonstruksi matriks inverse dengan perhitungan determinan ekspansi kofaktor
+     * Menambahkan dua buah matriks berordo sama.
+     * @param m1 matriks pertama
+     * @param m2 matriks kedua
+     * @return matriks baru penjumlahan kedua matriks
+     * @throws IllegalArgumentException ketika ordo kedua matriks tidak sama
     */
-    /** Matrix.add */
     public static Matrix add(Matrix m1, Matrix m2) {
         if(m1.rows != m2.rows || m1.cols != m2.cols)
             throw new IllegalArgumentException("Matrix.add: ordo matriks tidak sama!");
@@ -74,7 +109,13 @@ public class Matrix {
         return r;
     }
 
-    /** Matrix.multiply */
+    /** 
+     * Mengalikan dua buah matriks berordo {@code m}x{@code n} dan {@code n}x{@code l}.
+     * @param m1 matriks pertama berordo {@code m}x{@code n}
+     * @param m2 matriks kedua berordo {@code n}x{@code l}
+     * @return matriks baru perkalian kedua matriks
+     * @throws IllegalArgumentException ketika jumlah kolom {@code m1} tidak sama dengan jumlah baris {@code m2} 
+    */
     public static Matrix mul(Matrix m1, Matrix m2) {
         if(m1.cols != m2.rows)
             throw new IllegalArgumentException("Matrix.mul: baris matriks tidak sama dengan kolom matriks");
@@ -97,7 +138,11 @@ public class Matrix {
         return r;
     }
     
-    /** Matrix.transpose */
+    /** 
+     * Mentranspose sebuah matriks, yakni mengubah setiap kolom menjadi baris dan sebaliknya.
+     * @param m matriks sumber
+     * @return matriks sumber yang telah di-transpose
+    */
     public static Matrix tr(Matrix m) {
         Matrix r = new Matrix(m.cols, m.rows);
         for(int i = 0; i < m.rows; ++i)
@@ -107,7 +152,15 @@ public class Matrix {
         return r;
     }
 
-    /** Matrix.submatrix */
+    /** 
+     * Mengambil upamatriks "kofaktor" ke-{@code in,jn}, yakni submatriks dari m tanpa baris ke-{@code in} dan kolom ke-{@code jn}.
+     * @param m matriks sumber
+     * @param in baris yang ingin dihapus
+     * @param jn kolom yang ingin dihapus
+     * @return upamatriks baru, yakni matriks sumber tanpa baris ke-{@code in} dan kolom ke-{@code jn}
+     * @throws IllegalArgumentException ketika {@code in} tidak berada dalam {@code (0, m.rows]}
+     * @throws IllegalArgumentException ketika {@code jn} tidak berada dalam {@code (0, m.cols]}
+    */
     public static Matrix sb(Matrix m, int in, int jn) {
         if(in < 0 || in >= m.rows)
             throw new IllegalArgumentException("Matrix.sb: nilai i-n tidak valid!");
@@ -132,7 +185,19 @@ public class Matrix {
         return r;
     }
 
-    /** Matrix.submatrix */
+    /** 
+     * Mengambil upamatriks dari {@code (i0, j0)} sampai {@code (ip, jp)}.
+     * @param m matriks sumber
+     * @param i0 baris awal
+     * @param j0 kolom awal
+     * @param ip baris akhir
+     * @param jp kolom akhir
+     * @return upamatriks baru, potongan matriks dari {@code (i0, j0)} sampai {@code (ip, jp)}}
+     * @throws IllegalArgumentException ketika {@code i0} atau {@code ip} tidak berada dalam {@code (0, m.rows]}
+     * @throws IllegalArgumentException ketika {@code j0} atau {@code jp} tidak berada dalam {@code (0, m.cols]}
+     * @throws IllegalArgumentException ketika {@code i0 > ip}
+     * @throws IllegalArgumentException ketika {@code j0 > jp}
+    */
     public static Matrix sb(Matrix m, int i0, int j0, int ip, int jp) {
         if(i0 < 0 || i0 >= m.rows || ip < 0 || ip >= m.rows)
             throw new IllegalArgumentException("Matrix.sb: nilai i-nol atau i-prime tidak valid!");
@@ -152,7 +217,12 @@ public class Matrix {
         return r;
     }
 
-    /** Matrix.determinant */
+    /** 
+     * Menghitung determinan matriks persegi.
+     * @param m matriks sumber
+     * @return determinan matriks sumber
+     * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
+    */
     public static double det(Matrix m) {
         if(m.rows != m.cols)
             throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
@@ -222,7 +292,12 @@ public class Matrix {
         return val;
     }
 
-    /** Matrix.cofactor */
+    /** 
+     * Mengonstruksi matriks kofaktor.
+     * @param m matriks sumber
+     * @return matriks kofaktor dari matriks sumber
+     * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
+    */
     public static Matrix cof(Matrix m) {
         if(m.rows != m.cols)
             throw new IllegalArgumentException("Matrix.cof: matriks yang diberikan bukanlah matriks persegi!");
@@ -239,12 +314,26 @@ public class Matrix {
         return r;
     }
 
-    /** Matrix.adjoint */
+    /** 
+     * Mengonstruksi matriks adjoint.
+     * @param m matriks sumber
+     * @return matriks adjoint dari matriks sumber
+     * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
+    */
     public static Matrix adj(Matrix m) {
+        if(m.rows != m.cols)
+            throw new IllegalArgumentException("Matrix.adj: matriks yang diberikan bukanlah matriks persegi!");
+
         return Matrix.tr(Matrix.cof(m));
     }
 
-    /** Matrix.inverse */
+    /** 
+     * Mengonstruksi matriks invers.
+     * @param m matriks sumber
+     * @return matriks invers dari matriks sumber
+     * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
+     * @throws IllegalArgumentException ketika determinan matriks persegi bernilai 0
+    */
     public static Matrix inv(Matrix m) {
         if(m.rows != m.cols)
             throw new IllegalArgumentException("Matrix.inv: matriks yang diberikan bukanlah matriks persegi!");
@@ -260,13 +349,12 @@ public class Matrix {
         return r;
     }
 
-    /**
-     * === METODE OPERASI BARIS ELEMENTER (OBE) Matriks ===
-     * MatrixInstance.swapR(): menukar posisi 2 buah baris
-     * MatrixInstance.mulR(): mengali sebuah baris dengan sebuah konstanta tidak 0
-     * MatrixInstance.addR(): menambah suatu baris dengan kelipatan baris lainnya
+    /** 
+     * Menukar posisi dua baris dalam matriks.
+     * @param r1 baris pertama
+     * @param r2 baris kedua
+     * @throws IllegalArgumentException ketika {@code r1} atau {@code r2} tidak berada dalam {@code (0, rows]}
      */
-    /** MatrixInstance.swapRow */
     public void swapR(int r1, int r2) {
         if(r1 < 0 || r1 >= this.rows || r2 < 0 || r2 >= this.rows)
             throw new IllegalArgumentException("MatrixInstance.swapR: nilai r1 atau r2 tidak valid!");
@@ -278,7 +366,13 @@ public class Matrix {
         }
     }
 
-    /** MatrixInstance.multiplyRow */
+    /** 
+     * Mengali suatu baris dalam matriks dengan konstanta non-0.
+     * @param r baris sumber
+     * @param c konstanta pengali non-0
+     * @throws IllegalArgumentException ketika {@code r} tidak berada dalam {@code (0, rows]}
+     * @throws IllegalArgumentException ketika konstanta bernilai atau mendekati 0
+     */
     public void mulR(int r, double c) {
         if(r < 0 || r >= this.rows)
             throw new IllegalArgumentException("MatrixInstance.mulR: nilai r tidak valid!");
@@ -295,12 +389,18 @@ public class Matrix {
         }
     }
 
-    /** MatrixInstance.addRow */
+    /** 
+     * Menambah baris sumber dengan kelipatan baris lain dalam matriks.
+     * @param rs baris sumber
+     * @param rm baris modifier
+     * @throws IllegalArgumentException ketika {@code rs} atau {@code rm} tidak berada dalam {@code (0, rows]}
+     * @throws IllegalArgumentException ketika {@code rs = rm}
+     */
     public void addR(int rs, int rm, double c) {
         if(rs < 0 || rs >= this.rows || rm < 0 || rm >= this.rows)
-            throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source atau r-multiplier tidak valid!");
+            throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source atau r-modifier tidak valid!");
         if(rs == rm)
-            throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source dan r-multiplier sama!");
+            throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source dan r-modifier sama!");
 
         if(Math.abs(c) < Matrix.EPSILON)
             return;
@@ -315,12 +415,10 @@ public class Matrix {
         }
     }
 
-    /**
-     * === METODE PEMBENTUKAN MATRIKS BARIS ESELON (MBE) dan tereduksinya (MBER) ===
-     * static Matrix.toREF(): Membentuk Matrix Baris Eselon (MBE)
-     * static Matrix.toRREF(): Membentuk Matriks Baris Eselon Reduksi (MBER)
+    /** 
+     * Memodifikasi matriks menjadi Matriks Eselon Baris (MEB).
+     * @return jumlah terjadinya pertukaran baris
      */
-    /** MatrixInstance.toRowEchelonForm */
     public int toREF() {
         int swapCount = 0;
         for(int i = 0; i < this.rows; ++i) {
@@ -369,7 +467,9 @@ public class Matrix {
         return swapCount;
     }
 
-    /** MatrixInstance.toReducedRowEchelonForm */
+    /** 
+     * Memodifikasi matriks menjadi Matriks Eselon Baris Tereduksi (MEBR).
+    */
     public void toRREF() {
         // fase maju
         this.toREF();
@@ -397,12 +497,13 @@ public class Matrix {
         }
     }
 
-    /**
-     * === FUNGSI DETERMINAN DAN INVERS MATRIKS DENGAN OBE ===
-     * static Matrix.detERO(): Menghitung determinan matriks persegi dengan OBE
-     * static Matrix.invERO(): Mengonstruksi invers matriks persegi dengan OBE
-     */
-    /** Matrix.determinantWithElementaryRowOperations*/
+   
+    /** 
+     * Menghitung determinan matriks persegi dengan Eliminasi Gaussian.
+     * @param m matriks sumber
+     * @return determinan matriks sumber
+     * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
+    */
     public static double detERO(Matrix m) {
         if(m.rows != m.cols)
             throw new IllegalArgumentException("Matrix.detERO: matriks yang diberikan bukanlah matriks persegi!");
@@ -431,7 +532,13 @@ public class Matrix {
         return val * (swapCount % 2 == 0 ? 1 : -1);
     }
 
-    /** Matrix.inverseWithElementaryRowOperations */
+    /** 
+     * Mengonstruksi matriks invers dengan Eliminasi Gauss-Jordan pada matriks augmented.
+     * @param m matriks sumber
+     * @return matriks invers dari matriks sumber
+     * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
+     * @throws IllegalArgumentException ketika matriks augmented tidak berbentuk {@code [I|A^-1]}
+    */
     public static Matrix invERO(Matrix m) {
         if(m.rows != m.cols)
             throw new IllegalArgumentException("Matrix.invERO: matriks yang diberikan bukanlah matriks persegi!");
