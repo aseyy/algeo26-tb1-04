@@ -32,7 +32,8 @@ public class Matrix {
         }
     }
 
-    /** === FUNGSI DASAR MATRIKS ===
+    /** 
+     * === FUNGSI DASAR MATRIKS ===
      * static Matrix.add(): Menambahkan 2 buah matriks
      * static Matrix.mul(): Mengalikan 2 buah matriks
      * static Matrix.tr(): Mentranspose matriks, yakni menukar setiap baris menjadi kolom dan sebaliknya
@@ -140,6 +141,7 @@ public class Matrix {
         return r;
     }
 
+    /** Matrix.determinant */
     public static double det(Matrix m) {
         if(m.rows != m.cols)
             throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
@@ -236,16 +238,28 @@ public class Matrix {
         return r;
     }
 
-    // // == operasi baris elementer matriks ==
+    /**
+     * === Fungsi Operasi Baris Elementer (OBE) Matriks ===
+     * static Matrix.swapR(): menukar posisi 2 buah baris
+     * static Matrix.mulR(): mengali sebuah baris dengan sebuah konstanta tidak 0
+     * static Matrix.addR(): menambah suatu baris dengan kelipatan baris lainnya
+     */
     // public int swapR(int r1, int r2) {}
     // public int mulR(int r, int c) {}
     // public int addR(int r1, int r2, int c) {}
 
-    // // fungsi pembentuk baris eselon (dan tereduksinya)
+    /**
+     * === Fungsi pembentuk Matrix Baris Eselon (dan tereduksinya) ===
+     * static Matrix.toREF(): Membentuk 
+     * static Matrix.toRREF(): Membentuk
+     */
     // public Matrix toREF() {}
     // public Matrix toRREF() {}
 
-    // // fungsi invers dan determinan khusus (dengan OBE)
+    /**
+     * === Fungsi determinan dan invers dengan OBE ===
+     * static Matrix.
+     */
     // public int detERO() {}
     // public Matrix invERO() {}
 }
