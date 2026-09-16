@@ -1,7 +1,7 @@
 package algeo.modules;
 
 public class Matrix {
-    final static double EPSILON = 1e-11;
+    final static double EPSILON = 1e-9;
 
     /**
      * === METODE DAN PROPERTI DASAR MATRIKS ===
@@ -261,7 +261,7 @@ public class Matrix {
      */
 
     /** MatrixInstance.swapRow */
-    public Matrix swapR(int r1, int r2) {
+    public void swapR(int r1, int r2) {
         if(r1 < 0 || r1 >= this.rows || r2 < 0 || r2 >= this.rows)
             throw new IllegalArgumentException("MatrixInstance.swapR: nilai r1 atau r2 tidak valid!");
 
@@ -270,37 +270,41 @@ public class Matrix {
             this.src[r1][j] = this.src[r2][j];
             this.src[r2][j] = buf;
         }
-
-        return this;
     }
 
     /** MatrixInstance.multiplyRow */
-    public Matrix mulR(int r, double c) {
+    public void mulR(int r, double c) {
         if(r < 0 || r >= this.rows)
             throw new IllegalArgumentException("MatrixInstance.mulR: nilai r tidak valid!");
         if(Math.abs(c) < Matrix.EPSILON)
             throw new IllegalArgumentException("MatrixInstance.mulR: konstanta bernilai 0 atau mendekati 0!");
 
-        for(int j = 0; j < this.cols; ++j)
-            this.src[r][j] *= c;
-        
-        return this;
+        for(int j = 0; j < this.cols; ++j) {
+            double val = c * this.src[r][j];
+            if(Math.abs(val) < Matrix.EPSILON)
+                this.src[r][j] = 0;
+            else
+                this.src[r][j] = val;
+        }
     }
 
     /** MatrixInstance.addRow */
-    public Matrix addR(int rs, int rm, double c) {
+    public void addR(int rs, int rm, double c) {
         if(rs < 0 || rs >= this.rows || rm < 0 || rm >= this.rows)
             throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source atau r-multiplier tidak valid!");
         if(rs == rm)
             throw new IllegalArgumentException("MatrixInstance.addR: nilai r-source dan r-multiplier sama!");
 
         if(Math.abs(c) < Matrix.EPSILON)
-            return this;
+            return;
 
-        for(int j = 0; j < this.cols; ++j)
-            this.src[rs][j] += c * this.src[rm][j];
-        
-        return this;
+        for(int j = 0; j < this.cols; ++j) {
+            double val = this.src[rs][j] + c * this.src[rm][j];
+            if(Math.abs(val) < Matrix.EPSILON)
+                this.src[rs][j] = 0;
+            else
+                this.src[rs][j] = val;
+        }
     }
 
     /**
@@ -310,7 +314,8 @@ public class Matrix {
      */
 
     /** MatrixInstance.toRowEchelonForm */
-    public Matrix toREF() {
+    public int toREF() {
+        int swapCount = 0;
         for(int i = 0; i < this.rows; ++i) {
             // kalau matriks punya rows > cols
             // stop iterasi di saat i >= cols
@@ -325,6 +330,7 @@ public class Matrix {
                 int locVal = i;
                 for(int ip = i; ip < this.rows; ++ip) {
                     double val = Math.abs(this.src[ip][j]);
+                    // if val 
                     if(val > bestVal) {
                         bestVal = val;
                         locVal = ip;
@@ -334,6 +340,7 @@ public class Matrix {
                 // jika ada yang lebih besar, tukar-OBE dan henti
                 if(locVal != i) {
                     this.swapR(i, locVal);
+                    swapCount++;
                     break;
                 }
 
@@ -342,7 +349,7 @@ public class Matrix {
                     break;
 
                 if(j == this.cols-1)
-                    return this;
+                    return swapCount;
             }
 
             // membentuk 0 semua di bawah [i][j] dengan membentuk partial pivoting
@@ -352,11 +359,11 @@ public class Matrix {
             }
         }
 
-        return this;
+        return swapCount;
     }
 
     /** MatrixInstance.toReducedRowEchelonForm */
-    public Matrix toRREF() {
+    public void toRREF() {
         // fase maju
         this.toREF();
 
@@ -368,7 +375,7 @@ public class Matrix {
                 if(this.src[i][j] != 0)
                     break;
                 if(j == this.cols-1)
-                    return this;
+                    return;
             }
 
             // membentuk 1-utama
@@ -381,8 +388,6 @@ public class Matrix {
                 this.addR(ip, i, cb);
             }
         }
-
-        return this;
     }
 
     /**
@@ -390,6 +395,32 @@ public class Matrix {
      * static Matrix.detERO(): Menghitung determinan matriks persegi dengan OBE
      * static Matrix.invERO(): Mengonstruksi invers matriks persegi dengan OBE
      */
-    // public int detERO() {}
+    public static double detERO(Matrix m) {
+        if(m.rows != m.cols)
+            throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
+
+        // biar mempermudah hidup
+        switch (m.rows) {
+            case 0: return 1;
+            case 1: return m.src[0][0];
+            case 2: return m.src[0][0]*m.src[1][1] - m.src[0][1]*m.src[1][0];
+        }
+
+        // perhitungan berat ya guys ya
+        // basically: ngubah m jadi matriks segitiga pake OBE
+        // ini nge-copy
+        Matrix r = new Matrix(m.rows, m.cols);
+        for(int i = 0; i < r.rows; ++i)
+            for(int j = 0; j < r.cols; ++j)
+                r.src[i][j] = m.src[i][j];
+        
+        // ini ngubah jadi segitiga, lalu hitung determinannya
+        int swapCount = r.toREF();
+        double val = 1;
+        for(int k = 0; k < m.rows; ++k)
+            val *= r.src[k][k];
+
+        return val * (swapCount % 2 == 0 ? 1 : -1);
+    }
     // public Matrix invERO() {}
 }
