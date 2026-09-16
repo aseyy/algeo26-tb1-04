@@ -5,26 +5,27 @@ package algeo.modules;
  * Memuat fungsi dasar matriks, operasi baris elementer matriks, dan bentukan eselon. 
  * Berikut adalah daftar fungsi dan metodenya:
  * <ul>
- *   <li>{@code static Matrix.add}: Menambahkan 2 buah matriks</li>
- *   <li>{@code static Matrix.mul}: Mengalikan 2 buah matriks</li>
- *   <li>{@code static Matrix.tr}: Mentranspose matriks, yakni menukar setiap baris menjadi kolom dan sebaliknya</li>
- *   <li>{@code static Matrix.sb}: 
- *     <ul>
- *       <li>2 parameter: Membuat upamatriks dari m tanpa baris in dan kolom jn</li>
- *       <li>4 parameter: Membuat upamatriks dari m, dari titik (i0,j0) sampai (ip,jp)</li>
- *     </ul>
- *   </li>
- *   <li>{@code static Matrix.det}: Mencari determinan matriks persegi dengan ekspansi kofaktor</li>
- *   <li>{@code static Matrix.cof}: Mengonstruksi matriks kofaktor suatu matriks</li>
- *   <li>{@code static Matrix.adj}: Mengonstruksi matriks adjoint suatu matriks, yakni transpose dari matriks kofaktornya</li>
- *   <li>{@code static Matrix.inv}: Mengonstruksi matriks inverse dengan perhitungan determinan ekspansi kofaktor</li>
- *   <li>{@code Matrix.swapR}: Menukar posisi 2 buah baris</li>
- *   <li>{@code Matrix.mulR}: Mengali sebuah baris dengan sebuah konstanta tidak 0</li>
- *   <li>{@code Matrix.addR}: Menambah suatu baris dengan kelipatan baris lainnya</li>
- *   <li>{@code Matrix.toREF}: Membentuk Matrix Baris Eselon (MBE)</li>
- *   <li>{@code Matrix.toRREF}: Membentuk Matriks Baris Eselon Reduksi (MBER)</li>
- *   <li>{@code static Matrix.detERO}: Menghitung determinan matriks persegi dengan Eliminasi Gaussian</li>
- *   <li>{@code static Matrix.invERO}: Mengonstruksi invers matriks persegi dengan Eliminasi Gauss-Jordan pada matriks augmented</li>
+ *  <li>{@link Matrix#print() Matrix.print}</li>
+ *  <li>{@link Matrix#add(Matrix, Matrix) static Matrix.add}</li>
+ *  <li>{@link Matrix#mul(Matrix, Matrix) static Matrix.mul}</li>
+ *  <li>{@link Matrix#tr(Matrix) static Matrix.tr}</li>
+ *  <li>static Matrix.sb: 
+ *   <ul>
+ *    <li>2 parameter: {@link Matrix#sb(Matrix, int, int)}</li>
+ *    <li>4 parameter: {@link Matrix#sb(Matrix, int, int, int, int)}</li>
+ *   </ul>
+ *  </li>
+ *  <li>{@link Matrix#det(Matrix) static Matrix.det}</li>
+ *  <li>{@link Matrix#cof(Matrix) static Matrix.cof}</li>
+ *  <li>{@link Matrix#adj(Matrix) static Matrix.adj}</li>
+ *  <li>{@link Matrix#inv(Matrix) static Matrix.inv}</li>
+ *  <li>{@link Matrix#swapR(int, int) Matrix.swapR}</li>
+ *  <li>{@link Matrix#mulR(int, double) Matrix.mulR}</li>
+ *  <li>{@link Matrix#addR(int, int, double) Matrix.addR}</li>
+ *  <li>{@link Matrix#toREF() Matrix.toREF}</li>
+ *  <li>{@link Matrix#toRREF() Matrix.toRREF}</li>
+ *  <li>{@link Matrix#detERO(Matrix) static Matrix.detERO}</li>
+ *  <li>{@link Matrix#invERO(Matrix) static Matrix.invERO}</li>
  * </ul>
  * 
  * @author Fachry Azriel Fajdwani (rabsed1)
@@ -61,7 +62,7 @@ public class Matrix {
     /** 
      * Mencetak matriks dengan format menyesuaikan {@code val}, 
      * yakni nilai elemen di baris-{@code i} kolom-{@code j} 
-     * dengan ketentuan format sebagai berikut.
+     * dengan ketentuan format sebagai berikut:
      * <ul>
      *  <li> {@code abs(val) >= 1/(EPSILON*CORRECTION)}: scientific notation
      *  <li> {@code abs(val - round(val)) < EPSILON}: pembulatan menuju integer
