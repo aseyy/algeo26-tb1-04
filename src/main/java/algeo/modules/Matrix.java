@@ -30,9 +30,6 @@ package algeo.modules;
  * @since 16/09/2026
  */
 public class Matrix {
-    /** Presisi angka; konstanta sebelum dianggap 0. */
-    final static double EPSILON = 1e-12;
-
     /** Jumlah baris dalam matriks. */
     final public int rows;
 
@@ -44,6 +41,9 @@ public class Matrix {
 
     /** Sumber berbentuk array of array bertipe {@code double}. */
     final public double[][] src;
+
+    /** Menyimpan scale untuk partial pivoting */
+    private double[] scale;
 
     /** 
      * Mengonstruksi matriks null (<i>semua elemen bernilai 0</i>) statis berordo {@code rows} x {@code cols}.
@@ -428,57 +428,76 @@ public class Matrix {
      * @return jumlah terjadinya pertukaran baris
      */
     public int toREF() {
-        int swapCount = 0;
+        int swapc = 0;
 
-        double scale[] = new double[this.rows];
-        for(int i = 0; i < this.rows; ++i)
-            for(int j = 0; j < this.cols; ++j)
-                if(this.src[i][j] > scale[i])
-                    scale[i] = this.src[i][j];
-
+        // data nilai absolut terbesar per baris
+        this.scale = new double[this.rows];
         for(int i = 0; i < this.rows; ++i) {
-            // kalau matriks punya rows > cols
-            // stop iterasi di saat i >= cols
+            for(int j = 0; j < this.cols; ++j) {
+                double aval = Math.abs(this.src[i][j]);
+                if(aval > scale[i])
+                    scale[i] = aval;
+            }
+        }    
+
+        // fase eliminasi
+        int j = 0;
+        for(int i = 0; i < this.rows - 1; ++i) {
             if(i >= this.cols)
                 break;
 
-            // melakukan partial pivoting di non-0 pertama
-            // cari nilai absolut terbesar
-            int j = 0;
+            // melakukan partial pivoting dulu
             for(; j < this.cols; ++j) {
-                double bestVal = 0;
-                int locVal = i;
+                // mencari pivot yang lebih baik
+                double bestr = 0;
+                int locr = i;
                 for(int ip = i; ip < this.rows; ++ip) {
-                    double val = Math.abs(this.src[ip][j]);
-                    if(val > bestVal) {
-                        bestVal = val;
-                        locVal = ip;
+                    double r = scale[ip] == 0 ? 0 : Math.abs(this.src[ip][j]) / scale[ip];
+                    if(r > bestr) {
+                        bestr = r;
+                        locr = ip;
+                    } else if (swithin(r - bestr, EPSILON)) {
+                        if(Math.abs(this.src[ip][j]) > Math.abs(this.src[locr][j])) {
+                            bestr = r;
+                            locr = ip;
+                        }
                     }
                 }
 
-                // jika ada yang lebih besar, tukar-OBE dan henti
-                if(locVal != i) {
-                    this.rswp(i, locVal);
-                    swapCount++;
+                // jika ada yang lebih baik, tukar
+                if(locr > i) {
+                    this.rswp(i, locr);
+                    double buf = scale[locr];
+                    scale[locr] = scale[i];
+                    scale[i] = buf;
+                    swapc++;
+
+                    if(swithin(this.src[i][j], EPSILON * scale[i])) {
+                        this.src[i][j] = 0;
+                        continue;
+                    }
+
                     break;
                 }
 
                 // jika tidak terjadi apa-apa, henti
-                if(locVal == i && this.src[i][j] != 0)
+                if(locr == i && !swithin(this.src[i][j], EPSILON * scale[i]))      
                     break;
-
+                
+                // stop klo ada baris yg semua 0
+                // karena klo di baris itu semua 0, maka baris2 di bawahnya juga semua 0
                 if(j == this.cols-1)
-                    return swapCount;
+                    return swapc;
             }
 
-            // membentuk 0 semua di bawah [i][j] dengan membentuk partial pivoting
+            // membentuk 0 semua di bawah [i][j]
             for(int ip = i+1; ip < this.rows; ++ip) {
                 double c = -this.src[ip][j] / this.src[i][j];
                 this.radd(ip, i, c);
             }
         }
 
-        return swapCount;
+        return swapc;
     }
 
     /** 
@@ -493,7 +512,7 @@ public class Matrix {
             // mencari angka non-0 paling kiri
             int j = 0;
             for(; j < this.cols; ++j) {
-                if(this.src[i][j] != 0)
+                if(!swithin(this.src[i][j], EPSILON * scale[i]))
                     break;
                 if(j == this.cols-1)
                     return;
@@ -537,12 +556,12 @@ public class Matrix {
                 r.src[i][j] = m.src[i][j];
         
         // ini ngubah jadi segitiga, lalu hitung determinannya
-        int swapCount = r.toREF();
+        int swapc = r.toREF();
         double val = 1;
         for(int k = 0; k < m.rows; ++k)
             val *= r.src[k][k];
 
-        return val * (swapCount % 2 == 0 ? 1 : -1);
+        return val * (swapc % 2 == 0 ? 1 : -1);
     }
 
     /** 
@@ -577,7 +596,28 @@ public class Matrix {
         return r;
     }
     
+    /* ========= PROPERTI DAN FUNGSI PEMBANTU =========== */
+    // untuk operasi yang berhubungan dengan tipe data double
+    
+    /** Presisi angka; konstanta sebelum dianggap 0. */
+    final static double EPSILON = 1e-12;
+
+    /** 
+     * Menghitung apakah nilai absolut {@code n} kurang dari atau sama dengan {@code r}
+     * @param n terbanding
+     * @param r pembanding
+     * @return boolean
+     */
     private static boolean swithin(double n, double r) {
-        return Math.abs(n) < r;
+        return Math.abs(n) <= r;
+    }
+
+    /**
+     * Menormalisasi angka sangat kecil menjadi 0
+     * @param n angka masukan
+     * @return angka keluaran
+     */
+    private static double snorm(double n) {
+        return swithin(n, EPSILON) ? 0 : n;
     }
 }
