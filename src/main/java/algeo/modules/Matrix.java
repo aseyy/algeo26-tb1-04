@@ -31,14 +31,7 @@ package algeo.modules;
  */
 public class Matrix {
     /** Presisi angka; konstanta sebelum dianggap 0. */
-    final static double EPSILON = 1e-10;
-
-    /** Nilai koreksi untuk pencetakan matriks. */
-    final static double CORRECTION = EPSILON * 1e-3;
-
-    private static boolean swithin(double n, double r) {
-        return Math.abs(n) < r;
-    }
+    final static double EPSILON = 1e-12;
 
     /** Jumlah baris dalam matriks. */
     final public int rows;
@@ -66,28 +59,15 @@ public class Matrix {
     }
 
     /** 
-     * Mencetak matriks dengan format menyesuaikan {@code val}, 
-     * yakni nilai elemen di baris-{@code i} kolom-{@code j} 
-     * dengan ketentuan format sebagai berikut:
-     * <ul>
-     *  <li> {@code abs(val) >= 1/(EPSILON*CORRECTION)}: scientific notation
-     *  <li> {@code abs(val - round(val)) < EPSILON}: pembulatan menuju integer
-     *  <li> otherwise: pembulatan menuju 3 angka desimal
-     * </ul>
+     * Mencetak matriks dengan format yang menyesuaikan 
+     * nilai elemen di baris-{@code i} kolom-{@code j}
      */
     public void print() {
         for (int i = 0; i < this.rows; i++) {
             System.out.print("[ ");
             for (int j = 0; j < this.cols; j++) {
                 double val = this.src[i][j];
-                double roundVal = Math.round(val);
-
-                if(!swithin(val, CORRECTION))
-                    System.out.printf("%12.4e ", val);
-                else if(swithin(val - roundVal, EPSILON))
-                    System.out.printf("%12s ", val);
-                else
-                    System.out.printf("%12.3f ", val);
+                System.out.printf("%14.4g ", val);
             }
             System.out.println("]");
         }
@@ -130,15 +110,12 @@ public class Matrix {
         Matrix r = new Matrix(m1.rows, m2.cols);
         int kMax = m1.cols;
         for(int i = 0; i < m1.rows; ++i) {
-            for(int j = 0; j < m2.cols; ++j) {
-                double total = 0;
-                for(int k = 0; k < kMax; ++k) {
-                    double val1 = m1.src[i][k];
+            for(int k = 0; k < kMax; ++k) {
+                double val1 = m1.src[i][k];
+                for(int j = 0; j < m2.cols; ++j) {
                     double val2 = m2.src[k][j];
-                    total += val1 * val2;
+                    r.src[i][j] += val1 * val2;
                 }
-
-                r.src[i][j] = total;
             }
         }
 
@@ -186,6 +163,7 @@ public class Matrix {
                 if(j == jn) sc = 1;
                 else r.src[i-sr][j-sc] = m.src[i][j];
             }
+
             sc = 0;
         }
 
@@ -234,18 +212,16 @@ public class Matrix {
         if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
 
-        // basis rekursi (nggak juga sih)
-        // basis yang asli ketika ordonya bernilai 2x2
+        // basis
         switch (m.rows) {
             case 0: return 1;
             case 1: return m.src[0][0];
             case 2: return m.src[0][0]*m.src[1][1] - m.src[0][1]*m.src[1][0];
         }
         
-        // mencari 
+        // mencari baris atau kolom dengan 0 terbanyak
         int maxZeroR = 0, locR = 0;
         int maxZeroC = 0, locC = 0;
-        // cari baris dengan elemen 0 terbanyak
         for(int i = 0; i < m.rows; ++i) {
             int zeros = 0;
             for(int j = 0; j < m.cols; ++j)
@@ -257,7 +233,6 @@ public class Matrix {
             }
         }
 
-        // cari kolom dengan 0 terbanyak
         for(int i = 0; i < m.rows; ++i) {
             int zeros = 0;
             for(int j = 0; j < m.cols; ++j)
@@ -271,9 +246,8 @@ public class Matrix {
 
         // lakukan perhitungan det
         double val = 0;
-        // jika 0 terbanyak ada secara baris,
-        // atau 0 terbanyak secara baris dan secara kolom sama
         if(maxZeroR >= maxZeroC) {
+            // jika 0 terbanyak ada secara baris
             for(int j = 0; j < m.cols; ++j) {
                 if(m.src[locR][j] == 0)
                     continue;
@@ -283,8 +257,8 @@ public class Matrix {
                 double cf = (locR+j) % 2 == 0 ? 1 : -1;
                 val += Matrix.det(sub) * c * cf;
             }
-        // jika 0 terbanyak ada secara kolom
         } else {
+            // jika 0 terbanyak ada secara kolom
             for(int i = 0; i < m.rows; ++i) {
                 if(m.src[i][locC] == 0)
                     continue;
@@ -344,6 +318,7 @@ public class Matrix {
     public static Matrix inv(Matrix m) {
         if(!m.isSquare)
             throw new IllegalArgumentException("Matrix.inv: matriks yang diberikan bukanlah matriks persegi!");
+        
         double det = Matrix.det(m);
         if(det == 0)
             throw new IllegalArgumentException("Matrix.inv: determinan matriks bernilai 0");
@@ -423,12 +398,7 @@ public class Matrix {
 
         for(int j = 0; j < this.cols; ++j) {
             double val = c * this.src[r][j];
-            double roundVal = Math.round(val);
             this.src[r][j] = val;
-            if(swithin(val - roundVal, EPSILON))
-                this.src[r][j] = roundVal;
-            else
-                this.src[r][j] = val;
         }
     }
 
@@ -449,12 +419,7 @@ public class Matrix {
 
         for(int j = 0; j < this.cols; ++j) {
             double val = this.src[rs][j] + c * this.src[rm][j];
-            double roundVal = Math.round(val);
             this.src[rs][j] = val;
-            if(swithin(val - roundVal, EPSILON))
-                this.src[rs][j] = roundVal;
-            else
-                this.src[rs][j] = val;
         }
     }
 
@@ -464,6 +429,13 @@ public class Matrix {
      */
     public int toREF() {
         int swapCount = 0;
+
+        double scale[] = new double[this.rows];
+        for(int i = 0; i < this.rows; ++i)
+            for(int j = 0; j < this.cols; ++j)
+                if(this.src[i][j] > scale[i])
+                    scale[i] = this.src[i][j];
+
         for(int i = 0; i < this.rows; ++i) {
             // kalau matriks punya rows > cols
             // stop iterasi di saat i >= cols
@@ -603,5 +575,9 @@ public class Matrix {
                 throw new RuntimeException("Matrix.ginv: Matriks tidak punya invers!");
 
         return r;
+    }
+    
+    private static boolean swithin(double n, double r) {
+        return Math.abs(n) < r;
     }
 }
