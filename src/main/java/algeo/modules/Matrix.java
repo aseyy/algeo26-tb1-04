@@ -77,7 +77,6 @@ public class Matrix {
             System.out.println("]");
         }
     }
-
     /**
      * Menormalisasi seluruh elemen matriks, yakni membulatkan angka desimal yang punya galat tertentu.
      */
@@ -86,6 +85,22 @@ public class Matrix {
             for(int j = 0; j < this.cols; ++j)
                 this.src[i][j] = snorm(this.src[i][j], e);
     }
+
+    /** 
+     * Mengonstruksi matriks null (<i>semua elemen bernilai 0</i>) statis berordo {@code rows} x {@code cols}.
+     * @param rows jumlah baris matriks
+     * @param cols jumlah kolom matriks
+     * @return Matriks null berordo {@code rows} x {@code cols}
+    */
+    public static Matrix copy(Matrix m) {
+        Matrix r = new Matrix(m.rows, m.cols);
+        for(int i = 0; i < r.rows; ++i) 
+            for(int j = 0; j < r.cols; ++j) 
+                r.src[i][j] = m.src[i][j];
+
+        return r;
+    }
+
 
     /** 
      * Menambahkan dua buah matriks berordo sama.
@@ -574,14 +589,8 @@ public class Matrix {
         }
 
         // perhitungan berat ya guys ya
-        // basically: ngubah m jadi matriks segitiga pake OBE
-        // ini nge-copy
-        Matrix r = new Matrix(m.rows, m.cols);
-        for(int i = 0; i < r.rows; ++i)
-            for(int j = 0; j < r.cols; ++j)
-                r.src[i][j] = m.src[i][j];
-        
         // ini ngubah jadi segitiga, lalu hitung determinannya
+        Matrix r = Matrix.copy(m);
         int swapc = r.toREF();
         double val = 1;
         for(int k = 0; k < m.rows; ++k)
