@@ -7,6 +7,7 @@ package algeo.modules;
  * <ul>
  *  <li>{@link Matrix#print() Matrix.print}</li>
  *  <li>{@link Matrix#norm() Matrix.norm}</li>
+ *  <li>{@link Matrix#copy() static Matrix.copy}</li>
  *  <li>{@link Matrix#add(Matrix, Matrix) static Matrix.add}</li>
  *  <li>{@link Matrix#mul(Matrix, Matrix) static Matrix.mul}</li>
  *  <li>{@link Matrix#tr(Matrix) static Matrix.tr}</li>
@@ -87,10 +88,9 @@ public class Matrix {
     }
 
     /** 
-     * Mengonstruksi matriks null (<i>semua elemen bernilai 0</i>) statis berordo {@code rows} x {@code cols}.
-     * @param rows jumlah baris matriks
-     * @param cols jumlah kolom matriks
-     * @return Matriks null berordo {@code rows} x {@code cols}
+     * Menyalin sebuah matriks.
+     * @param m matrik asal
+     * @return matriks salinan
     */
     public static Matrix copy(Matrix m) {
         Matrix r = new Matrix(m.rows, m.cols);
