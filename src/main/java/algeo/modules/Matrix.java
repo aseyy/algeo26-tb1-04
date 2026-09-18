@@ -79,7 +79,7 @@ public class Matrix {
     }
 
     /**
-     * Menormalisasi seluruh elemen matriks, yakni menghilangkan angka super kecil.
+     * Menormalisasi seluruh elemen matriks, yakni membulatkan angka desimal yang punya galat tertentu.
      */
     public void norm(double e) {
         for(int i = 0; i < this.rows; ++i)
@@ -491,6 +491,8 @@ public class Matrix {
                     scale[i] = buf;
                     swapc++;
 
+                    // jika setelah ditukar, masih bernilai sangat kecil
+                    // jadikan dia 0, dan geser ke kolom sebelah
                     if(swithin(this.src[i][j], CEPSILON * scale[i])) {
                         this.src[i][j] = 0;
                         continue;
@@ -545,7 +547,7 @@ public class Matrix {
             double c = 1/this.src[i][j];
             this.rmul(i, c);
 
-            // membentuk 0 semua di atas [i][j] dengan membentuk partial pivoting
+            // membentuk 0 semua di atas [i][j]
             for(int ip = i-1; ip >= 0; --ip) {
                 double cb = -this.src[ip][j];
                 this.radd(ip, i, cb);
