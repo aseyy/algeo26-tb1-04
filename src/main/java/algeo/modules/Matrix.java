@@ -6,6 +6,7 @@ package algeo.modules;
  * Berikut adalah daftar fungsi dan metodenya:
  * <ul>
  *  <li>{@link Matrix#print() Matrix.print}</li>
+ *  <li>{@link Matrix#norm() Matrix.norm}</li>
  *  <li>{@link Matrix#add(Matrix, Matrix) static Matrix.add}</li>
  *  <li>{@link Matrix#mul(Matrix, Matrix) static Matrix.mul}</li>
  *  <li>{@link Matrix#tr(Matrix) static Matrix.tr}</li>
@@ -45,6 +46,9 @@ public class Matrix {
     /** Menyimpan scale untuk partial pivoting */
     private double[] scale;
 
+    /** Menyimpan kunci pembuatan scale */
+    private boolean scaleLock;
+
     /** 
      * Mengonstruksi matriks null (<i>semua elemen bernilai 0</i>) statis berordo {@code rows} x {@code cols}.
      * @param rows jumlah baris matriks
@@ -55,12 +59,13 @@ public class Matrix {
         this.rows = rows;
         this.cols = cols;
         this.isSquare = rows == cols;
+        this.scaleLock = false;
         this.src = new double[rows][cols];
     }
 
     /** 
      * Mencetak matriks dengan format yang menyesuaikan 
-     * nilai elemen di baris-{@code i} kolom-{@code j}
+     * nilai elemen di baris-{@code i} kolom-{@code j}.
      */
     public void print() {
         for (int i = 0; i < this.rows; i++) {
@@ -71,6 +76,15 @@ public class Matrix {
             }
             System.out.println("]");
         }
+    }
+
+    /**
+     * Menormalisasi seluruh elemen matriks, yakni menghilangkan angka super kecil.
+     */
+    public void norm(double e) {
+        for(int i = 0; i < this.rows; ++i)
+            for(int j = 0; j < this.cols; ++j)
+                this.src[i][j] = snorm(this.src[i][j], e);
     }
 
     /** 
@@ -388,13 +402,13 @@ public class Matrix {
      * @param r baris sumber
      * @param c konstanta pengali non-0
      * @throws IllegalArgumentException ketika {@code r} tidak berada dalam {@code (0, rows]}
-     * @throws IllegalArgumentException ketika konstanta bernilai atau mendekati 0
+     * @throws IllegalArgumentException ketika konstanta bernilai 0
      */
     public void rmul(int r, double c) {
         if(r < 0 || r >= this.rows)
             throw new IllegalArgumentException("MatrixInstance.rmul: nilai r tidak valid!");
         if(c == 0)
-            throw new IllegalArgumentException("MatrixInstance.rmul: konstanta bernilai 0 atau mendekati 0!");
+            throw new IllegalArgumentException("MatrixInstance.rmul: konstanta bernilai 0!");
 
         for(int j = 0; j < this.cols; ++j) {
             double val = c * this.src[r][j];
@@ -418,7 +432,8 @@ public class Matrix {
             return;
 
         for(int j = 0; j < this.cols; ++j) {
-            double val = this.src[rs][j] + c * this.src[rm][j];
+            // double val = this.src[rs][j] + c * this.src[rm][j];
+            double val = Math.fma(c, this.src[rm][j], this.src[rs][j]);
             this.src[rs][j] = val;
         }
     }
@@ -431,14 +446,18 @@ public class Matrix {
         int swapc = 0;
 
         // data nilai absolut terbesar per baris
-        this.scale = new double[this.rows];
-        for(int i = 0; i < this.rows; ++i) {
-            for(int j = 0; j < this.cols; ++j) {
-                double aval = Math.abs(this.src[i][j]);
-                if(aval > scale[i])
-                    scale[i] = aval;
+        if(!scaleLock) {
+            scale = new double[this.rows];
+            for(int i = 0; i < this.rows; ++i) {
+                for(int j = 0; j < this.cols; ++j) {
+                    double aval = Math.abs(this.src[i][j]);
+                    if(aval > scale[i])
+                        scale[i] = aval;
+                }
             }
-        }    
+
+            scaleLock = true;
+        }  
 
         // fase eliminasi
         int j = 0;
@@ -456,7 +475,7 @@ public class Matrix {
                     if(r > bestr) {
                         bestr = r;
                         locr = ip;
-                    } else if (swithin(r - bestr, EPSILON)) {
+                    } else if (swithin(r - bestr, CEPSILON)) {
                         if(Math.abs(this.src[ip][j]) > Math.abs(this.src[locr][j])) {
                             bestr = r;
                             locr = ip;
@@ -472,7 +491,7 @@ public class Matrix {
                     scale[i] = buf;
                     swapc++;
 
-                    if(swithin(this.src[i][j], EPSILON * scale[i])) {
+                    if(swithin(this.src[i][j], CEPSILON * scale[i])) {
                         this.src[i][j] = 0;
                         continue;
                     }
@@ -481,7 +500,7 @@ public class Matrix {
                 }
 
                 // jika tidak terjadi apa-apa, henti
-                if(locr == i && !swithin(this.src[i][j], EPSILON * scale[i]))      
+                if(locr == i && !swithin(this.src[i][j], CEPSILON * scale[i]))      
                     break;
                 
                 // stop klo ada baris yg semua 0
@@ -490,10 +509,14 @@ public class Matrix {
                     return swapc;
             }
 
+            if(j == this.cols)
+                return swapc;
+
             // membentuk 0 semua di bawah [i][j]
             for(int ip = i+1; ip < this.rows; ++ip) {
                 double c = -this.src[ip][j] / this.src[i][j];
                 this.radd(ip, i, c);
+                this.src[ip][j] = 0;
             }
         }
 
@@ -512,7 +535,7 @@ public class Matrix {
             // mencari angka non-0 paling kiri
             int j = 0;
             for(; j < this.cols; ++j) {
-                if(!swithin(this.src[i][j], EPSILON * scale[i]))
+                if(!swithin(this.src[i][j], CEPSILON * scale[i]))
                     break;
                 if(j == this.cols-1)
                     return;
@@ -526,6 +549,7 @@ public class Matrix {
             for(int ip = i-1; ip >= 0; --ip) {
                 double cb = -this.src[ip][j];
                 this.radd(ip, i, cb);
+                this.src[ip][j] = 0;
             }
         }
     }
@@ -590,7 +614,7 @@ public class Matrix {
         // cek apakah matriks identitas terbentuk di kiri
         // kalau nggak ada, brrti matriks nggak punya invers
         for(int k = 0; k < r.rows; ++k)
-            if(!swithin(aug.src[k][k] - 1, EPSILON))
+            if(!swithin(aug.src[k][k] - 1, CEPSILON))
                 throw new RuntimeException("Matrix.ginv: Matriks tidak punya invers!");
 
         return r;
@@ -599,8 +623,11 @@ public class Matrix {
     /* ========= PROPERTI DAN FUNGSI PEMBANTU =========== */
     // untuk operasi yang berhubungan dengan tipe data double
     
-    /** Presisi angka; konstanta sebelum dianggap 0. */
-    final static double EPSILON = 1e-12;
+    /** Toleransi galat untuk komputasi. */
+    final static double CEPSILON = 1e-12;
+
+    /** Toleransi galat untuk normalisasi. */
+    final static double NEPSILON = 1e-9;
 
     /** 
      * Menghitung apakah nilai absolut {@code n} kurang dari atau sama dengan {@code r}
@@ -608,8 +635,8 @@ public class Matrix {
      * @param r pembanding
      * @return boolean
      */
-    private static boolean swithin(double n, double r) {
-        return Math.abs(n) <= r;
+    private static boolean swithin(double n, double e) {
+        return Math.abs(n) <= e;
     }
 
     /**
@@ -617,7 +644,8 @@ public class Matrix {
      * @param n angka masukan
      * @return angka keluaran
      */
-    private static double snorm(double n) {
-        return swithin(n, EPSILON) ? 0 : n;
+    private static double snorm(double n, double e) {
+        double rn = Math.round(n);
+        return swithin(n - rn, e) ? rn : n;
     }
 }
