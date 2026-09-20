@@ -80,6 +80,7 @@ public class Matrix {
     }
     /**
      * Menormalisasi seluruh elemen matriks, yakni membulatkan angka desimal yang punya galat tertentu.
+     * @param e nilai toleransi galats
      */
     public void norm(double e) {
         for(int i = 0; i < this.rows; ++i)
@@ -635,10 +636,10 @@ public class Matrix {
     // untuk operasi yang berhubungan dengan tipe data double
     
     /** Toleransi galat untuk komputasi. */
-    final static double CEPSILON = 1e-12;
+    public final static double CEPSILON = 1e-12;
 
     /** Toleransi galat untuk normalisasi. */
-    final static double NEPSILON = 1e-9;
+    public final static double NEPSILON = 1e-15;
 
     /** 
      * Menghitung apakah nilai absolut {@code n} kurang dari atau sama dengan {@code r}
@@ -646,7 +647,7 @@ public class Matrix {
      * @param r pembanding
      * @return boolean
      */
-    private static boolean swithin(double n, double e) {
+    public static boolean swithin(double n, double e) {
         return Math.abs(n) <= e;
     }
 
@@ -655,7 +656,7 @@ public class Matrix {
      * @param n angka masukan
      * @return angka keluaran
      */
-    private static double snorm(double n, double e) {
+    public static double snorm(double n, double e) {
         double rn = Math.round(n);
         return swithin(n - rn, e) ? rn : n;
     }
