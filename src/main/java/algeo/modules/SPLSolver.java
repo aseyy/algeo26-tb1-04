@@ -12,7 +12,7 @@ public class SPLSolver {
         double[][] r = new double[s.cols-1][s.cols];
         Matrix sp = Matrix.copy(s);
         sp.norm(Matrix.NEPSILON);
-        sp.toREF();
+        sp.toREF(false);
         sp.norm(Matrix.NEPSILON);
 
         // untuk tracking variable apa aja yg udah punya padanan
@@ -110,6 +110,12 @@ public class SPLSolver {
         return r;
     }
 
+    /**
+     * Menyelesaikan SPL menggunakan Eliminasi Gauss-Jordan pada matriks augmented SPL.
+     * @param s matriks augmented dari persamaan
+     * @return solusi berbentuk array 2D bertipe double
+     * @throws RuntimeException ketika ditemukan bahwa SPL tidak mungkin punya solusi
+     */
     public static double[][] byRREF(Matrix s) {
         // inisialisasi
         double[][] r = new double[s.cols-1][s.cols];
@@ -205,6 +211,84 @@ public class SPLSolver {
             r[j][mulc] = 1;
             mulc++;
         }
+
+        return r;
+    }
+
+    /**
+     * Menyelesaikan SPL yang memiliki jumlah persamaan dan variabel yang sama menggunakan Kaidah Cramer.
+     * @param s matriks augmented dari persamaan
+     * @return solusi berbentuk array 2D bertipe double
+     * @throws IllegalArgumentException ketika jumlah persamaan tidak sama dengan jumlah variabel
+     * @throws RuntimeException ketika matriks persamaan non-augmented utama tidak memiliki determinan
+     */
+    public static double[][] byCramer(Matrix s) {
+        if(s.cols-1 != s.rows)
+            throw new IllegalArgumentException("SPLSolver.byCramer: Jumlah persamaan tidak sama dengan jumlah variabel!");
+        
+        // misah matriks A dan b dari matriks sistem s=[A|b]
+        Matrix A = new Matrix(s.rows, s.cols-1);
+        Matrix b = new Matrix(s.rows, 1);
+        for(int i = 0; i < s.rows; ++i) {
+            for(int j = 0; j < s.cols; ++j) {
+                if(j == s.cols-1) b.src[i][0] = s.src[i][j];
+                else A.src[i][j] = s.src[i][j];
+            }
+        }
+
+        // hitung determinan utama dan cek
+        double mdet = Matrix.gdet(A);
+        if(mdet == 0)
+            throw new RuntimeException("SPLSolver.byCramer: Matriks persamaan tidak mempunyai determinan!");
+
+        // cari solusi
+        double[][] r = new double[A.cols][A.cols+1];
+        for(int j = 0; j < A.cols; ++j) {
+            // simpen elemen kolom A utama sementara
+            double[] t = new double[A.rows];
+            for(int i = 0; i < A.rows; ++i) {
+                t[i] = A.src[i][j];
+                A.src[i][j] = b.src[i][0];
+            }
+           
+            // hitung solusi
+            double cdet = Matrix.gdet(A);
+            r[j][0] = cdet/mdet;
+
+            // kembaliin A utama
+            for(int i = 0; i < A.rows; ++i)
+                A.src[i][j] = t[i];
+        }
+
+        return r;
+    }
+
+    /**
+     * Menyelesaikan SPL yang memiliki jumlah persamaan dan variabel yang sama menggunakan perkalian inverse, mengikuti {@code x=A^-1*b}.
+     * @param s matriks augmented dari persamaan
+     * @return solusi berbentuk array 2D bertipe double
+     * @throws IllegalArgumentException ketika jumlah persamaan tidak sama dengan jumlah variabel
+     */
+    public static double[][] byInverse(Matrix s) {
+        if(s.cols-1 != s.rows)
+            throw new IllegalArgumentException("SPLSolver.byInverse: Jumlah persamaan tidak sama dengan jumlah variabel!");
+        
+        // misah matriks A dan b dari matriks sistem s=[A|b]
+        Matrix A = new Matrix(s.rows, s.cols-1);
+        Matrix b = new Matrix(s.rows, 1);
+        for(int i = 0; i < s.rows; ++i) {
+            for(int j = 0; j < s.cols; ++j) {
+                if(j == s.cols-1) b.src[i][0] = s.src[i][j];
+                else A.src[i][j] = s.src[i][j];
+            }
+        }
+
+        // hitung x=A^-1*b
+        Matrix Ap = Matrix.ginv(A);
+        Matrix sol = Matrix.mul(Ap, b);
+        double[][] r = new double[A.cols][A.cols+1];
+        for(int i = 0; i < sol.rows; ++i)
+            r[i][0] = sol.src[i][0];
 
         return r;
     }
