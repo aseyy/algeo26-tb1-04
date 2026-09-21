@@ -158,7 +158,7 @@ public class SPLSolver {
                     // brrti ada 2 persamaan dengan nilai variabel yg berbeda...
                     // nggak mungkin!
                     if(assigned[nzeroloc[0]] && free)
-                        throw new RuntimeException("SPLSolver.byREF: Sistem tidak punya solusi!");
+                        throw new RuntimeException("SPLSolver.byRREF: Sistem tidak punya solusi!");
                     
                     // yh lgsg assigned saja
                     r[nzeroloc[0]][0] += sp.src[i][sp.cols-1];
