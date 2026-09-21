@@ -636,7 +636,7 @@ public class Matrix {
     // untuk operasi yang berhubungan dengan tipe data double
     
     /** Toleransi galat untuk komputasi. */
-    public final static double CEPSILON = 1e-12;
+    public final static double CEPSILON = 1e-15;
 
     /** Toleransi galat untuk normalisasi. */
     public final static double NEPSILON = 1e-15;
