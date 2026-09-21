@@ -1,5 +1,18 @@
 package algeo.modules;
 
+/**
+ * Modul penyelesaian Sistem Persamaan Linear (SPL) berbasis matriks.
+ * Berikut adalah daftar metodenya:
+ * <ul>
+ *  <li>{@link SPLSolver#byREF() static SPLSolver.byREF}</li>
+ *  <li>{@link SPLSolver#byRREF() static SPLSolver.byRREF}</li>
+ *  <li>{@link SPLSolver#byCramer() static SPLSolver.byCramer}</li>
+ *  <li>{@link SPLSolver#byInverse() static SPLSolver.byInverse}</li>
+ *  <li>{@link SPLSolver#presentate() static SPLSolver.presentate}</li>
+ * </ul>
+ * @author Fachry Azriel Fajdwani (rabsed1)
+ * @since 20/09/2026
+ */
 public class SPLSolver {
     /**
      * Menyelesaikan SPL menggunakan Eliminasi Gaussian pada matriks augmented SPL.
