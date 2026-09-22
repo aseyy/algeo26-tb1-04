@@ -39,16 +39,16 @@ public class Matrix {
     final public int cols;
 
     /** Menunjukkan apakah matriks sebuah matriks persegi */
-    final public boolean isSquare;
+    final public boolean square;
 
     /** Sumber berbentuk array of array bertipe {@code double}. */
     final public double[][] src;
 
     /** Menyimpan scale untuk partial pivoting */
-    private double[] scale;
+    public double[] scale;
 
     /** Menyimpan kunci pembuatan scale */
-    private boolean scaleLock;
+    public boolean scaleLock;
 
     /** 
      * Mengonstruksi matriks null (<i>semua elemen bernilai 0</i>) statis berordo {@code rows} x {@code cols}.
@@ -59,9 +59,10 @@ public class Matrix {
     public Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        this.isSquare = rows == cols;
-        this.scaleLock = false;
         this.src = new double[rows][cols];
+        
+        this.square = rows == cols;
+        this.scaleLock = false;
     }
 
     /** 
@@ -73,7 +74,7 @@ public class Matrix {
             System.out.print("[ ");
             for (int j = 0; j < this.cols; j++) {
                 double val = this.src[i][j];
-                System.out.printf("%14.4g ", val);
+                System.out.printf("%17.15g ", val);
             }
             System.out.println("]");
         }
@@ -239,7 +240,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static double det(Matrix m) {
-        if(!m.isSquare)
+        if(!m.square)
             throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
 
         // basis
@@ -310,7 +311,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static Matrix cof(Matrix m) {
-        if(!m.isSquare)
+        if(!m.square)
             throw new IllegalArgumentException("Matrix.cof: matriks yang diberikan bukanlah matriks persegi!");
 
         Matrix r = new Matrix(m.rows, m.cols);
@@ -332,7 +333,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static Matrix adj(Matrix m) {
-        if(!m.isSquare)
+        if(!m.square)
             throw new IllegalArgumentException("Matrix.adj: matriks yang diberikan bukanlah matriks persegi!");
 
         return Matrix.tr(Matrix.cof(m));
@@ -346,7 +347,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika determinan matriks persegi bernilai 0
     */
     public static Matrix inv(Matrix m) {
-        if(!m.isSquare)
+        if(!m.square)
             throw new IllegalArgumentException("Matrix.inv: matriks yang diberikan bukanlah matriks persegi!");
         
         double det = Matrix.det(m);
@@ -532,11 +533,19 @@ public class Matrix {
 
             // membentuk 0 semua di bawah [i][j]
             for(int ip = i+1; ip < this.rows; ++ip) {
-                double c = -this.src[ip][j] / this.src[i][j];
-                this.radd(ip, i, c);
+                double cz = -this.src[ip][j] / this.src[i][j];
+                this.radd(ip, i, cz);
                 this.src[ip][j] = 0;
             }
         }
+
+        // if(norm) {
+        //     for(int i = 0; i < this.rows; ++i) {
+        //         double e = this.scale[i] * NEPSILON;
+        //         for(int jz = 0; jz < this.cols; ++jz)
+        //             this.src[i][jz] = snorm(this.src[i][jz], e);
+        //     }
+        // }
 
         return swapc;
     }
@@ -546,8 +555,9 @@ public class Matrix {
     */
     public void toRREF() {
         // fase maju
-        this.toREF();
-
+        if(!this.scaleLock)
+            this.toREF();
+        
         // fase mundur dan pembentukan 1-utama
         for(int i = 0; i < this.rows; ++i) {
             // mencari angka non-0 paling kiri
@@ -562,7 +572,7 @@ public class Matrix {
             // membentuk 1-utama
             double c = 1/this.src[i][j];
             this.rmul(i, c);
-
+            
             // membentuk 0 semua di atas [i][j]
             for(int ip = i-1; ip >= 0; --ip) {
                 double cb = -this.src[ip][j];
@@ -579,7 +589,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
     public static double gdet(Matrix m) {
-        if(!m.isSquare)
+        if(!m.square)
             throw new IllegalArgumentException("Matrix.gdet: matriks yang diberikan bukanlah matriks persegi!");
 
         // biar mempermudah hidup
@@ -590,9 +600,14 @@ public class Matrix {
         }
 
         // perhitungan berat ya guys ya
-        // ini ngubah jadi segitiga, lalu hitung determinannya
+        // ini ngubah jadi segitiga, lalu normalisasi
         Matrix r = Matrix.copy(m);
         int swapc = r.toREF();
+        for(int i = 0; i < r.rows; ++i)
+            for(int j = 0; j < r.cols; ++j)
+                r.src[i][j] = snorm(r.src[i][j], r.scale[i] * NEPSILON);
+        
+        // ini ngitung determinan matriks segitiga tadi
         double val = 1;
         for(int k = 0; k < m.rows; ++k)
             val *= r.src[k][k];
@@ -608,7 +623,7 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks augmented tidak berbentuk {@code [I|A^-1]}
     */
     public static Matrix ginv(Matrix m) {
-        if(!m.isSquare)
+        if(!m.square)
             throw new IllegalArgumentException("Matrix.ginv: matriks yang diberikan bukanlah matriks persegi!");
 
         // Bikin matriks augmented
@@ -616,7 +631,7 @@ public class Matrix {
         Matrix idt = Matrix.idt(m.rows);
         Matrix aug = Matrix.aug(m, idt);
 
-        // Lakukan RREF, lalu saring bagian kanannya
+        // Bentuk RREF, lalu saring bagian kanannya.
         aug.toRREF();
         Matrix r = new Matrix(m.rows, m.cols);
         for(int i = 0; i < r.rows; ++i)

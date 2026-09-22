@@ -25,7 +25,7 @@ public class SPLSolver {
         double[][] r = new double[s.cols-1][s.cols];
         Matrix sp = Matrix.copy(s);
         sp.norm(Matrix.NEPSILON);
-        sp.toREF(false);
+        sp.toREF();
         sp.norm(Matrix.NEPSILON);
 
         // untuk tracking variable apa aja yg udah punya padanan
@@ -296,8 +296,12 @@ public class SPLSolver {
             }
         }
 
-        // hitung x=A^-1*b
-        Matrix Ap = Matrix.ginv(A);
+        // hitung inverse, tergantung ordo
+        Matrix Ap;
+        if(A.cols < 6) Ap = Matrix.inv(A);
+        else Ap = Matrix.ginv(A);
+
+        // ngitung x=A^-1*b
         Matrix sol = Matrix.mul(Ap, b);
         double[][] r = new double[A.cols][A.cols+1];
         for(int i = 0; i < sol.rows; ++i)
