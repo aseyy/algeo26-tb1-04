@@ -79,6 +79,7 @@ public class Matrix {
             System.out.println("]");
         }
     }
+    
     /**
      * Menormalisasi seluruh elemen matriks, yakni membulatkan angka desimal yang punya galat tertentu.
      * @param e nilai toleransi galats
