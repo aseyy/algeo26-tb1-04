@@ -16,22 +16,19 @@ public class Interpolation {
             throw new IllegalArgumentException("Interpolation.Polynomial: Butuh setidaknya 2 data point!");
         
         // membuat spl dalam matriks
-        Matrix s = new Matrix(pt.length, pt.length+1);
-        double accu = 1;
-        for(int i = 0; i < s.rows; ++i) {
-            for(int j = 0; j < s.cols; ++j) {
-                if(j == s.cols-1) {
-                    s.src[i][j] = pt[i][1];
-                    continue;
-                }
-                
-                s.src[i][j] = accu;
+        Matrix sl = new Matrix(pt.length, pt.length);
+        Matrix sr = new Matrix(pt.length, 1);
+        for(int i = 0; i < pt.length; ++i) {
+            double accu = 1;
+            for(int j = 0; j < pt.length; ++j) {
+                sl.src[i][j] = accu;
                 accu *= pt[i][0];
             }
-            accu = 1;
+            sr.src[i][0] = pt[i][1];
         }
 
         // yach, selesaikan
+        Matrix s = Matrix.aug(sl, sr);
         double[][] sol = SPLSolver.byRREF(s);
 
         // cek data point yang kembar
