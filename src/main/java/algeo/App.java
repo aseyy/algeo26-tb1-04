@@ -5,9 +5,20 @@ import java.io.*;
 import algeo.modules.*;
 
 public class App {
-    // Buat saty scanner yang kepake buat keseluruhan fungsi
+
+    
     static Scanner sc = new Scanner(System.in);
 
+    /**
+     * Titik masuk program. Menjalankan loop utama: 
+     * 1. menampilkan menu
+     * 2. membaca pilihan
+     * 3. memanggil handler yang sesuai 
+     * 4. lanjut/bersihkan layar.
+     * Setiap {@code Exception} yang dilempar handler akan ditangkap dan
+     * dilaporkan sebagai {@code "Error: <message>"} agar program tidak crash.
+     * @param args argumen command-line (tidak digunakan)
+     */
     public static void main(String[] args) {
         while (true) {
             try {
@@ -37,6 +48,9 @@ public class App {
         }
     }
 
+     /**
+     * Mencetak menu utama ke layar.
+     */
     static void showMainMenu() {
         System.out.println("------------ NurEngine's Linear Algebra Equator ------------");
         System.out.println("1. Sistem Persamaan Linier (SPL)");
@@ -50,6 +64,13 @@ public class App {
     }
 
     // ----------------- SPL ----------------- 
+    /**
+     * Menangani alur penyelesaian Sistem Persamaan Linier (SPL).
+     * Membaca matriks augmented {@code [A|b]} dari keyboard atau file,
+     * meminta metode penyelesaian, lalu mencetak solusi dan menawarkan
+     * penyimpanan hasil ke file.
+     * @throws IllegalArgumentException ketika mode input atau metode tidak valid
+     */
     static void handleSPL() {
         
         // Tanya source input
@@ -103,6 +124,13 @@ public class App {
     }
 
     // ----------------- Determinan -----------------
+
+    /**
+     * Menangani alur perhitungan determinan matriks persegi.
+     * Membaca matriks dari keyboard atau file, memvalidasi bahwa matriks
+     * persegi, meminta metode perhitungan, lalu mencetak hasilnya.
+     * @throws IllegalArgumentException ketika mode input, bentuk matriks, atau metode tidak valid
+     */
     static void handleDeterminant() {
         
         // Tanya source input
@@ -161,6 +189,14 @@ public class App {
     }
 
     // ----------------- Invers -----------------
+
+    /**
+     * Menangani alur pencarian matriks balikan (invers).
+     * Membaca matriks persegi, memvalidasi, meminta metode (Augmen / Adjoin),
+     * lalu mencetak invers dan menawarkan penyimpanan hasil.
+     * @throws IllegalArgumentException ketika mode input, bentuk matriks, atau metode tidak valid,
+     *                                  atau ketika matriks singular
+     */
     static void handleInverse() {
 
         // Tanya source input
@@ -218,6 +254,11 @@ public class App {
     }
 
     // ----------------- Interpolasi -----------------
+
+     /**
+     * Menampilkan submenu interpolasi dan meneruskan ke metode yang dipilih.
+     * @throws IllegalArgumentException ketika metode tidak valid
+     */
     static void handleInterpolation() {
 
 
@@ -288,6 +329,13 @@ public class App {
         askSaveToFile(sb.toString());
     }
 
+     /**
+     * Menangani interpolasi polinomial.
+     * Membaca himpunan titik {@code (x, y)}, menghitung koefisien polinom
+     * interpolan, mencetak persamaannya, lalu opsional mengevaluasi nilai
+     * polinom di {@code xt}. Mengetik {@code "skip"} melewati tahap evaluasi.
+     * @throws IllegalArgumentException ketika mode input atau data titik tidak valid
+     */
     static void handleNaturalCubicSplineInterpolation() {
      
         // Tanya source input
@@ -342,8 +390,16 @@ public class App {
     }
 
     // ----------------- Regresi -----------------
+
+    /**
+     * Menangani regresi spline kubik berbasis Truncated Power Basis.
+     * Membaca {@code n} titik data dan {@code k} knots dari keyboard atau file,
+     * memvalidasi {@code n >= k + 4}, menghitung koefisien regresi, mencetak
+     * persamaannya, lalu opsional mengevaluasi spline di {@code xt}.
+     * @throws IllegalArgumentException ketika mode input atau data regresi tidak valid
+     */
     static void handleRegression() {
-        System.out.println("\n=== Regresi Spline Kubik (Truncated Power Basis) ===");
+        System.out.println("------------ Regresi Spline Kubik (Truncated Power Basis) ------------");
         System.out.println("1. Input dari keyboard");
         System.out.println("2. Input dari file .txt");
         System.out.print("Pilih: ");
@@ -402,8 +458,16 @@ public class App {
     }
 
     // ----------------- Bonus: Image Hole Fill -----------------
+
+    /**
+     * Menangani bonus Image Hole Filling.
+     * Meminta tiga path (gambar asli, mask, output), menjalankan algoritma
+     * pengisian lubang berbasis rata-rata tetangga iteratif, lalu mencetak
+     * ringkasan statistik (ukuran, jumlah hole, iterasi, error akhir).
+     * @throws RuntimeException ketika gambar gagal dibaca atau ditulis
+     */
     static void handleImageHoleFill() {
-        System.out.println("\n=== Bonus: Image Hole Filling ===");
+        System.out.println("------------ Bonus: Image Hole Filling ------------");
         System.out.print("Path gambar asli (.png/.jpg): ");
         String imagePath = sc.next();
         System.out.print("Path mask (.png/.jpg): ");
@@ -433,6 +497,10 @@ public class App {
     }
 
     // ----------------- submenu -----------------
+
+    /**
+     * Mencetak submenu metode penyelesaian SPL.
+     */
     static void showSPLMenu() {
         System.out.println("------------ Menu Sistem Persamaan Linier ------------");
         System.out.println("1. Metode Eliminasi Gauss");
@@ -441,18 +509,30 @@ public class App {
         System.out.println("4. Metode Matriks Balikan");
         System.out.print("Pilihan: ");
     }
+
+     /**
+     * Mencetak submenu metode perhitungan determinan.
+     */
     static void showDeterminantMenu() {
         System.out.println("------------ Menu Determinan ------------");
         System.out.println("1. Metode Ekspansi Kofaktor");
         System.out.println("2. Metode Reduksi Baris (Operasi Baris Elementer)");
         System.out.print("Pilihan: ");
     }
+
+    /**
+     * Mencetak submenu metode pencarian invers.
+     */
     static void showInverseMenu() {
         System.out.println("------------ Menu Invers ------------");
         System.out.println("1. Metode Augmen");
         System.out.println("2. Metode Adjoin");
         System.out.print("Pilihan: ");
     }
+
+    /**
+     * Mencetak submenu metode interpolasi.
+     */
     static void showInterpolationMenu() {
         System.out.println("------------ Menu Interpolasi ------------");
         System.out.println("1. Metode Polinomial");
@@ -461,6 +541,14 @@ public class App {
     }
 
     // ----------------- input helpers -----------------
+
+    /**
+     * Membaca sebuah bilangan bulat dari Scanner, meminta ulang sampai input valid.
+     * Token yang bukan angka akan dikonsumsi dan dilaporkan sebelum mencoba lagi.
+     * Setelah sukses, karakter newline di akhir baris ikut dikonsumsi.
+     * @param sc Scanner sumber
+     * @return bilangan bulat yang berhasil dibaca
+     */
     public static int readInt(Scanner sc) {
         while (!sc.hasNextInt()) {
             String bad = sc.next();
@@ -471,10 +559,24 @@ public class App {
         return val;
     }
 
+    /**
+     * Mengubah string menjadi bilangan pecahan, mendukung pemisah desimal
+     * baik {@code "."} maupun {@code ","}.
+     * @param s string sumber
+     * @return nilai {@code double} hasil penguraian
+     * @throws NumberFormatException ketika string tidak dapat diuraikan
+     */
     static double parseNumber(String s) {
         return Double.parseDouble(s.trim().replace(",", "."));
     }
 
+    /**
+     * Membaca matriks berordo {@code rows} x {@code cols} dari keyboard.
+     * @param sc Scanner sumber
+     * @param rows jumlah baris
+     * @param cols jumlah kolom
+     * @return matriks hasil pembacaan
+     */
     static double[][] readMatrixFromKeyboard(Scanner sc, int rows, int cols) {
         double[][] m = new double[rows][cols];
         for (int i = 0; i < rows; i++) {
@@ -487,6 +589,14 @@ public class App {
         return m;
     }
 
+    /**
+     * Membaca matriks dari file teks.
+     * Format: baris pertama {@code "rows cols"}, lalu {@code rows} baris
+     * berisi {@code cols} bilangan.
+     * @param path path file masukan
+     * @return matriks hasil pembacaan
+     * @throws RuntimeException ketika file gagal dibaca
+     */
     static double[][] readMatrixFromFile(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String[] dims = br.readLine().trim().split("\\s+");
@@ -504,6 +614,11 @@ public class App {
         }
     }
 
+    /**
+     * Membaca matriks augmented {@code [A|b]} dari keyboard.
+     * @param sc Scanner sumber
+     * @return matriks augmented berukuran {@code rows} x {@code (vars + 1)}
+     */
     static double[][] readAugmentedMatrixFromKeyboard(Scanner sc) {
         System.out.print("Jumlah persamaan: ");
         int rows = readInt(sc);
@@ -522,6 +637,14 @@ public class App {
         return m;
     }
 
+    /**
+     * Membaca matriks augmented {@code [A|b]} dari file teks.
+     * Format: baris pertama {@code "rows vars"}, lalu {@code rows} baris
+     * berisi {@code vars} koefisien dan satu konstanta.
+     * @param path path file masukan
+     * @return matriks augmented hasil pembacaan
+     * @throws RuntimeException ketika file gagal dibaca
+     */
     static double[][] readAugmentedMatrixFromFile(String path) {
         // format: baris 1 = "jumlahPersamaan jumlahVariabel"
         // baris berikutnya = koefisien... konstanta
@@ -541,6 +664,12 @@ public class App {
         }
     }
 
+     /**
+     * Membaca {@code n} titik {@code (x, y)} dari keyboard.
+     * @param sc Scanner sumber
+     * @param n jumlah titik
+     * @return array {@code n x 2} berisi tiap titik
+     */
     static double[][] readPointsFromKeyboard(Scanner sc, int n) {
         double[][] pt = new double[n][2];
         for (int i = 0; i < n; i++) {
@@ -551,6 +680,14 @@ public class App {
         return pt;
     }
 
+    /**
+     * Membaca titik-titik dari file teks.
+     * Format: baris pertama jumlah titik {@code n}, lalu {@code n} baris
+     * berisi {@code "x y"}.
+     * @param path path file masukan
+     * @return array {@code n x 2} berisi tiap titik
+     * @throws RuntimeException ketika file gagal dibaca
+     */
     static double[][] readPointsFromFile(String path) {
         // format: baris 1 = jumlah titik n, lalu n baris "x y"
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -573,6 +710,21 @@ public class App {
         double[] knots;
     }
 
+    /**
+     * Membaca data regresi dari file teks.
+     * Format:
+     * <pre>
+     *   n k
+     *   x1 y1
+     *   x2 y2
+     *   ...
+     *   xn yn
+     *   knot1 knot2 ... knotk
+     * </pre>
+     * @param path path file masukan
+     * @return {@link RegressionInput} berisi titik-titik dan knots
+     * @throws RuntimeException ketika file gagal dibaca
+     */
     static RegressionInput readRegressionDataFromFile(String path) {
         // format: baris 1 = "n k" (n titik, k knots)
         // n baris berikutnya = "x y"
@@ -604,6 +756,13 @@ public class App {
     }
 
     // ----------------- output helpers -----------------
+
+    /**
+     * Menyimpan konten ke file teks, menimpa isi lama jika ada.
+     * Jika gagal, pesan kesalahan dicetak alih-alih melempar exception.
+     * @param filename path file keluaran
+     * @param content teks yang akan ditulis
+     */
     static void saveOutputToFile(String filename, String content) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filename))) {
             pw.print(content);
@@ -612,6 +771,12 @@ public class App {
         }
     }
 
+    /**
+     * Memformat matriks menjadi string multi-baris dengan tiga angka desimal
+     * di belakang koma untuk setiap elemen.
+     * @param matrix matriks yang akan diformat
+     * @return string hasil pemformatan
+     */
     static String formatMatrix(double[][] matrix) {
         StringBuilder sb = new StringBuilder();
         for (double[] row : matrix) {
@@ -623,6 +788,12 @@ public class App {
         return sb.toString();
     }
 
+    /**
+     * Memformat solusi SPL sebagai barisan persamaan, satu per variabel.
+     * Variabel bebas ditampilkan terhadap parameter {@code a1, a2, ...}.
+     * @param sol matriks solusi hasil {@code SPLSolver}
+     * @return string solusi terformat
+     */
     static String formatSPLSolution(double[][] sol) {
         StringBuilder sb = new StringBuilder();
         int maxFree = 0;
@@ -641,6 +812,12 @@ public class App {
         return sb.toString();
     }
 
+    /**
+     * Mengevaluasi polinom (koefisien menaik menurut derajat) di titik {@code x}.
+     * @param coeffs koefisien, {@code coeffs[i]} adalah koefisien {@code x^i}
+     * @param x titik evaluasi
+     * @return nilai {@code P(x)}
+     */
     static double evalPolynomial(double[] coeffs, double x) {
         double val = 0, p = 1;
         for (double c : coeffs) {
@@ -650,6 +827,12 @@ public class App {
         return val;
     }
 
+    /**
+     * Memformat polinom dengan notasi basis pangkat standar,
+     * misalnya {@code y = 1.000 + 2.000*x + 3.000*x^2}.
+     * @param coeffs koefisien menaik menurut derajat
+     * @return string persamaan (tanpa awalan {@code "y = "})
+     */
     static String formatPolynomialEquation(double[] coeffs) {
         String[] basis = new String[coeffs.length];
         for (int i = 0; i < coeffs.length; i++)
@@ -657,6 +840,14 @@ public class App {
         return formatEquationTerms(coeffs, basis);
     }
 
+    /**
+     * Memformat persamaan regresi dengan basis truncated power:
+     * empat suku pertama bagian polinom kubik, setiap suku berikutnya
+     * berbentuk {@code max(0, x - knot_i)^3}.
+     * @param coeffs koefisien regresi (panjang {@code knots.length + 4})
+     * @param knots lokasi knot untuk suku truncated power
+     * @return string persamaan (tanpa awalan {@code "y = "})
+     */
     static String formatTruncatedPowerEquation(double[] coeffs, double[] knots) {
         String[] basis = new String[coeffs.length];
         for (int i = 0; i < coeffs.length; i++) {
@@ -666,6 +857,14 @@ public class App {
         return formatEquationTerms(coeffs, basis);
     }
 
+    /**
+     * Menggabungkan koefisien dan basis simboliknya menjadi satu string persamaan
+     * yang mudah dibaca. Koefisien dengan nilai absolut di bawah {@code 1e-9}
+     * dihilangkan. Mengembalikan {@code "0"} jika semua suku hilang.
+     * @param coeffs nilai koefisien
+     * @param basis representasi simbolik tiap suku (string kosong untuk konstanta)
+     * @return string persamaan terformat
+     */
     static String formatEquationTerms(double[] coeffs, String[] basis) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < coeffs.length; i++) {
@@ -683,6 +882,11 @@ public class App {
         return sb.toString();
     }
 
+     /**
+     * Membungkus array 2D {@code double} menjadi objek {@link Matrix}.
+     * @param arr array sumber
+     * @return {@link Matrix} baru dengan isi sama
+     */
     static Matrix toMatrix(double[][] arr) {
         Matrix m = new Matrix(arr.length, arr[0].length);
         for (int i = 0; i < arr.length; i++)
@@ -691,6 +895,11 @@ public class App {
         return m;
     }
 
+    /**
+     * Mengambil array 2D penyusun dari sebuah {@link Matrix}.
+     * @param m matriks sumber
+     * @return array 2D {@code double} baru dengan isi sama
+     */
     static double[][] toArray(Matrix m) {
         double[][] r = new double[m.rows][m.cols];
         for (int i = 0; i < m.rows; i++)
@@ -699,6 +908,11 @@ public class App {
         return r;
     }
 
+    /**
+     * Membersihkan layar konsol.
+     * Menggunakan {@code cls} di Windows dan {@code clear} di sistem Unix-like.
+     * Jika perintah eksternal gagal, dicetak 50 baris kosong sebagai fallback.
+     */
     public static void clearScreen() {
         try {
             String os = System.getProperty("os.name").toLowerCase();
@@ -716,11 +930,19 @@ public class App {
         }
     }
 
+     /**
+     * Menghentikan eksekusi hingga pengguna menekan Enter.
+     */
     public static void enterContinue() {
         System.out.print("Tekan Enter Untuk Lanjut...");
         sc.nextLine();
     }
 
+    /**
+     * Menanyakan kepada pengguna apakah ingin menyimpan hasil ke file.
+     * Jika ya, meminta nama file lalu menuliskan kontennya.
+     * @param content teks yang akan disimpan
+     */
     static void askSaveToFile(String content) {
         System.out.print("Simpan hasil ke file .txt? (y/n): ");
         String ans = sc.next();
@@ -733,6 +955,12 @@ public class App {
     }
 
     // ----------------- Validation Helper -----------------
+
+    /**
+     * Memvalidasi bahwa matriks tidak kosong dan persegi.
+     * @param m matriks yang akan divalidasi
+     * @throws IllegalArgumentException ketika matriks {@code null}, kosong, atau tidak persegi
+     */
     static void validateSquareMatrix(double[][] m) {
         if (m == null || m.length == 0)
             throw new IllegalArgumentException("Matriks kosong!");
@@ -741,6 +969,12 @@ public class App {
                 throw new IllegalArgumentException("Matriks harus persegi!");
     }
 
+    /**
+     * Memvalidasi bahwa sekumpulan titik tidak kosong dan tiap titik adalah
+     * pasangan {@code (x, y)}.
+     * @param points titik-titik yang akan divalidasi
+     * @throws IllegalArgumentException ketika himpunan titik {@code null}, kosong, atau tidak valid
+     */
     static void validatePoints(double[][] points) {
         if (points == null || points.length == 0)
             throw new IllegalArgumentException("Data titik kosong!");
@@ -749,6 +983,14 @@ public class App {
                 throw new IllegalArgumentException("Setiap titik harus berupa pasangan (x, y)!");
     }
 
+    /**
+     * Memvalidasi masukan regresi: titik harus valid dan jumlahnya minimal
+     * {@code knots.length + 4} (empat suku basis polinom ditambah satu suku
+     * per knot).
+     * @param data  titik data
+     * @param knots lokasi knot
+     * @throws IllegalArgumentException ketika validasi gagal
+     */
     static void validateRegressionInput(double[][] data, double[] knots) {
         validatePoints(data);
         if (knots == null)
@@ -757,6 +999,17 @@ public class App {
             throw new IllegalArgumentException("Jumlah titik data tidak cukup untuk jumlah knots yang diberikan!");
     }
 
+     /**
+     * Memvalidasi bahwa sebuah offset tidak negatif.
+     * Saat ini belum dipakai; disiapkan untuk fitur Image Hole Filling.
+     * @param offsetX offset horizontal
+     * @param offsetY offset vertikal
+     * @param widthA  lebar citra pertama (belum dipakai)
+     * @param heightA tinggi citra pertama (belum dipakai)
+     * @param widthB  lebar citra kedua (belum dipakai)
+     * @param heightB tinggi citra kedua (belum dipakai)
+     * @throws IllegalArgumentException ketika salah satu offset negatif
+     */
     static void validateOffset(int offsetX, int offsetY,
                                 int widthA, int heightA,
                                 int widthB, int heightB) {
