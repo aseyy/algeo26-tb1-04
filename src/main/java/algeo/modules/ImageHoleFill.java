@@ -13,18 +13,52 @@ import java.io.IOException;
 // read write gambar
 import javax.imageio.ImageIO;
 
-// class utama image hole filling. ImageHoleFill.fill(imagePath, maskPath, outputPath);
+/**
+ * Implementasi pembenahan gambar rusak dengan mask (Image Hole Filling)
+ * menggunakan Algoritma Gauss-Seidel.
+ * Berikut adalah daftar fungsinya:
+ * <ul>
+ *  <li>{@link ImageHoleFill#fill ImageHoleFill.fill}</li>
+ * </ul>
+ * 
+ * @author Rionaldo Casey Panditha (aseyy)
+ * @since 25/10/2026
+ */
 public class ImageHoleFill {
     private static final int MAX_SIZE = 512; // sesuai spek
     private static final double TOLERANCE = 0.001; // asumsi batas error dah cukup kecil
-    //class buat hasil
+    
+    /**
+     * Tipe bentukan baru untuk menampung hasil proses filling.
+     */
     public static class Result {
-        final public int width; // lebar gambar
-        final public int height; // tinggi gambar
-        final public int holeCount; // jumlah pixel yg dimasking
-        final public int iterations; // jumlah iterasi
-        final public double finalError; // last error
-        final public String outputPath; // lokasi output.
+        /** Lebar gambar. */
+        final public int width;
+        
+        /** Tinggi gambar. */
+        final public int height;
+
+        /** Jumlah piksel yang di-masking. */
+        final public int holeCount; 
+        
+        /** Jumlah iterasi. */
+        final public int iterations;
+
+        /** Galat akumulasi akhir. */
+        final public double finalError;
+
+        /** Lokasi gambar rekonstruksi. */
+        final public String outputPath;
+        
+        /**
+         * Membentuk tipe bentukan untuk menampung hasil proses filling.
+         * @param width lebar gambar
+         * @param height tinggi gambar
+         * @param holeCount jumlah piksel yang di-mask
+         * @param iterations jumlah iterasi
+         * @param finalError galat akhir
+         * @param outputPath lokasi keluaran
+         */
         public Result(int width, int height, int holeCount, int iterations, double finalError, String outputPath) {
             // Simpan param ke result
             this.width = width;
@@ -36,34 +70,52 @@ public class ImageHoleFill {
         }
     }
     
+    /**
+     * Merekonstruksi gambar rusak dengan bantuan mask menggunakan algoritma Gauss-Seidel.
+     * @param imagePath letak gambar rusak berada
+     * @param maskPath letak mask gambar berada
+     * @param outputPath letak gambar rekonstruksi berada
+     * @return objek bertipe Result
+     * @throws IOException ketika ada berkas yang tidak bisa dibaca
+     * @throws IllegalArgumentException ketika mask gambar seluruhnya putih
+     */
     public static Result fill(String imagePath, String maskPath, String outputPath) throws IOException {
         // cek ekstensi foto
         checkInputFormat(imagePath);
         checkInputFormat(maskPath);
         checkOutputFormat(outputPath);
+
         //simpen jdi buffered, namanya image & mask
         BufferedImage image = readOriginalImage(imagePath);
         BufferedImage mask = readMaskImage(maskPath);
+
         // ambil size gambar
         int width = image.getWidth();
         int height = image.getHeight();
+        
         // pastiin ukuran sama
         checkSameSize(image, mask);
+
         // gboleh lebihin bates max
         checkMaxSize(image);
+
         // mapping pixel putih
         boolean[][] hole = makeHoleMap(mask);
+
         // hitung pixel putih
         int holeCount = countHole(hole);
+
         // harusnya mask gaboleh putih semua
         if(holeCount == width * height) {
-            throw new IllegalArgumentException("ImageHoleFill.fill: mask tidak boleh putih semua");
+            throw new IllegalArgumentException("ImageHoleFill.fill: Mask tidak boleh putih semua");
         }
+
         // nandain ada hole apa kga
         boolean hasHole = false;
         if(holeCount > 0) {
             hasHole = true;
         }
+
         // kalo mask hitam semua, lgsg save gambar asli aja ke output
         if(!hasHole) {
             saveImage(image, outputPath);
@@ -74,6 +126,7 @@ public class ImageHoleFill {
         double[][] red = getRedChannel(image);
         double[][] green = getGreenChannel(image);
         double[][] blue = getBlueChannel(image);
+
         // pixel hole dijadiin 0 dlu di awal
         setRedHoleToZero(red, hole);
         setGreenHoleToZero(green, hole);
@@ -89,6 +142,7 @@ public class ImageHoleFill {
                     if(hole[i][j] == false) {
                         continue; // kalo pixel bukan hole, sekif
                     }
+
                     //simpen nilai asalnya buat ngitung error
                     double oldRed = red[i][j];
                     double oldGreen = green[i][j];
@@ -115,6 +169,7 @@ public class ImageHoleFill {
                     if(blueError <0) {
                         blueError = blueError * -1;
                     }
+
                     // cari max error buat pixel skrg
                     double pixelError = redError;
                     if(greenError > pixelError) {
@@ -136,6 +191,7 @@ public class ImageHoleFill {
         // ubah jdi bufferedimg pas udh beres
         BufferedImage output = makeOutputImage(image, hole, red, green, blue);
         saveImage(output, outputPath); //save
+
         // result buat ditampilin di app ntar
         Result result = new Result(
             width,
@@ -145,13 +201,11 @@ public class ImageHoleFill {
             maxError,
             outputPath
         );
+        
         return result;
     }
 
-
-    // helper
-
-
+    /* ========= PROPERTI DAN FUNGSI PEMBANTU =========== */
     // baca gambar aseli
     private static BufferedImage readOriginalImage(String path) throws IOException {
         // bikin file
@@ -164,6 +218,7 @@ public class ImageHoleFill {
         if(image == null) {
             throw new IOException("ImageHoleFill.readOriginalImage: gambar asli gagal dibaca"); // barangkali gambarnya gabisa dibaca
         }
+
         return image;
     }
 
@@ -178,6 +233,7 @@ public class ImageHoleFill {
         if(mask == null) {
             throw new IOException("ImageHoleFill.readMaskImage: mask gagal dibaca");
         }
+
         return mask;
     }
 
@@ -202,6 +258,7 @@ public class ImageHoleFill {
         // ukuran img
         int width= image.getWidth();
         int height = image.getHeight();
+
         // klo salah satunya aja >512, gaboleh
         if(width >MAX_SIZE || height > MAX_SIZE) {
             throw new IllegalArgumentException("ImageHoleFill.checkMaxSize: ukuran gambar maksimal 512 x 512px");
@@ -213,6 +270,7 @@ public class ImageHoleFill {
         //ukuran mask
         int width = mask.getWidth();
         int height = mask.getHeight();
+
         // array 2d
         boolean[][] hole = new boolean[height][width];
         for(int i = 0; i < height; i++) {
@@ -231,6 +289,7 @@ public class ImageHoleFill {
                 }
             }
         }
+
         return hole;
     }
 
@@ -244,6 +303,7 @@ public class ImageHoleFill {
                 }
             }
         }
+
         return count;
     }
 
@@ -265,6 +325,7 @@ public class ImageHoleFill {
                 red[i][j] = value;
             }
         }
+
         return red;
     }
 
@@ -281,6 +342,7 @@ public class ImageHoleFill {
                 green[i][j] = value;
             }
         }
+
         return green;
     }
 
@@ -297,11 +359,11 @@ public class ImageHoleFill {
                 blue[i][j] = value;
             }
         }
+
         return blue;
     }
 
     // rgb buat hole diubah ke 0 dlu buat awalannya
-
     private static void setRedHoleToZero(double[][] red, boolean[][] hole) {
         for(int i = 0; i < red.length; i++) {
             for(int j = 0; j < red[i].length; j++) {
@@ -312,6 +374,7 @@ public class ImageHoleFill {
         }
     }
 
+    // ini versi hijau
     private static void setGreenHoleToZero(double[][] green, boolean[][] hole) {
         for(int i = 0; i < green.length; i++) {
             for(int j = 0; j < green[i].length; j++) {
@@ -322,6 +385,7 @@ public class ImageHoleFill {
         }
     }
 
+    // ini versi biru
     private static void setBlueHoleToZero(double[][] blue, boolean[][] hole) {
         for(int i = 0; i < blue.length; i++) {
             for(int j = 0; j < blue[i].length; j++) {
@@ -398,9 +462,8 @@ public class ImageHoleFill {
         return average;
     }
 
-    //ngegabungin rgb jd bufferedimg
+    // ngegabungin rgb jd bufferedimg
     private static BufferedImage makeOutputImage(BufferedImage original, boolean[][] hole, double[][] red, double[][] green, double[][] blue) {
-
         // ukuran img
         int width = original.getWidth();
         int height = original.getHeight();
@@ -431,6 +494,7 @@ public class ImageHoleFill {
                 }
             }
         }
+
         return output;
     }
 
@@ -447,7 +511,7 @@ public class ImageHoleFill {
         }
     }
 
-    //validasi ekstensi input
+    // validasi ekstensi input
     private static void checkInputFormat(String path) {
         // ambil ekstensi
         String format = getFormat(path);
@@ -488,6 +552,7 @@ public class ImageHoleFill {
         if(format.equals("jpeg")) {
             format = "jpg";
         }
+        
         return format;
     }
 }
