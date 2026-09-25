@@ -85,19 +85,17 @@ public class Regression {
 
     /**
      * Mengevaluasi (mengekstrapolasi) suatu nilai x dengan fungsi regresi Cubic Splinal.
-     * @param pt data points
+     * @param coeff koefisien tiap suku
      * @param kn knots
      * @param x nilai masukan
      * @return nilai keluaran
      */
-    public static double CubicSplinalEvaluate(double[][] pt, double[] kn, double x) {
-        double[] coeff = CubicSplinal(pt, kn);
-
-        // evaluasiiii
+    public static double CubicSplinalEvaluate(double[] coeff, double[] kn, double x) {
+        // gosok gigi, evaluasiiii
         double val = 0;
         for(int i = 0; i < coeff.length; ++i) {
             if(i < 4) val += coeff[i] * Math.pow(x, i);
-            else if(pt[i][0] <= kn[i-4]) val += 0;
+            else if(x <= kn[i-4]) val += 0;
             else val += coeff[i] * Math.pow(x - kn[i-4], 3);
         }
 

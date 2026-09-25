@@ -6,8 +6,8 @@ import java.util.Arrays;
  * Interpolasi sederhana menggunakan algoritma yang memanfaatkan SPLSolver.
  * Berikut adalah daftar fungsinya:
  * <ul>
- *  <li>{@link Interpolation#Polynomial() Interpolation.Polynomial}</li>
- *  <li>{@link Interpolation#CubicSplinal() Interpolation.CubicSplinal}</li>
+ *  <li>{@link Interpolation#Polynomial() static Interpolation.Polynomial}</li>
+ *  <li>{@link Interpolation#CubicSplinal() static Interpolation.CubicSplinal}</li>
  *  <li>{@link Interpolation#CubicSplinalEvaluate() static Interpolation.CubicSplinalEvaluate}</li>
  * </ul>
  * @author Fachry Azriel Fajdwani (rabsed1)
@@ -107,11 +107,12 @@ public class Interpolation {
     /**
      * Mengevaluasi nilai {@code x} dari fungsi hasil Interpolasi Natural Cubic Spline.
      * @param pt data points
+     * @param k kumpulan knots
      * @param x nilai masukan
      * @return nilai keluran
      * @throws IllegalArgumentException nilai masukan berada di luar domain
      */
-    public static double CubicSplinalEvaluate(double[][] pt, double x) {
+    public static double CubicSplinalEvaluate(double[][] pt, double[] k, double x) {
         // cari rentang dan validasi
         // jujur maaf ya gw nulisnya begini...
         int i = 0;
@@ -126,7 +127,7 @@ public class Interpolation {
         // System.out.println(i);
 
         // saatnya hitung
-        double[] k = CubicSplinal(pt);
+        // double[] k = CubicSplinal(pt);
         double t11 = Math.pow(x - pt[i+1][0], 3) / (pt[i][0] - pt[i+1][0]);
         double t12 = (x - pt[i+1][0]) * (pt[i][0] - pt[i+1][0]);
         double t1 = k[i] / 6 * (t11 - t12);
