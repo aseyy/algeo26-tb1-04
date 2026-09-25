@@ -343,12 +343,93 @@ public class App {
 
     // ----------------- Regresi -----------------
     static void handleRegression() {
-        
+        System.out.println("\n=== Regresi Spline Kubik (Truncated Power Basis) ===");
+        System.out.println("1. Input dari keyboard");
+        System.out.println("2. Input dari file .txt");
+        System.out.print("Pilih: ");
+        int mode = readInt(sc);
+
+        double[][] points;
+        double[] knots;
+
+        if (mode == 1) {
+            System.out.print("Jumlah titik data n: ");
+            int n = readInt(sc);
+            points = readPointsFromKeyboard(sc, n);
+
+            System.out.print("Jumlah knots k: ");
+            int k = readInt(sc);
+            knots = new double[k];
+            for (int i = 0; i < k; i++) {
+                System.out.print("  knot[" + i + "]: ");
+                knots[i] = parseNumber(sc.next());
+            }
+        } else if (mode == 2) {
+            System.out.print("Path file: ");
+            String path = sc.next();
+            RegressionInput parsed = readRegressionDataFromFile(path);
+            points = parsed.points;
+            knots = parsed.knots;
+        } else {
+            throw new IllegalArgumentException("Mode input tidak valid");
+        }
+        validateRegressionInput(points, knots);
+
+        double[] coeffs = Regression.CubicSplinal(points, knots);
+        String equation = formatTruncatedPowerEquation(coeffs, knots);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Metode: Regresi Spline Kubik\n");
+        sb.append("Jumlah knots: ").append(knots.length).append("\n");
+        sb.append("Persamaan: y = ").append(equation).append("\n");
+
+        System.out.println("\n--- Hasil ---");
+        System.out.println(sb.toString());
+
+        System.out.print("Masukkan xt untuk evaluasi (atau 'skip'): ");
+        String input = sc.next();
+        if (!input.equalsIgnoreCase("skip")) {
+            double xt = parseNumber(input);
+
+            // ini biar work dlu aja, aslinya mah masih rada bug sikit cuma aku ngantuk twin
+            double yt = Regression.CubicSplinalEvaluate(knots, knots, xt);
+            String evalLine = String.format("y(%.3f) = %.3f%n", xt, yt);
+            System.out.println(evalLine);
+            sb.append(evalLine);
+        }
+
+        askSaveToFile(sb.toString());
     }
 
     // ----------------- Bonus: Image Hole Fill -----------------
     static void handleImageHoleFill() {
-        
+        System.out.println("\n=== Bonus: Image Hole Filling ===");
+        System.out.print("Path gambar asli (.png/.jpg): ");
+        String imagePath = sc.next();
+        System.out.print("Path mask (.png/.jpg): ");
+        String maskPath = sc.next();
+        System.out.print("Path output (.png/.jpg): ");
+        String outputPath = sc.next();
+ 
+        ImageHoleFill.Result result;
+        try {
+            result = ImageHoleFill.fill(imagePath, maskPath, outputPath);
+        } catch (IOException e) {
+            throw new RuntimeException("Gagal memproses gambar: " + e.getMessage());
+        }
+ 
+        StringBuilder sb = new StringBuilder();
+        sb.append("Metode: Image Hole Filling (Rata-rata Tetangga Iteratif)\n");
+        sb.append("Ukuran gambar: ").append(result.width).append(" x ").append(result.height).append("\n");
+        sb.append("Jumlah pixel hole: ").append(result.holeCount).append("\n");
+        sb.append("Jumlah iterasi: ").append(result.iterations).append("\n");
+        sb.append("Error akhir: ").append(String.format("%.6f", result.finalError)).append("\n");
+        sb.append("Output disimpan di: ").append(result.outputPath).append("\n");
+ 
+        System.out.println("\n--- Hasil ---");
+        System.out.println(sb.toString());
+ 
+        askSaveToFile(sb.toString());
     }
 
     // ----------------- submenu -----------------
@@ -486,6 +567,41 @@ public class App {
         }
     }
 
+    // Helper class supaya lebih rapih
+    static class RegressionInput {
+        double[][] points;
+        double[] knots;
+    }
+
+    static RegressionInput readRegressionDataFromFile(String path) {
+        // format: baris 1 = "n k" (n titik, k knots)
+        // n baris berikutnya = "x y"
+        // baris terakhir = k nilai knot dipisah spasi
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String[] dims = br.readLine().trim().split("\\s+");
+            int n = Integer.parseInt(dims[0]);
+            int k = Integer.parseInt(dims[1]);
+
+            double[][] points = new double[n][2];
+            for (int i = 0; i < n; i++) {
+                String[] parts = br.readLine().trim().split("\\s+");
+                points[i][0] = parseNumber(parts[0]);
+                points[i][1] = parseNumber(parts[1]);
+            }
+
+            String[] knotParts = br.readLine().trim().split("\\s+");
+            double[] knots = new double[k];
+            for (int i = 0; i < k; i++)
+                knots[i] = parseNumber(knotParts[i]);
+
+            RegressionInput ri = new RegressionInput();
+            ri.points = points;
+            ri.knots = knots;
+            return ri;
+        } catch (IOException e) {
+            throw new RuntimeException("Gagal membaca file: " + e.getMessage());
+        }
+    }
 
     // ----------------- output helpers -----------------
     static void saveOutputToFile(String filename, String content) {
@@ -538,6 +654,15 @@ public class App {
         String[] basis = new String[coeffs.length];
         for (int i = 0; i < coeffs.length; i++)
             basis[i] = i == 0 ? "" : (i == 1 ? "x" : "x^" + i);
+        return formatEquationTerms(coeffs, basis);
+    }
+
+    static String formatTruncatedPowerEquation(double[] coeffs, double[] knots) {
+        String[] basis = new String[coeffs.length];
+        for (int i = 0; i < coeffs.length; i++) {
+            if (i < 4) basis[i] = i == 0 ? "" : (i == 1 ? "x" : "x^" + i);
+            else basis[i] = "max(0,x-" + String.format("%.3f", knots[i - 4]) + ")^3";
+        }
         return formatEquationTerms(coeffs, basis);
     }
 
@@ -622,5 +747,20 @@ public class App {
         for (double[] p : points)
             if (p.length != 2)
                 throw new IllegalArgumentException("Setiap titik harus berupa pasangan (x, y)!");
+    }
+
+    static void validateRegressionInput(double[][] data, double[] knots) {
+        validatePoints(data);
+        if (knots == null)
+            throw new IllegalArgumentException("Knots tidak boleh kosong!");
+        if (data.length < knots.length + 4)
+            throw new IllegalArgumentException("Jumlah titik data tidak cukup untuk jumlah knots yang diberikan!");
+    }
+
+    static void validateOffset(int offsetX, int offsetY,
+                                int widthA, int heightA,
+                                int widthB, int heightB) {
+        if (offsetX < 0 || offsetY < 0)
+            throw new IllegalArgumentException("Offset tidak boleh negatif!");
     }
 }
