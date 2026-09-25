@@ -2,6 +2,17 @@ package algeo.modules;
 
 import java.util.Arrays;
 
+/**
+ * Interpolasi sederhana menggunakan algoritma yang memanfaatkan SPLSolver.
+ * Berikut adalah daftar fungsinya:
+ * <ul>
+ *  <li>{@link Interpolation#Polynomial() Interpolation.Polynomial}</li>
+ *  <li>{@link Interpolation#CubicSplinal() Interpolation.CubicSplinal}</li>
+ *  <li>{@link Interpolation#CubicSplinalEvaluate() static Interpolation.CubicSplinalEvaluate}</li>
+ * </ul>
+ * @author Fachry Azriel Fajdwani (rabsed1)
+ * @since 23/10/2026
+ */
 public class Interpolation {
     /**
      * Mengonstruksi polinomial berderajat {@code N} dari {@code N+1} data points.

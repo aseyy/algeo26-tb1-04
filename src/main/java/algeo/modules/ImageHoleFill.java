@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  * menggunakan Algoritma Gauss-Seidel.
  * Berikut adalah daftar fungsinya:
  * <ul>
- *  <li>{@link ImageHoleFill#fill ImageHoleFill.fill}</li>
+ *  <li>{@link ImageHoleFill#fill static ImageHoleFill.fill}</li>
  * </ul>
  * 
  * @author Rionaldo Casey Panditha (aseyy)
@@ -552,7 +552,7 @@ public class ImageHoleFill {
         if(format.equals("jpeg")) {
             format = "jpg";
         }
-        
+
         return format;
     }
 }

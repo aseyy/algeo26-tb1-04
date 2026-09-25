@@ -2,6 +2,16 @@ package algeo.modules;
 
 import java.util.Arrays;
 
+/**
+ * Regresi sederhana menggunakan algoritma yang memanfaatkan SPLSolver.
+ * Berikut adalah daftar fungsinya:
+ * <ul>
+ *  <li>{@link Regression#CubicSplinal() static Regression.CubicSplinal}</li>
+ *  <li>{@link Regression#CubicSplinalEvaluate() static Regression.CubicSplinalEvaluate}</li>
+ * </ul>
+ * @author Fachry Azriel Fajdwani (rabsed1)
+ * @since 23/10/2026
+ */
 public class Regression {
     /**
      * Membentuk fungsi regresi Cubic Spline dengan Truncated Power Basis.
