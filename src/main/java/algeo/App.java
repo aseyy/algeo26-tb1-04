@@ -1,13 +1,13 @@
 package algeo;
+
+import algeo.modules.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
 
-import algeo.modules.*;
-
 public class App {
-
-    
     static Scanner sc = new Scanner(System.in);
+    static double e = Matrix.NEPSILON;
 
     /**
      * Titik masuk program. Menjalankan loop utama: 
@@ -22,29 +22,27 @@ public class App {
     public static void main(String[] args) {
         while (true) {
             try {
+                clearScreen();
                 showMainMenu();
                 int choice = readInt(sc);
                 switch (choice) {
                     case 1: handleSPL(); break;
                     case 2: handleDeterminant(); break;
                     case 3: handleInverse(); break;
-                    case 4: handleInterpolation(); break;
-
+                    case 4: handlePolynomialInterpolation(); break;
+                    case 5: handleNaturalCubicSplineInterpolation(); break;
                     // Belum implemen
-                    case 5: handleRegression(); break;
-                    case 6: handleImageHoleFill(); break;
-
-                    case 7: return;
-                    default: System.out.println("Pilihan tidak valid");
+                    case 6: handleRegression(); break;
+                    case 7: handleImageHoleFill(); break;
+                    case 8: return;
+                    default: throw new IllegalArgumentException("Pilihan tidak valid.");
                 }
-                
-            // Error handling
+                enterContinue();
             } catch (Exception e) {
+                // Handle SEGALA error
                 System.out.println("Error: " + e.getMessage());
+                enterContinue();
             }
-
-            enterContinue();
-            clearScreen();
         }
     }
 
@@ -53,13 +51,14 @@ public class App {
      */
     static void showMainMenu() {
         System.out.println("------------ NurEngine's Linear Algebra Equator ------------");
-        System.out.println("1. Sistem Persamaan Linier (SPL)");
+        System.out.println("1. Sistem Persamaan Linier");
         System.out.println("2. Determinan Matriks");
-        System.out.println("3. Matriks Balikan (Invers)");
-        System.out.println("4. Interpolasi (Polinomial / Natural Cubic Spline)");
-        System.out.println("5. Regresi Spline Kubik (Truncated Power Basis)");
-        System.out.println("6. Bonus: Image Hole Filling");
-        System.out.println("7. Keluar");
+        System.out.println("3. Invers Matriks");
+        System.out.println("4. Interpolasi Polinomial");
+        System.out.println("5. Interpolasi Cubic Spline");
+        System.out.println("6. Regresi Cubic Spline");
+        System.out.println("7. Image Hole Filling");
+        System.out.println("8. Keluar");
         System.out.print("Pilihan: ");
     }
 
@@ -72,24 +71,27 @@ public class App {
      * @throws IllegalArgumentException ketika mode input atau metode tidak valid
      */
     static void handleSPL() {
-        
         // Tanya source input
+        clearScreen();
         System.out.println("------------ Sistem Persamaan Linier ------------");
+        System.out.println("[Jenis Input]");
         System.out.println("1. Input dari keyboard");
         System.out.println("2. Input dari file .txt");
-        System.out.print("Pilih: ");
+        System.out.print("Pilihan: ");
         int mode = readInt(sc);
 
         // Baca data (dari file/keyboard)
         double[][] augmented;
         if (mode == 1) {
+            System.out.println("\n[Input SPL]");
             augmented = readAugmentedMatrixFromKeyboard(sc);
         } else if (mode == 2) {
+            System.out.println("\n[Input SPL]");
             System.out.print("Path file: ");
             String path = sc.next();
             augmented = readAugmentedMatrixFromFile(path);
         } else {
-            throw new IllegalArgumentException("Mode input tidak valid");
+            throw new IllegalArgumentException("Mode input tidak valid.");
         }
 
         // Tampil menu dan pilih metode SPL
@@ -100,27 +102,33 @@ public class App {
         Matrix s = toMatrix(augmented);
 
         // Solve SPL
-        double[][] sol;
-        String methodName;
-        switch (method) {
-            case 1: sol = SPLSolver.byREF(s); methodName = "Eliminasi Gauss"; break;
-            case 2: sol = SPLSolver.byRREF(s); methodName = "Eliminasi Gauss-Jordan"; break;
-            case 3: sol = SPLSolver.byCramer(s); methodName = "Kaidah Cramer"; break;
-            case 4: sol = SPLSolver.byInverse(s); methodName = "Matriks Balikan"; break;
+        double[][] sol = null;
+        String methodName = "";
+        
+        clearScreen();
+        System.out.println("------------ Sistem Persamaan Linier ------------");
+        System.out.println("Langkah:");
+
+        // Penentuan metode
+        switch(method) {
+            case 1: sol = SPLSolver.byREF(s, true); methodName = "Eliminasi Gauss"; break;
+            case 2: sol = SPLSolver.byRREF(s, true); methodName = "Eliminasi Gauss-Jordan"; break;
+            case 3: sol = SPLSolver.byCramer(s, true); methodName = "Kaidah Cramer"; break;
+            case 4: sol = SPLSolver.byInverse(s, true); methodName = "Matriks Balikan"; break;
             default: throw new IllegalArgumentException("Metode tidak valid");
         }
 
         // Formatting output
         StringBuilder sb = new StringBuilder();
-        sb.append("Metode: ").append(methodName).append("\n");
+        sb.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(augmented)).append("\n");
         sb.append("Solusi:\n").append(formatSPLSolution(sol)).append("\n");
-
         
-        System.out.println("------------ Hasil ---");
-        System.out.println(sb.toString());
-
-        askSaveToFile(sb.toString());
+        // Print output dulu ke terminal
+        System.out.println();
+        String out = sb.toString();
+        System.out.println(out);
+        askSaveToFile(out);
     }
 
     // ----------------- Determinan -----------------
@@ -132,21 +140,24 @@ public class App {
      * @throws IllegalArgumentException ketika mode input, bentuk matriks, atau metode tidak valid
      */
     static void handleDeterminant() {
-        
         // Tanya source input
+        clearScreen();
         System.out.println("------------ Determinan Matriks ------------");
+        System.out.println("[Jenis Input]");
         System.out.println("1. Input dari keyboard");
         System.out.println("2. Input dari file .txt");
-        System.out.print("Pilih: ");
+        System.out.print("Pilihan: ");
         int mode = readInt(sc);
 
         // Baca data
         double[][] matrix;
         if (mode == 1) {
+            System.out.println("\n[Input Matriks]");
             System.out.print("Ukuran matriks n: ");
             int n = readInt(sc);
             matrix = readMatrixFromKeyboard(sc, n, n);
         } else if (mode == 2) {
+            System.out.println("\n[Input Matriks]");
             System.out.print("Path file: ");
             String path = sc.next();
             matrix = readMatrixFromFile(path);
@@ -162,30 +173,40 @@ public class App {
         int method = readInt(sc);
 
         // Solve determinan
-        double det;
-        String methodName;
+        double det = 0;
+        String methodName = "";
+        
+        // handle yg tidak diinginkan
+
+        clearScreen();
+        System.out.println("------------ Determinan Matriks ------------");
+        System.out.println("Langkah:");
+
+        // Penentuan metode
         switch (method) {
             case 1:
-                det = Matrix.det(toMatrix(matrix));
+                det = Matrix.det(toMatrix(matrix), true);
                 methodName = "Ekspansi Kofaktor";
                 break;
             case 2:
-                det = Matrix.gdet(toMatrix(matrix));
-                methodName = "Reduksi Baris (Eliminasi Gaussian)";
+                det = Matrix.gdet(toMatrix(matrix), true);
+                methodName = "Reduksi Baris";
                 break;
-            default: throw new IllegalArgumentException("Metode tidak valid");
+            default:
+                throw new IllegalArgumentException("Metode tidak valid");
         }
 
         // Format output
         StringBuilder sb = new StringBuilder();
-        sb.append("Metode: ").append(methodName).append("\n");
+        sb.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(matrix)).append("\n");
-        sb.append("Determinan = ").append(String.format("%.3f", det)).append("\n");
-
-        System.out.println("------------ Hasil ---");
-        System.out.println(sb.toString());
-
-        askSaveToFile(sb.toString());
+        sb.append("Determinan:\n").append(String.format("%f", det)).append("\n");
+        
+        // Print output dulu ke terminal
+        System.out.println();
+        String out = sb.toString();
+        System.out.println(out);
+        askSaveToFile(out);
     }
 
     // ----------------- Invers -----------------
@@ -198,21 +219,24 @@ public class App {
      *                                  atau ketika matriks singular
      */
     static void handleInverse() {
-
         // Tanya source input
-        System.out.println("------------ Matriks Balikan ------------");
+        clearScreen();
+        System.out.println("------------ Invers Matriks ------------");
+        System.out.println("[Jenis Input]");
         System.out.println("1. Input dari keyboard");
         System.out.println("2. Input dari file .txt");
-        System.out.print("Pilih: ");
+        System.out.print("Pilihan: ");
         int mode = readInt(sc);
 
         // Baca data (dari file/keyboard)
         double[][] matrix;
         if (mode == 1) {
+            System.out.println("\n[Input Matriks]");
             System.out.print("Ukuran matriks n: ");
             int n = readInt(sc);
             matrix = readMatrixFromKeyboard(sc, n, n);
         } else if (mode == 2) {
+            System.out.println("\n[Input Matriks]");
             System.out.print("Path file: ");
             String path = sc.next();
             matrix = readMatrixFromFile(path);
@@ -229,70 +253,78 @@ public class App {
 
         double[][] inverse;
         String methodName;
-        switch (method) {
+
+        clearScreen();
+        System.out.println("------------ Invers Matriks ------------");
+        System.out.println("Langkah:");
+
+        switch(method) {
             case 1:
-                inverse = toArray(Matrix.ginv(toMatrix(matrix)));
-                methodName = "Augmen (Gauss-Jordan)";
+                inverse = toArray(Matrix.ginv(toMatrix(matrix), true));
+                methodName = "Augmen";
                 break;
             case 2:
-                inverse = toArray(Matrix.inv(toMatrix(matrix)));
+                inverse = toArray(Matrix.inv(toMatrix(matrix), true));
                 methodName = "Adjoin";
                 break;
-            default: throw new IllegalArgumentException("Metode tidak valid");
+            default:
+                throw new IllegalArgumentException("Metode tidak valid");
         }
-
+    
         // Formatting output
         StringBuilder sb = new StringBuilder();
-        sb.append("Metode: ").append(methodName).append("\n");
+        sb.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(matrix)).append("\n");
         sb.append("Matriks Balikan:\n").append(formatMatrix(inverse)).append("\n");
-
-        System.out.println("------------ Hasil ---");
-        System.out.println(sb.toString());
-
-        askSaveToFile(sb.toString());
+       
+        // Print output dulu ke terminal
+        System.out.println();
+        String out = sb.toString();
+        System.out.println(out);
+        askSaveToFile(out);
     }
 
     // ----------------- Interpolasi -----------------
 
-     /**
-     * Menampilkan submenu interpolasi dan meneruskan ke metode yang dipilih.
-     * @throws IllegalArgumentException ketika metode tidak valid
-     */
-    static void handleInterpolation() {
-
-
-        System.out.println("------------ Interpolasi ------------");
+    //  /**
+    //  * Menampilkan submenu interpolasi dan meneruskan ke metode yang dipilih.
+    //  * @throws IllegalArgumentException ketika metode tidak valid
+    //  */
+    // static void handleInterpolation() {
+    //     System.out.println("------------ Interpolasi ------------");
         
-        // Tampil menu dan pilih metode interpolasi polinomial
-        showInterpolationMenu();
-        int method = readInt(sc);
+    //     // Tampil menu dan pilih metode interpolasi polinomial
+    //     showInterpolationMenu();
+    //     int method = readInt(sc);
 
-        if (method == 1) {
-            handlePolynomialInterpolation();
-        } else if (method == 2) {
-            handleNaturalCubicSplineInterpolation();
-        } else {
-            throw new IllegalArgumentException("Metode tidak valid");
-        }
-    }
+    //     if (method == 1) {
+    //         handlePolynomialInterpolation();
+    //     } else if (method == 2) {
+    //         handleNaturalCubicSplineInterpolation();
+    //     } else {
+    //         throw new IllegalArgumentException("Metode tidak valid");
+    //     }
+    // }
 
     static void handlePolynomialInterpolation() {
-        
         // Tanya source input
-        System.out.println("------------ Interpolasi Polinomial ---");
+        clearScreen();
+        System.out.println("------------ Interpolasi Polinomial ------------");
+        System.out.println("[Jenis Input]");
         System.out.println("1. Input dari keyboard");
         System.out.println("2. Input dari file .txt");
-        System.out.print("Pilih: ");
+        System.out.print("Pilihan: ");
         int mode = readInt(sc);
 
         // Baca data (dari file/keyboard)
-        double[][] points;
+        double[][] points = null;
         if (mode == 1) {
+            System.out.println("\n[Input Titik]");
             System.out.print("Jumlah titik n: ");
             int n = readInt(sc);
             points = readPointsFromKeyboard(sc, n);
         } else if (mode == 2) {
+            System.out.println("\n[Input Titik]");
             System.out.print("Path file: ");
             String path = sc.next();
             points = readPointsFromFile(path);
@@ -305,14 +337,18 @@ public class App {
 
         // Solve interpolasi
         double[] coeffs = Interpolation.Polynomial(points);
+        Arrays.sort(coeffs);
         String equation = formatPolynomialEquation(coeffs);
 
         // Formatting output
         StringBuilder sb = new StringBuilder();
-        sb.append("Metode: Interpolasi Polinomial\n");
-        sb.append("Persamaan: y = ").append(equation).append("\n");
+        sb.append("Metode:\nInterpolasi Polinomial\n\n");
+        sb.append("Domain:\n").append(String.format("[%f, %f]\n\n", points[0][0], points[coeffs.length-1][0]));
+        sb.append("Persamaan:\ny = ").append(equation).append("\n");
 
-        System.out.println("------------ Hasil ---");
+        clearScreen();
+        System.out.println("------------ Interpolasi Polinomial ------------");
+        System.out.println("[Hasil]");
         System.out.println(sb.toString());
 
         // Evaluasi hasil di suatu koordinat x (opsional) 
@@ -337,21 +373,24 @@ public class App {
      * @throws IllegalArgumentException ketika mode input atau data titik tidak valid
      */
     static void handleNaturalCubicSplineInterpolation() {
-     
         // Tanya source input
-        System.out.println("------------ Interpolasi Natural Cubic Spline ------------");
+        clearScreen();
+        System.out.println("------------ Interpolasi Cubic Spline ------------");
+        System.out.println("[Jenis Input]");
         System.out.println("1. Input dari keyboard");
         System.out.println("2. Input dari file .txt");
-        System.out.print("Pilih: ");
+        System.out.print("Pilihan: ");
         int mode = readInt(sc);
 
         // Baca data (dari file/keyboard)
         double[][] points;
         if (mode == 1) {
+            System.out.println("\n[Input Titik]");
             System.out.print("Jumlah titik n: ");
             int n = readInt(sc);
             points = readPointsFromKeyboard(sc, n);
         } else if (mode == 2) {
+            System.out.println("\n[Input Titik]");
             System.out.print("Path file: ");
             String path = sc.next();
             points = readPointsFromFile(path);
@@ -367,12 +406,42 @@ public class App {
 
         // Formatting output
         StringBuilder sb = new StringBuilder();
-        sb.append("Metode: Natural Cubic Spline\n");
-        sb.append("Nilai turunan kedua tiap titik (knots):\n");
+        sb.append("Metode:\nNatural Cubic Spline\n\n");
+        sb.append("Persamaan setiap segmen:\n");
+        // for(int i = 0; i < points.length-1; ++i) {
+        //     double[] p0 = points[i], pp = points[i+1];
+        //     double z = p0[0] - pp[0];
+        //     double kf = knots[i] / 6;
+        //     double ks = knots[i] / 6;
+        //     sb.append("- f{%d,%d}(x) = ", i, i+1);
+        //     if(!Matrix.swithin(kf, e)) {
+        //         sb.append(String.format(
+        //             "%.3f*((x-%.3f)^3/%.3f-%.3f*(x-%.3f) ",
+        //             kf, pp[0], z, z, pp[0]
+        //         ));
+        //         if(Matrix.swithin(ks, e)) sb.append(" + ");
+        //     }
+        //     if(!Matrix.swithin(ks, e)) {
+        //         // double ksb = Math.
+        //         sb.append(String.format(
+        //             "%.3f*((x-%.3f)^3/%.3f-%.3f*(x-%.3f)",
+        //             ks, p0[0], z, z, p0[0]
+        //         ));
+        //         sb.append(" + ");
+        //     }
+        //     sb.append(String.format(
+        //         "(%.3f*(x-%.3f)-%.3f*(x-%.3f))/%.3f",
+        //         p0[1], pp[0], pp[1], p0[1], z
+        //     ));
+        //     sb.append("\n");
+        // }
+        sb.append("\nNilai turunan kedua tiap titik (knots):\n");
         for (int i = 0; i < knots.length; i++)
-            sb.append(String.format("  k%d = %.3f%n", i, knots[i]));
+            sb.append(String.format("- k%d = %.3f%n", i, knots[i]));
 
-        System.out.println("------------ Hasil ------------");
+        clearScreen();
+        System.out.println("------------ Interpolasi Cubic Spline ------------");
+        System.out.println("[Hasil]");
         System.out.println(sb.toString());
 
         // Evaluasi hasil di suatu koordinat x (opsional)
@@ -502,7 +571,7 @@ public class App {
      * Mencetak submenu metode penyelesaian SPL.
      */
     static void showSPLMenu() {
-        System.out.println("------------ Menu Sistem Persamaan Linier ------------");
+        System.out.println("\n[Metode Penyelesaian]");
         System.out.println("1. Metode Eliminasi Gauss");
         System.out.println("2. Metode Eliminasi Gauss-Jordan");
         System.out.println("3. Kaidah Cramer");
@@ -514,9 +583,9 @@ public class App {
      * Mencetak submenu metode perhitungan determinan.
      */
     static void showDeterminantMenu() {
-        System.out.println("------------ Menu Determinan ------------");
+        System.out.println("\n[Metode Penyelesaian]");
         System.out.println("1. Metode Ekspansi Kofaktor");
-        System.out.println("2. Metode Reduksi Baris (Operasi Baris Elementer)");
+        System.out.println("2. Metode Reduksi Baris");
         System.out.print("Pilihan: ");
     }
 
@@ -524,7 +593,7 @@ public class App {
      * Mencetak submenu metode pencarian invers.
      */
     static void showInverseMenu() {
-        System.out.println("------------ Menu Invers ------------");
+        System.out.println("\n[Metode Penyelesaian]");
         System.out.println("1. Metode Augmen");
         System.out.println("2. Metode Adjoin");
         System.out.print("Pilihan: ");
@@ -550,12 +619,23 @@ public class App {
      * @return bilangan bulat yang berhasil dibaca
      */
     public static int readInt(Scanner sc) {
-        while (!sc.hasNextInt()) {
-            String bad = sc.next();
-            System.out.println("'" + bad + "' bukan angka. Coba lagi:");
-        }
-        int val = sc.nextInt();
-        sc.nextLine();
+        // while (!sc.hasNextInt()) {
+        //     String bad = sc.next();
+        //     System.out.println("'" + bad + "' bukan angka. Coba lagi:");
+        // }
+        // if(!sc.hasNextInt()) {
+        //     sc.next();
+        //     throw new IllegalArgumentException("Input tidak berbentuk angka");
+        // }
+            
+        // int val = sc.nextInt();
+        // sc.nextLine();
+        
+        String input = ""; 
+        while (input.isEmpty())
+            input = sc.nextLine().trim();
+        
+        int val = Integer.parseInt(input);
         return val;
     }
 
@@ -624,6 +704,8 @@ public class App {
         int rows = readInt(sc);
         System.out.print("Jumlah variabel: ");
         int vars = readInt(sc);
+        if(rows <= 0) throw new IllegalArgumentException("Jumlah persamaan tidak valid");
+        if(vars <= 0) throw new IllegalArgumentException("Jumlah variabel tidak valid");
         double[][] m = new double[rows][vars + 1];
         for (int i = 0; i < rows; i++) {
             System.out.println("Persamaan " + (i + 1) + ":");
@@ -782,7 +864,7 @@ public class App {
         for (double[] row : matrix) {
             sb.append("[ ");
             for (double v : row)
-                sb.append(String.format("%.3f ", v));
+                sb.append(String.format("%12.7g ", v));
             sb.append("]\n");
         }
         return sb.toString();
@@ -801,11 +883,20 @@ public class App {
             maxFree = Math.max(maxFree, row.length - 1);
 
         for (int i = 0; i < sol.length; i++) {
-            sb.append("x").append(i + 1).append(" = ").append(String.format("%.3f", sol[i][0]));
+            sb.append("x").append(i).append(" = ");
+            boolean free = true;
+            for(int j = 1; j < sol[0].length; ++j)
+                if(!Matrix.swithin(sol[i][j],e))
+                    free = false;
+            if(!Matrix.swithin(sol[i][0],e) || free) sb.append(String.format("%.3f", sol[i][0]));
             for (int k = 1; k <= maxFree; k++) {
                 if (k >= sol[i].length || sol[i][k] == 0) continue;
                 double c = sol[i][k];
-                sb.append(c < 0 ? " - " : " + ").append(String.format("%.3f", Math.abs(c))).append("*a").append(k);
+                boolean cw0 = Matrix.swithin(c, e);
+                boolean cw1 = Matrix.swithin(Math.abs(c)-1, e);
+                if(!Matrix.swithin(sol[i][k-1], e)) sb.append(c < 0 ? " - " : " + ");
+                if(!cw0 && !cw1) sb.append(String.format("%.3f", Math.abs(c)));
+                if(!cw0) sb.append("a").append(k-1);
             }
             sb.append("\n");
         }
@@ -837,6 +928,7 @@ public class App {
         String[] basis = new String[coeffs.length];
         for (int i = 0; i < coeffs.length; i++)
             basis[i] = i == 0 ? "" : (i == 1 ? "x" : "x^" + i);
+        
         return formatEquationTerms(coeffs, basis);
     }
 
@@ -869,14 +961,15 @@ public class App {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < coeffs.length; i++) {
             double c = coeffs[i];
-            if (Math.abs(c) < 1e-9) continue;
+            if (Matrix.swithin(c, e)) continue;
             if (sb.length() == 0) {
                 if (c < 0) sb.append("-");
             } else {
                 sb.append(c < 0 ? " - " : " + ");
             }
-            sb.append(String.format("%.3f", Math.abs(c)));
-            if (!basis[i].isEmpty()) sb.append("*").append(basis[i]);
+            if(!Matrix.swithin(Math.abs(c)-1, e) || i == 0) sb.append(String.format("%.3f", Math.abs(c)));
+            if(!Matrix.swithin(Math.abs(c)-1, e)) sb.append("*");
+            if(!basis[i].isEmpty()) sb.append(basis[i]);
         }
         if (sb.length() == 0) sb.append("0");
         return sb.toString();
