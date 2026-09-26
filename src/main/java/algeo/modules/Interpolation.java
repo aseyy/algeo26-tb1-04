@@ -40,7 +40,7 @@ public class Interpolation {
 
         // yach, selesaikan
         Matrix s = Matrix.aug(sl, sr);
-        double[][] sol = SPLSolver.byRREF(s);
+        double[][] sol = SPLSolver.byRREF(s, false);
 
         // cek data point yang kembar
         // alias ngecek apakah ada baris yg semuanya 0
@@ -96,7 +96,7 @@ public class Interpolation {
         // temukan nilai knotnya!
         // terus sesuaikan lah mas mbak
         Matrix kmatrix = Matrix.aug(kl, kr);
-        double[][] k = SPLSolver.byREF(kmatrix);
+        double[][] k = SPLSolver.byREF(kmatrix, false);
         double[] r = new double[k.length+2];
         for(int i = 0; i < k.length; ++i)
             r[i+1] = k[i][0];

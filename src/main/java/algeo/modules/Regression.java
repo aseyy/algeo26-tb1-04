@@ -69,13 +69,13 @@ public class Regression {
         // normalization helps deh
         // jujur ini nih formula gampang bgt meledak
         // errornya gila men, > 1e-5
-        s.toREF();
+        s.toREF(false);
         for(int i = 0; i < s.rows; ++i)
             for(int j = 0; j < s.cols; ++j)
                 s.src[i][j] = Matrix.snorm(s.src[i][j], 1e-12);
         
         // cari koefisien! lalu sesuaikan!
-        double[][] sol = SPLSolver.byRREF(s);
+        double[][] sol = SPLSolver.byRREF(s, false);
         double[] r = new double[sol.length];
         for(int i = 0; i < r.length; ++i)
             r[i] = sol[i][0];

@@ -240,7 +240,7 @@ public class Matrix {
      * @return determinan matriks sumber
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
-    public static double det(Matrix m) {
+    public static double det(Matrix m, boolean dbg) {
         if(!m.square)
             throw new IllegalArgumentException("Matrix.det: matriks yang diberikan bukanlah matriks persegi!");
 
@@ -277,9 +277,11 @@ public class Matrix {
         }
 
         // lakukan perhitungan det
+        if(dbg) System.out.println("- (Menghitung determinan)");
         double val = 0;
         if(maxZeroR >= maxZeroC) {
             // jika 0 terbanyak ada secara baris
+            if(dbg) System.out.printf("  - Memilih baris ke-%d\n", locR);
             for(int j = 0; j < m.cols; ++j) {
                 if(m.src[locR][j] == 0)
                     continue;
@@ -287,10 +289,13 @@ public class Matrix {
                 Matrix sub = Matrix.sub(m, locR, j);
                 double c = m.src[locR][j];
                 double cf = (locR+j) % 2 == 0 ? 1 : -1;
-                val += Matrix.det(sub) * c * cf;
+                double idet = Matrix.det(sub, false);
+                val += idet * c * cf;
+                if(dbg) System.out.printf("  - Mengali %f dengan determinan C{%d,%d} = %f\n", c, locR, j, idet);
             }
         } else {
             // jika 0 terbanyak ada secara kolom
+            if(dbg) System.out.printf("  - Memilih kolom ke-%d\n", locC);
             for(int i = 0; i < m.rows; ++i) {
                 if(m.src[i][locC] == 0)
                     continue;
@@ -298,7 +303,9 @@ public class Matrix {
                 Matrix sub = Matrix.sub(m, i, locC);
                 double c = m.src[i][locC];
                 double cf = (i+locC) % 2 == 0 ? 1 : -1;
-                val += Matrix.det(sub) * c * cf;
+                double idet = Matrix.det(sub, false);
+                val += idet * c * cf;
+                if(dbg) System.out.printf("  - Mengali %f dengan determinan C{%d,%d} = %f\n", c, i, locC, idet);
             }
         }
        
@@ -311,16 +318,18 @@ public class Matrix {
      * @return matriks kofaktor dari matriks sumber
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
-    public static Matrix cof(Matrix m) {
+    public static Matrix cof(Matrix m, boolean dbg) {
         if(!m.square)
             throw new IllegalArgumentException("Matrix.cof: matriks yang diberikan bukanlah matriks persegi!");
 
+        if(dbg) System.out.println("- (Membentuk matriks kofaktor)");
         Matrix r = new Matrix(m.rows, m.cols);
         for(int i = 0; i < m.rows; ++i) {
             for(int j = 0; j < m.cols; ++j) {
+                if(dbg) System.out.printf("  - Membuat C{%d,%d}\n", i, j);
                 Matrix sub = Matrix.sub(m, i, j);
                 double cf = (i+j) % 2 == 0 ? 1 : -1;
-                r.src[i][j] = Matrix.det(sub) * cf;
+                r.src[i][j] = Matrix.det(sub, false) * cf;
             }
         }
 
@@ -333,11 +342,13 @@ public class Matrix {
      * @return matriks adjoint dari matriks sumber
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
-    public static Matrix adj(Matrix m) {
+    public static Matrix adj(Matrix m, boolean dbg) {
         if(!m.square)
             throw new IllegalArgumentException("Matrix.adj: matriks yang diberikan bukanlah matriks persegi!");
 
-        return Matrix.tr(Matrix.cof(m));
+        Matrix r = Matrix.tr(Matrix.cof(m, dbg));
+        System.out.println("- (Membentuk matriks adjoin)");
+        return r;
     }
 
     /** 
@@ -347,18 +358,19 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
      * @throws IllegalArgumentException ketika determinan matriks persegi bernilai 0
     */
-    public static Matrix inv(Matrix m) {
+    public static Matrix inv(Matrix m, boolean dbg) {
         if(!m.square)
             throw new IllegalArgumentException("Matrix.inv: matriks yang diberikan bukanlah matriks persegi!");
         
-        double det = Matrix.det(m);
+        double det = Matrix.det(m, dbg);
         if(det == 0)
             throw new IllegalArgumentException("Matrix.inv: determinan matriks bernilai 0");
         
-        Matrix r = Matrix.adj(m);
+        Matrix r = Matrix.adj(m, dbg);
         for(int i = 0; i < m.rows; ++i)
             for(int j = 0; j < m.cols; ++j)
                 r.src[i][j] = 1/det * r.src[i][j];
+        if(dbg) System.out.println("- (Membentuk matriks invers)");
         
         return r;
     }
@@ -460,10 +472,11 @@ public class Matrix {
      * Memodifikasi matriks menjadi Matriks Eselon Baris (MEB).
      * @return jumlah terjadinya pertukaran baris
      */
-    public int toREF() {
+    public int toREF(boolean dbg) {
         int swapc = 0;
 
         // data nilai absolut terbesar per baris
+        if(dbg) System.out.println("- (Mengubah matriks menjadi Matriks Baris Eselon)");
         if(!scaleLock) {
             scale = new double[this.rows];
             for(int i = 0; i < this.rows; ++i) {
@@ -503,6 +516,7 @@ public class Matrix {
 
                 // jika ada yang lebih baik, tukar
                 if(locr > i) {
+                    if(dbg) System.out.printf("  - Menukar baris %d dan %d\n", i, locr);
                     this.rswp(i, locr);
                     double buf = scale[locr];
                     scale[locr] = scale[i];
@@ -535,6 +549,7 @@ public class Matrix {
             // membentuk 0 semua di bawah [i][j]
             for(int ip = i+1; ip < this.rows; ++ip) {
                 double cz = -this.src[ip][j] / this.src[i][j];
+                if(dbg) System.out.printf("  - Menjumlahkan baris %d dengan baris %d yang telah dikali %f\n", ip, i, cz);
                 this.radd(ip, i, cz);
                 this.src[ip][j] = 0;
             }
@@ -554,11 +569,12 @@ public class Matrix {
     /** 
      * Memodifikasi matriks menjadi Matriks Eselon Baris Tereduksi (MEBR).
     */
-    public void toRREF() {
+    public void toRREF(boolean dbg) {
         // fase maju
         if(!this.scaleLock)
-            this.toREF();
+            this.toREF(dbg);
         
+        if(dbg) System.out.println("- (Mengubah matriks menjadi Matriks Baris Eselon Tereduksi)");
         // fase mundur dan pembentukan 1-utama
         for(int i = 0; i < this.rows; ++i) {
             // mencari angka non-0 paling kiri
@@ -572,11 +588,13 @@ public class Matrix {
 
             // membentuk 1-utama
             double c = 1/this.src[i][j];
+            if(dbg) System.out.printf("  - Mengali baris %d dengan %f (membentuk 1-utama)\n", i, c);
             this.rmul(i, c);
             
             // membentuk 0 semua di atas [i][j]
             for(int ip = i-1; ip >= 0; --ip) {
                 double cb = -this.src[ip][j];
+                if(dbg) System.out.printf("  - Menjumlahkan baris %d dengan baris %d yang telah dikali %f\n", ip, i, cb);
                 this.radd(ip, i, cb);
                 this.src[ip][j] = 0;
             }
@@ -589,7 +607,7 @@ public class Matrix {
      * @return determinan matriks sumber
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
     */
-    public static double gdet(Matrix m) {
+    public static double gdet(Matrix m, boolean dbg) {
         if(!m.square)
             throw new IllegalArgumentException("Matrix.gdet: matriks yang diberikan bukanlah matriks persegi!");
 
@@ -603,11 +621,12 @@ public class Matrix {
         // perhitungan berat ya guys ya
         // ini ngubah jadi segitiga, lalu normalisasi
         Matrix r = Matrix.copy(m);
-        int swapc = r.toREF();
+        int swapc = r.toREF(dbg);
         for(int i = 0; i < r.rows; ++i)
             for(int j = 0; j < r.cols; ++j)
                 r.src[i][j] = snorm(r.src[i][j], r.scale[i] * NEPSILON);
         
+        if(dbg) System.out.println("- (Menghitung determinan dengan mengali seluruh diagonal)");
         // ini ngitung determinan matriks segitiga tadi
         double val = 1;
         for(int k = 0; k < m.rows; ++k)
@@ -623,17 +642,18 @@ public class Matrix {
      * @throws IllegalArgumentException ketika matriks sumber bukan matriks persegi
      * @throws IllegalArgumentException ketika matriks augmented tidak berbentuk {@code [I|A^-1]}
     */
-    public static Matrix ginv(Matrix m) {
+    public static Matrix ginv(Matrix m, boolean dbg) {
         if(!m.square)
             throw new IllegalArgumentException("Matrix.ginv: matriks yang diberikan bukanlah matriks persegi!");
 
         // Bikin matriks augmented
         // Bagian kanan matriksnya, bagian kiri matriks identitas seukuran
+        if(dbg) System.out.println("- (Membentuk matriks [A|I])");
         Matrix idt = Matrix.idt(m.rows);
         Matrix aug = Matrix.aug(m, idt);
 
         // Bentuk RREF, lalu saring bagian kanannya.
-        aug.toRREF();
+        aug.toRREF(dbg);
         Matrix r = new Matrix(m.rows, m.cols);
         for(int i = 0; i < r.rows; ++i)
             for(int j = 0; j < r.cols; ++j)
@@ -645,6 +665,8 @@ public class Matrix {
             if(!swithin(aug.src[k][k] - 1, CEPSILON))
                 throw new RuntimeException("Matrix.ginv: Matriks tidak punya invers!");
 
+        if(dbg) System.out.println("- (Mengambil matriks A^-1 dari [I|A^-1])");
+
         return r;
     }
     
@@ -655,7 +677,7 @@ public class Matrix {
     public final static double CEPSILON = 1e-15;
 
     /** Toleransi galat untuk normalisasi. */
-    public final static double NEPSILON = 1e-15;
+    public final static double NEPSILON = 1e-12;
 
     /** 
      * Menghitung apakah nilai absolut {@code n} kurang dari atau sama dengan {@code r}
