@@ -5,9 +5,26 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
 
+/**
+ * Produly present ke para asisten, 
+ * program TB1 Algeo yang tertulis dari jerih payah 3 orang Pixel.
+ * Jerih payah yang timbul berkat dilarangnya penggunaan generative AI.
+ *
+ * @author Rafi Fauzi Hermawan (wequra)
+ * @author Rionaldo Casey Panditha (aseyy)
+ * @author Fachry Azriel Fajdwani (rabsed1)
+ * @since 26/09/2026
+ */
 public class App {
     static Scanner sc = new Scanner(System.in);
     static double e = Matrix.NEPSILON;
+
+    // spesifikasi ukuran statis
+    final static int maxOrdo = 1200;
+    final static int maxPt = 20;
+
+    // konstanta lain
+    final static String cwd = System.getProperty("user.dir");
 
     /**
      * Titik masuk program. Menjalankan loop utama: 
@@ -24,6 +41,7 @@ public class App {
             try {
                 clearScreen();
                 showMainMenu();
+
                 int choice = readInt(sc);
                 switch (choice) {
                     case 1: handleSPL(); break;
@@ -31,16 +49,16 @@ public class App {
                     case 3: handleInverse(); break;
                     case 4: handlePolynomialInterpolation(); break;
                     case 5: handleNaturalCubicSplineInterpolation(); break;
-                    // Belum implemen
                     case 6: handleRegression(); break;
                     case 7: handleImageHoleFill(); break;
-                    case 8: return;
+                    case 8: clearScreen(); return;
                     default: throw new IllegalArgumentException("Pilihan tidak valid.");
                 }
+
                 enterContinue();
             } catch (Exception e) {
-                // Handle SEGALA error
                 System.out.println("Error: " + e.getMessage());
+                sc = new Scanner(System.in);
                 enterContinue();
             }
         }
@@ -50,7 +68,7 @@ public class App {
      * Mencetak menu utama ke layar.
      */
     static void showMainMenu() {
-        System.out.println("------------ NurEngine's Linear Algebra Equator ------------");
+        System.out.println("------------ NurEngine sang Raja Algeo ------------");
         System.out.println("1. Sistem Persamaan Linier");
         System.out.println("2. Determinan Matriks");
         System.out.println("3. Invers Matriks");
@@ -71,7 +89,7 @@ public class App {
      * @throws IllegalArgumentException ketika mode input atau metode tidak valid
      */
     static void handleSPL() {
-        // Tanya source input
+        // Presentasikan dengan bagus dan bijak ygy
         clearScreen();
         System.out.println("------------ Sistem Persamaan Linier ------------");
         System.out.println("[Jenis Input]");
@@ -87,9 +105,11 @@ public class App {
             augmented = readAugmentedMatrixFromKeyboard(sc);
         } else if (mode == 2) {
             System.out.println("\n[Input SPL]");
+            System.out.println("CWD: " + cwd);
             System.out.print("Path file: ");
-            String path = sc.next();
-            augmented = readAugmentedMatrixFromFile(path);
+            String path = sc.nextLine();
+            augmented = readMatrixFromFile(path);
+            System.out.println("File terbaca!");
         } else {
             throw new IllegalArgumentException("Mode input tidak valid.");
         }
@@ -122,12 +142,14 @@ public class App {
         StringBuilder sb = new StringBuilder();
         sb.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(augmented)).append("\n");
-        sb.append("Solusi:\n").append(formatSPLSolution(sol)).append("\n");
+        sb.append("Solusi:\n").append(formatSPLSolution(sol));
         
         // Print output dulu ke terminal
         System.out.println();
         String out = sb.toString();
         System.out.println(out);
+
+        // Simpan
         askSaveToFile(out);
     }
 
@@ -140,7 +162,7 @@ public class App {
      * @throws IllegalArgumentException ketika mode input, bentuk matriks, atau metode tidak valid
      */
     static void handleDeterminant() {
-        // Tanya source input
+        // Presentasikan dengan bagus dan bijak ygy
         clearScreen();
         System.out.println("------------ Determinan Matriks ------------");
         System.out.println("[Jenis Input]");
@@ -158,9 +180,11 @@ public class App {
             matrix = readMatrixFromKeyboard(sc, n, n);
         } else if (mode == 2) {
             System.out.println("\n[Input Matriks]");
+            System.out.println("CWD: " + cwd);
             System.out.print("Path file: ");
-            String path = sc.next();
+            String path = sc.nextLine().trim();
             matrix = readMatrixFromFile(path);
+            System.out.println("File terbaca!");
         } else {
             throw new IllegalArgumentException("Mode input tidak valid");
         }
@@ -206,6 +230,8 @@ public class App {
         System.out.println();
         String out = sb.toString();
         System.out.println(out);
+
+        // Simpan
         askSaveToFile(out);
     }
 
@@ -219,7 +245,7 @@ public class App {
      *                                  atau ketika matriks singular
      */
     static void handleInverse() {
-        // Tanya source input
+        // Presentasikan dengan bagus dan bijak ygy
         clearScreen();
         System.out.println("------------ Invers Matriks ------------");
         System.out.println("[Jenis Input]");
@@ -237,9 +263,11 @@ public class App {
             matrix = readMatrixFromKeyboard(sc, n, n);
         } else if (mode == 2) {
             System.out.println("\n[Input Matriks]");
+            System.out.println("CWD: " + cwd);
             System.out.print("Path file: ");
-            String path = sc.next();
+            String path = sc.nextLine().trim();
             matrix = readMatrixFromFile(path);
+            System.out.println("File terbaca!");
         } else {
             throw new IllegalArgumentException("Mode input tidak valid");
         }
@@ -281,33 +309,15 @@ public class App {
         System.out.println();
         String out = sb.toString();
         System.out.println(out);
+
+        // Simpan
         askSaveToFile(out);
     }
 
     // ----------------- Interpolasi -----------------
 
-    //  /**
-    //  * Menampilkan submenu interpolasi dan meneruskan ke metode yang dipilih.
-    //  * @throws IllegalArgumentException ketika metode tidak valid
-    //  */
-    // static void handleInterpolation() {
-    //     System.out.println("------------ Interpolasi ------------");
-        
-    //     // Tampil menu dan pilih metode interpolasi polinomial
-    //     showInterpolationMenu();
-    //     int method = readInt(sc);
-
-    //     if (method == 1) {
-    //         handlePolynomialInterpolation();
-    //     } else if (method == 2) {
-    //         handleNaturalCubicSplineInterpolation();
-    //     } else {
-    //         throw new IllegalArgumentException("Metode tidak valid");
-    //     }
-    // }
-
     static void handlePolynomialInterpolation() {
-        // Tanya source input
+        // Presentasikan dengan bagus dan bijak ygy
         clearScreen();
         System.out.println("------------ Interpolasi Polinomial ------------");
         System.out.println("[Jenis Input]");
@@ -325,9 +335,11 @@ public class App {
             points = readPointsFromKeyboard(sc, n);
         } else if (mode == 2) {
             System.out.println("\n[Input Titik]");
+            System.out.println("CWD: " + cwd);
             System.out.print("Path file: ");
-            String path = sc.next();
+            String path = sc.nextLine().trim();
             points = readPointsFromFile(path);
+            System.out.println("File terbaca!");
         } else {
             throw new IllegalArgumentException("Mode input tidak valid");
         }
@@ -337,8 +349,8 @@ public class App {
 
         // Solve interpolasi
         double[] coeffs = Interpolation.Polynomial(points);
-        Arrays.sort(coeffs);
         String equation = formatPolynomialEquation(coeffs);
+        Arrays.sort(points, (a,b) -> a[0] > b[0] ? 1 : -1);
 
         // Formatting output
         StringBuilder sb = new StringBuilder();
@@ -352,8 +364,8 @@ public class App {
         System.out.println(sb.toString());
 
         // Evaluasi hasil di suatu koordinat x (opsional) 
-        System.out.print("Masukkan xt untuk evaluasi (atau ketik 'skip'): ");
-        String input = sc.next();
+        System.out.print("Masukkan xt untuk evaluasi (harus dalam domain, atau ketik 'skip'): ");
+        String input = sc.nextLine();
         if (!input.equalsIgnoreCase("skip")) {
             double xt = parseNumber(input);
             if(xt < points[0][0] || xt > points[coeffs.length-1][0])
@@ -364,6 +376,7 @@ public class App {
             sb.append(evalLine);
         }
 
+        // Simpan
         askSaveToFile(sb.toString());
     }
 
@@ -375,7 +388,7 @@ public class App {
      * @throws IllegalArgumentException ketika mode input atau data titik tidak valid
      */
     static void handleNaturalCubicSplineInterpolation() {
-        // Tanya source input
+        // Presentasikan dengan bagus dan bijak ygy
         clearScreen();
         System.out.println("------------ Interpolasi Cubic Spline ------------");
         System.out.println("[Jenis Input]");
@@ -393,9 +406,11 @@ public class App {
             points = readPointsFromKeyboard(sc, n);
         } else if (mode == 2) {
             System.out.println("\n[Input Titik]");
+            System.out.println("CWD: " + cwd);
             System.out.print("Path file: ");
-            String path = sc.next();
+            String path = sc.nextLine().trim();
             points = readPointsFromFile(path);
+            System.out.println("File terbaca!");
         } else {
             throw new IllegalArgumentException("Mode input tidak valid");
         }
@@ -421,7 +436,7 @@ public class App {
 
         sb.append("\nNilai turunan kedua tiap titik:\n");
         for (int i = 0; i < knots.length; i++)
-            sb.append(String.format("- k%d = %.3f%n", i, knots[i]));
+            sb.append(String.format("- k%d = %.6f%n", i, knots[i]));
 
         clearScreen();
         System.out.println("------------ Interpolasi Cubic Spline ------------");
@@ -429,8 +444,8 @@ public class App {
         System.out.println(sb.toString());
 
         // Evaluasi hasil di suatu koordinat x (opsional)
-        System.out.print("Masukkan xt untuk evaluasi (harus dalam domain, atau 'skip'): ");
-        String input = sc.next();
+        System.out.print("Masukkan xt untuk evaluasi (harus dalam domain, atau ketik 'skip'): ");
+        String input = sc.nextLine();
         if (!input.equalsIgnoreCase("skip")) {
             double xt = parseNumber(input);
             double yt = Interpolation.CubicSplinalEvaluate(points, knots, xt); // <-- fixed
@@ -439,6 +454,7 @@ public class App {
             sb.append(evalLine);
         }
 
+        // Simpan
         askSaveToFile(sb.toString());
     }
 
@@ -452,65 +468,92 @@ public class App {
      * @throws IllegalArgumentException ketika mode input atau data regresi tidak valid
      */
     static void handleRegression() {
-        System.out.println("------------ Regresi Spline Kubik (Truncated Power Basis) ------------");
+        // Presentasikan dengan bagus dan bijak ygy
+        clearScreen();
+        System.out.println("------------ Regresi Cubic Spline ------------");
+        System.out.println("[Jenis Input]");
         System.out.println("1. Input dari keyboard");
         System.out.println("2. Input dari file .txt");
-        System.out.print("Pilih: ");
+        System.out.print("Pilihan: ");
         int mode = readInt(sc);
 
-        double[][] points;
-        double[] knots;
+        double[][] points = null;
+        double[] knots = null;
 
+        // Input titik dan knots
         if (mode == 1) {
-            System.out.print("Jumlah titik data n: ");
+            System.out.println("\n[Input Titik]");
+            System.out.print("Jumlah titik n: ");
             int n = readInt(sc);
             points = readPointsFromKeyboard(sc, n);
 
-            System.out.print("Jumlah knots k: ");
+            System.out.println("\n[Input Knot]");
+            System.out.print("Jumlah knot k: ");
             int k = readInt(sc);
             knots = new double[k];
             for (int i = 0; i < k; i++) {
                 System.out.print("  knot[" + i + "]: ");
-                knots[i] = parseNumber(sc.next());
+                knots[i] = readNumber(sc);
             }
         } else if (mode == 2) {
+            System.out.println("\n[Input Titik]");
+            System.out.println("CWD: " + cwd);
             System.out.print("Path file: ");
-            String path = sc.next();
-            RegressionInput parsed = readRegressionDataFromFile(path);
-            points = parsed.points;
-            knots = parsed.knots;
+            String path = sc.nextLine().trim();
+            points = readPointsFromFile(path);
+            System.out.println("File terbaca!");
+            
+            System.out.println("\n[Input Knot]");
+            System.out.print("Jumlah knot k: ");
+            int k = readInt(sc);
+            knots = new double[k];
+            for (int i = 0; i < k; i++) {
+                System.out.print("  knot[" + i + "]: ");
+                knots[i] = readNumber(sc);
+            }
         } else {
             throw new IllegalArgumentException("Mode input tidak valid");
         }
+
+        // Validasi poin dan knot
         validateRegressionInput(points, knots);
 
         double[] coeffs = Regression.CubicSplinal(points, knots);
         String equation = formatTruncatedPowerEquation(coeffs, knots);
 
+        // Ngeoutput
         StringBuilder sb = new StringBuilder();
-        sb.append("Metode: Regresi Spline Kubik\n");
-        sb.append("Jumlah knots: ").append(knots.length).append("\n");
-        sb.append("Persamaan: y = ").append(equation).append("\n");
+        sb.append("Koefisien Regresi:\n");
+        for(int i = 0; i < coeffs.length; ++i)
+            sb.append(String.format("- B%d = %.6f\n", i, coeffs[i]));
+        sb.append("\nPosisi knot:\n");
+        for(int i = 0; i < knots.length; ++i)
+            sb.append(String.format("- k%d = (%.6f, %.6f)\n", i, knots[i], Regression.CubicSplinalEvaluate(coeffs, knots, knots[i])));
+        sb.append("\nPersamaan:\ny = ").append(equation).append("\n");
 
-        System.out.println("\n--- Hasil ---");
+        // Presentate hasilnya secara beaotipul
+        System.out.println("------------ Regresi Cubic Spline ------------");
+        System.out.println("[Hasil]");
         System.out.println(sb.toString());
 
+        // evaluasi kah bos?
         System.out.print("Masukkan xt untuk evaluasi (atau 'skip'): ");
-        String input = sc.next();
+        if(sc.hasNextLine()) sc.nextLine();
+        String input = sc.nextLine();
         if (!input.equalsIgnoreCase("skip")) {
             double xt = parseNumber(input);
-
-            // ini biar work dlu aja, aslinya mah masih rada bug sikit cuma aku ngantuk twin
+            // acc twin
             double yt = Regression.CubicSplinalEvaluate(knots, knots, xt);
             String evalLine = String.format("y(%.3f) = %.3f%n", xt, yt);
             System.out.println(evalLine);
             sb.append(evalLine);
         }
 
+        // Simpan
         askSaveToFile(sb.toString());
     }
 
-    // ----------------- Bonus: Image Hole Fill -----------------
+    // ----------------- Image Hole Fill -----------------
 
     /**
      * Menangani bonus Image Hole Filling.
@@ -520,7 +563,10 @@ public class App {
      * @throws RuntimeException ketika gambar gagal dibaca atau ditulis
      */
     static void handleImageHoleFill() {
-        System.out.println("------------ Bonus: Image Hole Filling ------------");
+        clearScreen();
+        System.out.println("------------ Image Hole Filling ------------");
+        System.out.println("[Input Path]");
+        System.out.println("CWD: " + cwd);
         System.out.print("Path gambar asli (.png/.jpg): ");
         String imagePath = sc.next();
         System.out.print("Path mask (.png/.jpg): ");
@@ -528,6 +574,7 @@ public class App {
         System.out.print("Path output (.png/.jpg): ");
         String outputPath = sc.next();
  
+        // Sok panggil fungsina Alddoo
         ImageHoleFill.Result result;
         try {
             result = ImageHoleFill.fill(imagePath, maskPath, outputPath);
@@ -535,6 +582,7 @@ public class App {
             throw new RuntimeException("Gagal memproses gambar: " + e.getMessage());
         }
  
+        // Konstruksi output
         StringBuilder sb = new StringBuilder();
         sb.append("Metode: Image Hole Filling (Rata-rata Tetangga Iteratif)\n");
         sb.append("Ukuran gambar: ").append(result.width).append(" x ").append(result.height).append("\n");
@@ -543,13 +591,18 @@ public class App {
         sb.append("Error akhir: ").append(String.format("%.6f", result.finalError)).append("\n");
         sb.append("Output disimpan di: ").append(result.outputPath).append("\n");
  
-        System.out.println("\n--- Hasil ---");
+        // Tampil output
+        clearScreen();
+        System.out.println("------------ Image Hole Filling ------------");
+        System.out.println("[Hasil]");
         System.out.println(sb.toString());
  
+        // As usual
+        if(sc.hasNextLine()) sc.nextLine();
         askSaveToFile(sb.toString());
     }
 
-    // ----------------- submenu -----------------
+    // ----------------- Submenu -----------------
 
     /**
      * Mencetak submenu metode penyelesaian SPL.
@@ -563,7 +616,7 @@ public class App {
         System.out.print("Pilihan: ");
     }
 
-     /**
+    /**
      * Mencetak submenu metode perhitungan determinan.
      */
     static void showDeterminantMenu() {
@@ -583,43 +636,34 @@ public class App {
         System.out.print("Pilihan: ");
     }
 
-    /**
-     * Mencetak submenu metode interpolasi.
-     */
-    static void showInterpolationMenu() {
-        System.out.println("------------ Menu Interpolasi ------------");
-        System.out.println("1. Metode Polinomial");
-        System.out.println("2. Metode Natural Cubic Spline");
-        System.out.print("Pilihan: ");
-    }
-
-    // ----------------- input helpers -----------------
+    // ----------------- Input Helpers -----------------
 
     /**
-     * Membaca sebuah bilangan bulat dari Scanner, meminta ulang sampai input valid.
-     * Token yang bukan angka akan dikonsumsi dan dilaporkan sebelum mencoba lagi.
-     * Setelah sukses, karakter newline di akhir baris ikut dikonsumsi.
+     * Membaca sebuah bilangan bulat dari Scanner.
      * @param sc Scanner sumber
      * @return bilangan bulat yang berhasil dibaca
      */
     public static int readInt(Scanner sc) {
-        // while (!sc.hasNextInt()) {
-        //     String bad = sc.next();
-        //     System.out.println("'" + bad + "' bukan angka. Coba lagi:");
-        // }
-        // if(!sc.hasNextInt()) {
-        //     sc.next();
-        //     throw new IllegalArgumentException("Input tidak berbentuk angka");
-        // }
-            
-        // int val = sc.nextInt();
-        // sc.nextLine();
-        
-        String input = ""; 
-        while (input.isEmpty())
-            input = sc.nextLine().trim();
-        
+        if(!sc.hasNextInt())
+            throw new IllegalArgumentException("Input bukan bilangan bulat!");
+
+        String input = sc.nextLine().trim();
         int val = Integer.parseInt(input);
+        return val;
+    }
+
+    /**
+     * Membaca sebuah bilangan riil dari Scanner.
+     * Mendukung pemisal desimal {@code "."} maupun {@code ","}.
+     * @param sc Scanner sumber
+     * @return bilangan bulat yang berhasil dibaca
+     */
+    public static double readNumber(Scanner sc) {
+        String input = sc.next().trim();
+        if(!input.matches("-?\\d+([.,]\\d+)?"))
+            throw new IllegalArgumentException("Input bukan bilangan!");
+        
+        double val = parseNumber(input);
         return val;
     }
 
@@ -631,7 +675,15 @@ public class App {
      * @throws NumberFormatException ketika string tidak dapat diuraikan
      */
     static double parseNumber(String s) {
-        return Double.parseDouble(s.trim().replace(",", "."));
+        String t = s.trim().replace(",", ".");
+        
+        // Cek validitas
+        for(int i = 0, c = 0; i < t.length(); ++i) {
+            if(t.charAt(i) == '.') c++;
+            if(c > 1) throw new IllegalArgumentException("Bilangan tidak bisa di-parse!");
+        }
+
+        return Double.parseDouble(t);
     }
 
     /**
@@ -647,32 +699,48 @@ public class App {
             System.out.println("Baris " + (i + 1) + ":");
             for (int j = 0; j < cols; j++) {
                 System.out.print("  [" + i + "][" + j + "]: ");
-                m[i][j] = parseNumber(sc.next());
+                m[i][j] = readNumber(sc);
             }
+            sc.nextLine();
         }
         return m;
     }
 
     /**
-     * Membaca matriks dari file teks.
-     * Format: baris pertama {@code "rows cols"}, lalu {@code rows} baris
-     * berisi {@code cols} bilangan.
+     * Membaca matriks ukuran sembarang dari file teks.
      * @param path path file masukan
-     * @return matriks hasil pembacaan
+     * @return matriks augmented hasil pembacaan
      * @throws RuntimeException ketika file gagal dibaca
      */
     static double[][] readMatrixFromFile(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String[] dims = br.readLine().trim().split("\\s+");
-            int rows = Integer.parseInt(dims[0]);
-            int cols = Integer.parseInt(dims[1]);
-            double[][] m = new double[rows][cols];
-            for (int i = 0; i < rows; i++) {
-                String[] parts = br.readLine().trim().split("\\s+");
-                for (int j = 0; j < cols; j++)
-                    m[i][j] = parseNumber(parts[j]);
+            double[][] m = new double[maxOrdo][maxOrdo];
+            String l = "";
+            int row = 0, col = 0, colp = 0;
+            boolean b = false;
+            
+            // baca sampe eof
+            while((l = br.readLine()) != null) {
+                String[] e = l.trim().split("\\s+");
+                if(e.length == 0 || e[0].isEmpty()) continue;
+
+                if(!b) { col = e.length; colp = e.length; b = true; }
+                else { colp = col; col = e.length; }
+
+                if(col != colp) throw new IllegalArgumentException("Input tidak konsisten!");
+
+                for(int j = 0; j < col; ++j)
+                    m[row][j] = parseNumber(e[j]);
+                row++;
             }
-            return m;
+
+            // disalin, tapi kali ini ukurannya sesuai ygy
+            double[][] r = new double[row][col];
+            for(int i = 0; i < row; ++i)
+                for(int j = 0; j < col; ++j)
+                    r[i][j] = m[i][j];
+                    
+            return r;
         } catch (IOException e) {
             throw new RuntimeException("Gagal membaca file: " + e.getMessage());
         }
@@ -695,39 +763,13 @@ public class App {
             System.out.println("Persamaan " + (i + 1) + ":");
             for (int j = 0; j < vars; j++) {
                 System.out.print("  koef x" + (j + 1) + ": ");
-                m[i][j] = parseNumber(sc.next());
+                m[i][j] = readNumber(sc);
             }
             System.out.print("  konstanta (ruas kanan): ");
-            m[i][vars] = parseNumber(sc.next());
+            m[i][vars] = readNumber(sc);
+            sc.nextLine();
         }
         return m;
-    }
-
-    /**
-     * Membaca matriks augmented {@code [A|b]} dari file teks.
-     * Format: baris pertama {@code "rows vars"}, lalu {@code rows} baris
-     * berisi {@code vars} koefisien dan satu konstanta.
-     * @param path path file masukan
-     * @return matriks augmented hasil pembacaan
-     * @throws RuntimeException ketika file gagal dibaca
-     */
-    static double[][] readAugmentedMatrixFromFile(String path) {
-        // format: baris 1 = "jumlahPersamaan jumlahVariabel"
-        // baris berikutnya = koefisien... konstanta
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String[] dims = br.readLine().trim().split("\\s+");
-            int rows = Integer.parseInt(dims[0]);
-            int vars = Integer.parseInt(dims[1]);
-            double[][] m = new double[rows][vars + 1];
-            for (int i = 0; i < rows; i++) {
-                String[] parts = br.readLine().trim().split("\\s+");
-                for (int j = 0; j <= vars; j++)
-                    m[i][j] = parseNumber(parts[j]);
-            }
-            return m;
-        } catch (IOException e) {
-            throw new RuntimeException("Gagal membaca file: " + e.getMessage());
-        }
     }
 
      /**
@@ -740,8 +782,9 @@ public class App {
         double[][] pt = new double[n][2];
         for (int i = 0; i < n; i++) {
             System.out.print("Titik " + (i + 1) + " (x y): ");
-            pt[i][0] = parseNumber(sc.next());
-            pt[i][1] = parseNumber(sc.next());
+            pt[i][0] = readNumber(sc);
+            pt[i][1] = readNumber(sc);
+            sc.nextLine();
         }
         return pt;
     }
@@ -755,67 +798,30 @@ public class App {
      * @throws RuntimeException ketika file gagal dibaca
      */
     static double[][] readPointsFromFile(String path) {
-        // format: baris 1 = jumlah titik n, lalu n baris "x y"
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            int n = Integer.parseInt(br.readLine().trim());
-            double[][] pt = new double[n][2];
-            for (int i = 0; i < n; i++) {
-                String[] parts = br.readLine().trim().split("\\s+");
-                pt[i][0] = parseNumber(parts[0]);
-                pt[i][1] = parseNumber(parts[1]);
-            }
-            return pt;
-        } catch (IOException e) {
-            throw new RuntimeException("Gagal membaca file: " + e.getMessage());
-        }
-    }
+            double[][] pt = new double[maxPt][2];
+            String l = "";
+            int len = 0;
+            
+            // baca sampe eof
+            while((l = br.readLine()) != null) {
+                String[] e = l.trim().split("\\s+");
+                if(e.length == 0 || e[0].isEmpty()) continue;
+                if(e.length != 2) throw new IllegalArgumentException("Input tidak konsisten!");
 
-    // Helper class supaya lebih rapih
-    static class RegressionInput {
-        double[][] points;
-        double[] knots;
-    }
-
-    /**
-     * Membaca data regresi dari file teks.
-     * Format:
-     * <pre>
-     *   n k
-     *   x1 y1
-     *   x2 y2
-     *   ...
-     *   xn yn
-     *   knot1 knot2 ... knotk
-     * </pre>
-     * @param path path file masukan
-     * @return {@link RegressionInput} berisi titik-titik dan knots
-     * @throws RuntimeException ketika file gagal dibaca
-     */
-    static RegressionInput readRegressionDataFromFile(String path) {
-        // format: baris 1 = "n k" (n titik, k knots)
-        // n baris berikutnya = "x y"
-        // baris terakhir = k nilai knot dipisah spasi
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String[] dims = br.readLine().trim().split("\\s+");
-            int n = Integer.parseInt(dims[0]);
-            int k = Integer.parseInt(dims[1]);
-
-            double[][] points = new double[n][2];
-            for (int i = 0; i < n; i++) {
-                String[] parts = br.readLine().trim().split("\\s+");
-                points[i][0] = parseNumber(parts[0]);
-                points[i][1] = parseNumber(parts[1]);
+                pt[len][0] = parseNumber(e[0]);
+                pt[len][1] = parseNumber(e[1]);
+                len++;
             }
 
-            String[] knotParts = br.readLine().trim().split("\\s+");
-            double[] knots = new double[k];
-            for (int i = 0; i < k; i++)
-                knots[i] = parseNumber(knotParts[i]);
-
-            RegressionInput ri = new RegressionInput();
-            ri.points = points;
-            ri.knots = knots;
-            return ri;
+            // disalin, tapi kali ini ukurannya sesuai ygy
+            double[][] r = new double[len][2];
+            for(int i = 0; i < len; ++i) {
+                r[i][0] = pt[i][0];
+                r[i][1] = pt[i][1];
+            } 
+                    
+            return r;
         } catch (IOException e) {
             throw new RuntimeException("Gagal membaca file: " + e.getMessage());
         }
@@ -913,7 +919,7 @@ public class App {
         for (int i = 0; i < coeffs.length; i++)
             basis[i] = i == 0 ? "" : (i == 1 ? "x" : "x^" + i);
         
-        return formatEquationTerms(coeffs, basis);
+        return formatEquationTerms(coeffs, basis, e);
     }
 
     /**
@@ -928,9 +934,9 @@ public class App {
         String[] basis = new String[coeffs.length];
         for (int i = 0; i < coeffs.length; i++) {
             if (i < 4) basis[i] = i == 0 ? "" : (i == 1 ? "x" : "x^" + i);
-            else basis[i] = "max(0,x-" + String.format("%.3f", knots[i - 4]) + ")^3";
+            else basis[i] = String.format("max(0,x-%.3f)^3", knots[i-4]);
         }
-        return formatEquationTerms(coeffs, basis);
+        return formatEquationTerms(coeffs, basis, 1e-3);
     }
 
     /**
@@ -941,24 +947,37 @@ public class App {
      * @param basis representasi simbolik tiap suku (string kosong untuk konstanta)
      * @return string persamaan terformat
      */
-    static String formatEquationTerms(double[] coeffs, String[] basis) {
+    static String formatEquationTerms(double[] coeffs, String[] basis, double ep) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < coeffs.length; i++) {
             double c = coeffs[i];
-            if (Matrix.swithin(c, e)) continue;
-            if (sb.length() == 0) {
-                if (c < 0) sb.append("-");
+            double ac = Math.abs(c);
+            if (Matrix.swithin(c, ep)) 
+                continue;
+            
+            if(!basis[i].isEmpty()) {
+                sb.append(c < 0 ? (sb.length() == 0  ? '-' : " - ") : (sb.length() == 0  ? "" : " + "));
+                sb.append(!Matrix.swithin(ac-1, ep) ? String.format("%.3f", ac) : "");
+                sb.append(!Matrix.swithin(ac-1, ep) && !basis[i].isEmpty() ? "*" : "");
+                sb.append(basis[i]);
             } else {
-                sb.append(c < 0 ? " - " : " + ");
+                sb.append(c < 0 ? (sb.length() == 0  ? '-' : " - ") : (sb.length() == 0  ? "" : " + "));
+                sb.append(String.format("%.3f", ac));
             }
-            if(!Matrix.swithin(Math.abs(c)-1, e) || i == 0) sb.append(String.format("%.3f", Math.abs(c)));
-            if(!Matrix.swithin(Math.abs(c)-1, e)) sb.append("*");
-            if(!basis[i].isEmpty()) sb.append(basis[i]);
         }
+
         if (sb.length() == 0) sb.append("0");
+
         return sb.toString();
     }
 
+    /**
+     * Mengonstruksi string persamaan fungsi segmen Interpolasi Cubic Spline ke-{@code {i,i+1}}.
+     * @param pt data points
+     * @param kn knots
+     * @param i indeks
+     * @return string persamaan
+     */
     static String formatSegmentInterpolation(double[][] pt, double[] kn, int i) {
         StringBuilder r = new StringBuilder();
         
@@ -1055,36 +1074,6 @@ public class App {
             ));
         }
 
-
-        // === TERM KETIGA OLD ===
-        // boolean py0NOL = Matrix.swithin(py0, e);
-        // boolean pypNOL = Matrix.swithin(pyp, e);
-        // int py0so = (py0 < 0) ? 1 : 0;
-        // int pypso = (pyp < 0) ? 1 : 0;
-        // int dxs = (dx < 0) ? 1 : 0;
-        // boolean prs = (!py0NOL && !pypNOL && py0so == dxs && pypso == dxs) || (py0NOL && pypso == dxs) || (pypNOL && py0so == dxs);
-        // if(!kfNOL || !ksNOL) {
-        //     if(prs) r.append(" + ");
-        //     else if(!prs) r.append(" - "); // takut klo pake else doang
-        // }
-        // char open = (!py0NOL && !pypNOL) ? '(' : '\0';
-        // char close = (!py0NOL && !pypNOL) ? ')' : '\0';
-        // char t3s = (!prs && kfNOL && ksNOL) ? '-' : '\0';
-        // char px0s = px0 < 0 ? '+' : '-';
-        // char pxps = pxp < 0 ? '+' : '-';
-        // char py0s = prs ? '\0' : py0 < 0 ? (pypNOL ? '\0' : '-') : '\0';
-        // char pyps = prs ? (pypNOL ? '\0' : '+') : pyp < 0 ? (py0NOL ? '\0' : '-') : (py0NOL ? '\0' : '+');
-        // String adxg = Matrix.swithin(adx-1, e) ? "" : String.format("/%.3f", adx);
-        // String apy0g = Matrix.swithin(apy0-1, e) ? "" : String.format("%.3f*", apy0);
-        // String apypg = Matrix.swithin(apyp-1, e) ? "" : String.format("%.3f*", apyp);
-        // String t31 = !py0NOL ? String.format("%c%s(x%c%.3f)", py0s, apy0g, pxps, apxp) : "";
-        // String t32 = !pypNOL ? String.format("%c%s(x%c%.3f)", pyps, apypg, px0s, apx0) : "";
-        
-        // r.append(String.format(
-        //     "%c%c%s%s%c%s",
-        //     t3s, open, t31, t32, close, adxg
-        // ));
-
         r.append("\n");
         return r.toString();
     }
@@ -1141,7 +1130,7 @@ public class App {
      * Menghentikan eksekusi hingga pengguna menekan Enter.
      */
     public static void enterContinue() {
-        System.out.print("Tekan Enter Untuk Lanjut...");
+        System.out.print("Tekan enter untuk lanjut...");
         sc.nextLine();
     }
 
@@ -1152,10 +1141,10 @@ public class App {
      */
     static void askSaveToFile(String content) {
         System.out.print("Simpan hasil ke file .txt? (y/n): ");
-        String ans = sc.next();
+        String ans = sc.nextLine();
         if (ans.equalsIgnoreCase("y")) {
             System.out.print("Nama file: ");
-            String filename = sc.next();
+            String filename = sc.nextLine();
             saveOutputToFile(filename, content);
             System.out.println("Hasil disimpan di " + filename);
         }
