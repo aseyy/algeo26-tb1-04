@@ -121,7 +121,7 @@ public class Interpolation {
         if(x < pt[0][0] || x > pt[pt.length-1][0]) o = true;
         for(; i < pt.length && !o; ++i) if(x <= pt[i][0]) break;
         i--;
-        i = Math.min(i,pt.length-2);
+        i = Math.min(Math.max(0,i),pt.length-2);
 
         // seriusssss lah camen
         if(o) throw new IllegalArgumentException("Interpolation.CubicSplinalEvaluate: nilai x berada di luar rentang!");
