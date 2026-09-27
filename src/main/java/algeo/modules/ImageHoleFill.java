@@ -26,7 +26,7 @@ import javax.imageio.ImageIO;
  */
 public class ImageHoleFill {
     private static final int MAX_SIZE = 512; // sesuai spek
-    private static final double TOLERANCE = 0.001; // asumsi batas error dah cukup kecil
+    private static final double TOLERANCE = 0.00001; // asumsi batas error dah cukup kecil
     
     /**
      * Tipe bentukan baru untuk menampung hasil proses filling.
