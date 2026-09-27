@@ -119,8 +119,9 @@ public class Interpolation {
         boolean o = false;
         Arrays.sort(pt, (a,b) -> a[0] > b[0] ? 1 : -1);
         if(x < pt[0][0] || x > pt[pt.length-1][0]) o = true;
-        for(; i < pt.length && !o; ++i) if(x < pt[i][0]) break;
+        for(; i < pt.length && !o; ++i) if(x <= pt[i][0]) break;
         i--;
+        i = Math.min(i,pt.length-2);
 
         // seriusssss lah camen
         if(o) throw new IllegalArgumentException("Interpolation.CubicSplinalEvaluate: nilai x berada di luar rentang!");

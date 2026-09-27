@@ -343,7 +343,7 @@ public class App {
         // Formatting output
         StringBuilder sb = new StringBuilder();
         sb.append("Metode:\nInterpolasi Polinomial\n\n");
-        sb.append("Domain:\n").append(String.format("[%f, %f]\n\n", points[0][0], points[coeffs.length-1][0]));
+        sb.append("Domain:\n").append(String.format("[%.3f, %.3f]\n\n", points[0][0], points[coeffs.length-1][0]));
         sb.append("Persamaan:\ny = ").append(equation).append("\n");
 
         clearScreen();
@@ -356,6 +356,8 @@ public class App {
         String input = sc.next();
         if (!input.equalsIgnoreCase("skip")) {
             double xt = parseNumber(input);
+            if(xt < points[0][0] || xt > points[coeffs.length-1][0])
+                throw new IllegalArgumentException("Nilai tidak berada dalam rentang!");
             double yt = evalPolynomial(coeffs, xt);
             String evalLine = String.format("y(%.3f) = %.3f%n", xt, yt);
             System.out.println(evalLine);
@@ -408,34 +410,16 @@ public class App {
         StringBuilder sb = new StringBuilder();
         sb.append("Metode:\nNatural Cubic Spline\n\n");
         sb.append("Persamaan setiap segmen:\n");
-        // for(int i = 0; i < points.length-1; ++i) {
-        //     double[] p0 = points[i], pp = points[i+1];
-        //     double z = p0[0] - pp[0];
-        //     double kf = knots[i] / 6;
-        //     double ks = knots[i] / 6;
-        //     sb.append("- f{%d,%d}(x) = ", i, i+1);
-        //     if(!Matrix.swithin(kf, e)) {
-        //         sb.append(String.format(
-        //             "%.3f*((x-%.3f)^3/%.3f-%.3f*(x-%.3f) ",
-        //             kf, pp[0], z, z, pp[0]
-        //         ));
-        //         if(Matrix.swithin(ks, e)) sb.append(" + ");
-        //     }
-        //     if(!Matrix.swithin(ks, e)) {
-        //         // double ksb = Math.
-        //         sb.append(String.format(
-        //             "%.3f*((x-%.3f)^3/%.3f-%.3f*(x-%.3f)",
-        //             ks, p0[0], z, z, p0[0]
-        //         ));
-        //         sb.append(" + ");
-        //     }
-        //     sb.append(String.format(
-        //         "(%.3f*(x-%.3f)-%.3f*(x-%.3f))/%.3f",
-        //         p0[1], pp[0], pp[1], p0[1], z
-        //     ));
-        //     sb.append("\n");
-        // }
-        sb.append("\nNilai turunan kedua tiap titik (knots):\n");
+        for(int i = 0; i < points.length-1; ++i)
+            sb.append(formatSegmentInterpolation(points, knots, i));
+           
+        sb.append("\nDomain setiap segmen:\n");
+        for (int i = 0; i < points.length-1; i++) {
+            if(i < points.length-2) sb.append(String.format("- D{%d,%d} = [%.3f, %.3f)\n", i, i+1, points[i][0], points[i+1][0]));
+            else sb.append(String.format("- D{%d,%d} = [%.3f, %.3f]\n", i, i+1, points[i][0], points[i+1][0]));
+        }
+
+        sb.append("\nNilai turunan kedua tiap titik:\n");
         for (int i = 0; i < knots.length; i++)
             sb.append(String.format("- k%d = %.3f%n", i, knots[i]));
 
@@ -973,6 +957,136 @@ public class App {
         }
         if (sb.length() == 0) sb.append("0");
         return sb.toString();
+    }
+
+    static String formatSegmentInterpolation(double[][] pt, double[] kn, int i) {
+        StringBuilder r = new StringBuilder();
+        
+        // global lah ya
+        double px0 = pt[i][0], pxp = pt[i+1][0];
+        double py0 = pt[i][1], pyp = pt[i+1][1];
+        double apx0 = Math.abs(px0), apxp = Math.abs(pxp);
+        // double apy0 = Math.abs(py0), apyp = Math.abs(pyp);
+        double dx = px0 - pxp, adx = Math.abs(dx);
+        double k1 = kn[i] / 6, ak1 = Math.abs(k1);
+        double k2 = kn[i+1] / 6, ak2 = Math.abs(k2);
+        double k3 = py0 / dx, ak3 = Math.abs(k3);
+        double k4 = -pyp / dx, ak4 = Math.abs(k4);
+        
+        // global boolean
+        boolean k1NOL = Matrix.swithin(k1, e);
+        boolean k2NOL = Matrix.swithin(k2, e);
+        boolean k3NOL = Matrix.swithin(k3, e);
+        boolean k4NOL = Matrix.swithin(k4, e);
+
+        r.append(String.format("- f{%d,%d}(x) = ", i, i+1));
+
+        // term pertama
+        if(!k1NOL) {
+            char k1s = k1 < 0 ? '-' : '\0';
+            char pxps = pxp < 0 ? '+' : '-';
+            char dxs = dx < 0 ? '-' : '\0';
+            char dxso = dx < 0 ? '+' : '\0';
+            String adxg = Matrix.swithin(adx-1, e) ? "" : String.format("/%.3f", adx);
+            String ak1gz = Matrix.swithin(ak1-1, e) ? "" : String.format("%.3f*", ak1);
+            String adxgz = Matrix.swithin(adx-1, e) ? "" : String.format("%.3f*", adx);
+
+            r.append(String.format(
+                "%c%s(%c(x%c%.3f)^3%s%c%s(x%c%.3f))",
+                k1s, ak1gz, dxs, pxps, apxp, adxg, dxso, adxgz, pxps, apxp
+            ));
+        }
+
+        // operator antara term 1 dan 2
+        if(!k1NOL && !k2NOL) {
+            if(k2 < 0) r.append(" + ");
+            else if(k2 > 0) r.append(" - "); // takut klo pake else doang
+        }
+
+        // term kedua
+        if(!k2NOL) {
+            char k2s = (k2 > 0 && k1NOL) ? '-' : (k1NOL ? '+' : '\0');
+            char px0s = px0 < 0 ? '+' : '-';
+            char dxs = dx < 0 ? '-' : '\0';
+            char dxso = dx < 0 ? '+' : '\0';
+            String adxg = Matrix.swithin(adx-1, e) ? "" : String.format("/%.3f", adx);
+            String ak2gz = Matrix.swithin(ak2-1, e) ? "" : String.format("%.3f*", ak2);
+            String adxgz = Matrix.swithin(adx-1, e) ? "" : String.format("%.3f*", adx);
+
+            r.append(String.format(
+                "%c%s(%c(x%c%.3f)^3%s%c%s(x%c%.3f))",
+                k2s, ak2gz, dxs, px0s, apx0, adxg, dxso, adxgz, px0s, apx0
+            ));
+        }
+
+        // operator antara term 2 dan 3
+        if((!k1NOL && !k3NOL) || (!k2NOL && !k3NOL)) {
+            if(k3 < 0) r.append(" - ");
+            else if(k3 > 0) r.append(" + "); // takut klo pake else doang
+        }
+
+        // term ketiga
+        if(!k3NOL) {
+            char k3s = (k3 < 0 && k1NOL && k2NOL) ? '-' : '\0';
+            char pxps = pxp < 0 ? '+' : '-';
+            String ak3gz = Matrix.swithin(ak3-1, e) ? "" : String.format("%.3f*", ak3);
+
+            r.append(String.format(
+                "%c%s(x%c%.3f)",
+                k3s, ak3gz, pxps, apxp
+            ));
+        }
+
+        // operator antara term 3 dan 4
+        if((!k1NOL && !k4NOL) || (!k2NOL && !k4NOL) || (!k3NOL && !k4NOL)) {
+            if(k4 < 0) r.append(" - ");
+            else if(k4 > 0) r.append(" + "); // takut klo pake else doang
+        }
+
+        // term keempat
+        if(!k4NOL) {
+            char k4s = (k4 < 0 && k1NOL && k2NOL && k3NOL) ? '-' : '\0';
+            char px0s = px0 < 0 ? '+' : '-';
+            String ak4gz = Matrix.swithin(ak4-1, e) ? "" : String.format("%.3f*", ak4);
+
+            r.append(String.format(
+                "%c%s(x%c%.3f)",
+                k4s, ak4gz, px0s, apx0
+            ));
+        }
+
+
+        // === TERM KETIGA OLD ===
+        // boolean py0NOL = Matrix.swithin(py0, e);
+        // boolean pypNOL = Matrix.swithin(pyp, e);
+        // int py0so = (py0 < 0) ? 1 : 0;
+        // int pypso = (pyp < 0) ? 1 : 0;
+        // int dxs = (dx < 0) ? 1 : 0;
+        // boolean prs = (!py0NOL && !pypNOL && py0so == dxs && pypso == dxs) || (py0NOL && pypso == dxs) || (pypNOL && py0so == dxs);
+        // if(!kfNOL || !ksNOL) {
+        //     if(prs) r.append(" + ");
+        //     else if(!prs) r.append(" - "); // takut klo pake else doang
+        // }
+        // char open = (!py0NOL && !pypNOL) ? '(' : '\0';
+        // char close = (!py0NOL && !pypNOL) ? ')' : '\0';
+        // char t3s = (!prs && kfNOL && ksNOL) ? '-' : '\0';
+        // char px0s = px0 < 0 ? '+' : '-';
+        // char pxps = pxp < 0 ? '+' : '-';
+        // char py0s = prs ? '\0' : py0 < 0 ? (pypNOL ? '\0' : '-') : '\0';
+        // char pyps = prs ? (pypNOL ? '\0' : '+') : pyp < 0 ? (py0NOL ? '\0' : '-') : (py0NOL ? '\0' : '+');
+        // String adxg = Matrix.swithin(adx-1, e) ? "" : String.format("/%.3f", adx);
+        // String apy0g = Matrix.swithin(apy0-1, e) ? "" : String.format("%.3f*", apy0);
+        // String apypg = Matrix.swithin(apyp-1, e) ? "" : String.format("%.3f*", apyp);
+        // String t31 = !py0NOL ? String.format("%c%s(x%c%.3f)", py0s, apy0g, pxps, apxp) : "";
+        // String t32 = !pypNOL ? String.format("%c%s(x%c%.3f)", pyps, apypg, px0s, apx0) : "";
+        
+        // r.append(String.format(
+        //     "%c%c%s%s%c%s",
+        //     t3s, open, t31, t32, close, adxg
+        // ));
+
+        r.append("\n");
+        return r.toString();
     }
 
      /**
