@@ -566,6 +566,7 @@ public class App {
         clearScreen();
         System.out.println("------------ Image Hole Filling ------------");
         System.out.println("[Input Path]");
+        System.out.println("(Sangat disarankan mask berformat lossless (.png))");
         System.out.println("CWD: " + cwd);
         System.out.print("Path gambar asli (.png/.jpg): ");
         String imagePath = sc.next();
