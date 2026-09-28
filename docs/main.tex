@@ -1,32 +1,72 @@
-\documentclass{report}
+\documentclass[12pt,a4paper]{report}
 
-% Packages
+% --- Bahasa & encoding ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[indonesian]{babel}
+
+% --- Margin A4: atas 2.5, bawah 2.5, kiri 3, kanan 2.5 cm ---
+\usepackage[
+    top=2.5cm, bottom=2.5cm,
+    left=3cm, right=2.5cm
+]{geometry}
+
+% --- Fon Times New Roman 12pt ---
+\usepackage{mathptmx}
+
+% --- Nomor halaman + header/footer identitas ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{IF2123 Aljabar Linier dan Geometri}
+\fancyhead[R]{Kelompok NurEngine's Linear Algebra Equator}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Halaman awal bab juga pakai gaya yang sama
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{IF2123 Aljabar Linier dan Geometri}
+    \fancyhead[R]{Kelompok NurEngine's Linear Algebra Equator}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+}
+
+% --- Paket pendukung ---
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+% --- Hyperlink ---
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    citecolor=green,
+    pdftitle={Laporan Tugas Besar 1 IF2123},
+    pdfauthor={NurEngine's Linear Algebra Equator}
+}
 
 \begin{document}
 
 \begin{titlepage}
     \centering
-
-    % ---- Title ----
     {\Huge\bfseries NurEngine's Linear Algebra Equator\par}
     \vspace{1.5cm}
-
-    % ---- Authors ----
     {\large
         Rionaldo Casey Pandhitha \\ NIM: 13525030 \\[0.5cm]
         Raffi Fauzi Hermawan \\ NIM: 13525054 \\[0.5cm]
         Fachry Azriel Fajdwani \\ NIM: 13525110 \par
     }
     \vspace{1.5cm}
-
-    % ---- Image ----
     \includegraphics[width=0.55\textwidth]{3_Pria_Hebat.jpg}\\[1cm]
-
-    % ---- Date ----
-    {\large \today\par}
+    {\large 28 September 2026\par}
 
 \end{titlepage}
 
@@ -106,7 +146,109 @@ menjadi perangkat lunak nyata yang lolos berbagai skenario uji
 
 \chapter{Dasar Teori}
 \chapter{Implementasi}
+
 \chapter{Eksperimen}
+
+Bab ini memaparkan hasil eksekusi program terhadap seluruh kasus uji pada Bab~5 dokumen \href{https://drive.google.com/file/d/1zpm_KGpbD0GnExEMcvEgktb4QAafZw_5/view}{Spesifikasi Tugas Besar}. Setiap kasus diuji dengan metode yang relevan sesuai spesifikasi. Pengujian dilakukan melalui masukan manual dan/atau berkas \texttt{.txt}. Bagian ini memuat input, output, tangkapan layar bila diperlukan, serta analisis singkat untuk setiap kasus.
+
+\section{Determinan Matriks}  
+
+\subsection{Kasus Uji 1}
+\textbf{Input:} Matriks dari berkas \texttt{determinan\_kasus1.txt}.
+
+\begin{table}[H]
+    \centering
+    \caption{Hasil pengujian determinan Kasus Uji 1}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Metode} & \textbf{Nilai Determinan} & \textbf{Status} \\
+        \hline
+        Ekspansi Kofaktor & -259.000 & Valid \\
+        Reduksi Baris (OBE) & -259.000 & Valid \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\textbf{Analisis:} Kedua metode menghasilkan hasil yang sama.
+
+\subsection{Kasus Uji 2}
+\textbf{Input:} Matriks dari berkas \texttt{determinan\_kasus2.txt}.
+
+\begin{table}[H]
+    \centering
+    \caption{Hasil pengujian determinan Kasus Uji 2}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Metode} & \textbf{Nilai Determinan} & \textbf{Status} \\
+        \hline
+        Ekspansi Kofaktor & 0.000 & valid \\
+        Reduksi Baris (OBE) & -0.000 & valid \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\textbf{Analisis:} Analisis hasil dan perbandingan metode.
+
+\section{Invers Matriks}
+
+\subsection{Kasus Uji 1}
+\textbf{Input:} Matriks dari berkas \texttt{inverse\_kasus1.txt}.
+
+\begin{table}[H]
+    \centering
+    \caption{Hasil pengujian invers matriks Kasus Uji 1}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Metode} & \textbf{Status} \\
+        \hline
+        Augment & Valid \\
+        Adjoin  & Valid \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\textbf{Hasil Augment:}
+\[
+A^{-1} = \begin{bmatrix}
+     0.200 & -0.100 &  0.400 & -0.300 \\
+    -0.100 & -0.200 &  0.300 &  0.400 \\
+     0.400 &  0.300 & -0.200 & -0.100 \\
+    -0.300 &  0.400 & -0.100 &  0.200
+\end{bmatrix}
+\]
+
+\textbf{Hasil Adjoin:}
+\[
+A^{-1} = \begin{bmatrix}
+     0.200 & -0.100 &  0.400 & -0.300 \\
+    -0.100 & -0.200 &  0.300 &  0.400 \\
+     0.400 &  0.300 & -0.200 & -0.100 \\
+    -0.300 &  0.400 & -0.100 &  0.200
+\end{bmatrix}
+\]
+
+\textbf{Analisis:} Kedua metode menghasilkan matriks balikan yang identik. Perbedaan hanya muncul pada galat pembulatan komputer.
+
+\subsection{Kasus Uji 2}
+\textbf{Input:} Matriks dari berkas \texttt{inverse\_kasus2.txt}.
+
+\begin{table}[H]
+    \centering
+    \caption{Hasil pengujian invers matriks Kasus Uji 2}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Metode} & \textbf{Hasil} & \textbf{Status} \\
+        \hline
+        Augment & Matriks balikan tidak ada & Tidak valid (singular) \\
+        Adjoin  & Matriks balikan tidak ada & Tidak valid (singular) \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\textbf{Analisis:} Matriks Kasus Uji 2 bersifat \emph{singular} karena $\det(A) = 0$, sehingga tidak memiliki invers. Kedua metode mendeteksi kondisi ini dan program menampilkan pesan kesalahan tanpa \emph{crash}.
+
+
+
 \chapter{Penutup}
 
 % Di Bawah Template Buat Dokumen Ges
