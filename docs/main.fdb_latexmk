@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1790609674.86366 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790609676.91893 0
+["pdflatex"] 1790611162.48379 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790611164.79146 0
   "/etc/texmf/web2c/texmf.cnf" 1787075751.84451 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790609672.08917 9533 f9b4f35f1bb8bd6ddbcec4aa78173fa0 ""
+  "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790611161.03885 21336 63099bdf07255a16dc89dfa7988f7445 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
@@ -126,9 +126,9 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1790505942.75022 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1790506206 8213776 f417c23f5a46c636a0d18bb061acdf87 ""
   "3_Pria_Hebat.jpg" 1790509537.01074 148067 891368e84acb53d9b61b3dd9d8ca668f ""
-  "main.aux" 1790609676.68488 3774 4e9c8582e973d752f2d2c63b167bb680 "pdflatex"
-  "main.out" 1790609676.68776 1952 07fe185f8d4024647296893e2763a08a "pdflatex"
-  "main.tex" 1790609672.08917 9533 f9b4f35f1bb8bd6ddbcec4aa78173fa0 ""
+  "main.aux" 1790611164.55923 7866 a04ce383a61aaa5720b4cd8e1efbeb06 "pdflatex"
+  "main.out" 1790611164.56323 5102 8760599977c121b6243a22965194f9c4 "pdflatex"
+  "main.tex" 1790611161.03885 21336 63099bdf07255a16dc89dfa7988f7445 ""
   "mitya.png" 1790517120.43007 19797 9db31524dc015b57a1c5646ff0c780f7 ""
   (generated)
   "main.aux"

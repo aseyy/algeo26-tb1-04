@@ -152,10 +152,18 @@ menjadi perangkat lunak nyata yang lolos berbagai skenario uji
 Bab ini memaparkan hasil eksekusi program terhadap seluruh kasus uji pada Bab~5 dokumen \href{https://drive.google.com/file/d/1zpm_KGpbD0GnExEMcvEgktb4QAafZw_5/view}{Spesifikasi Tugas Besar}. Setiap kasus diuji dengan metode yang relevan sesuai spesifikasi. Pengujian dilakukan melalui masukan manual dan/atau berkas \texttt{.txt}. Bagian ini memuat input, output, tangkapan layar bila diperlukan, serta analisis singkat untuk setiap kasus.
 
 \section{Determinan Matriks}  
-
+ 
 \subsection{Kasus Uji 1}
 \textbf{Input:} Matriks dari berkas \texttt{determinan\_kasus1.txt}.
-
+\[
+A = \begin{bmatrix}
+     5 &  7 &  9 & 11 \\
+    10 & 14 & 18 & 22 \\
+    15 & 21 & 27 & 33 \\
+    20 & 28 & 36 & 44
+\end{bmatrix}
+\]
+ 
 \begin{table}[H]
     \centering
     \caption{Hasil pengujian determinan Kasus Uji 1}
@@ -168,12 +176,20 @@ Bab ini memaparkan hasil eksekusi program terhadap seluruh kasus uji pada Bab~5 
         \hline
     \end{tabular}
 \end{table}
-
+ 
 \textbf{Analisis:} Kedua metode menghasilkan hasil yang sama.
-
+ 
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari berkas \texttt{determinan\_kasus2.txt}.
-
+\[
+A = \begin{bmatrix}
+    1 & \frac{1}{2} & \frac{1}{3} & \frac{1}{4} \\[4pt]
+    \frac{1}{2} & \frac{1}{3} & \frac{1}{4} & \frac{1}{5} \\[4pt]
+    \frac{1}{3} & \frac{1}{4} & \frac{1}{5} & \frac{1}{6} \\[4pt]
+    \frac{1}{4} & \frac{1}{5} & \frac{1}{6} & \frac{1}{7}
+\end{bmatrix}
+\]
+ 
 \begin{table}[H]
     \centering
     \caption{Hasil pengujian determinan Kasus Uji 2}
@@ -186,14 +202,22 @@ Bab ini memaparkan hasil eksekusi program terhadap seluruh kasus uji pada Bab~5 
         \hline
     \end{tabular}
 \end{table}
-
+ 
 \textbf{Analisis:} Analisis hasil dan perbandingan metode.
 
 \section{Invers Matriks}
-
+ 
 \subsection{Kasus Uji 1}
 \textbf{Input:} Matriks dari berkas \texttt{inverse\_kasus1.txt}.
-
+\[
+A = \begin{bmatrix}
+     5 &  2 & -3 &  4 \\
+     7 &  7 &  8 & -9 \\
+    12 & 13 &  2 & 14 \\
+    17 & 18 & 19 &  4
+\end{bmatrix}
+\]
+ 
 \begin{table}[H]
     \centering
     \caption{Hasil pengujian invers matriks Kasus Uji 1}
@@ -206,7 +230,7 @@ Bab ini memaparkan hasil eksekusi program terhadap seluruh kasus uji pada Bab~5 
         \hline
     \end{tabular}
 \end{table}
-
+ 
 \textbf{Hasil Augment:}
 \[
 A^{-1} = \begin{bmatrix}
@@ -216,7 +240,7 @@ A^{-1} = \begin{bmatrix}
     -0.300 &  0.400 & -0.100 &  0.200
 \end{bmatrix}
 \]
-
+ 
 \textbf{Hasil Adjoin:}
 \[
 A^{-1} = \begin{bmatrix}
@@ -226,12 +250,22 @@ A^{-1} = \begin{bmatrix}
     -0.300 &  0.400 & -0.100 &  0.200
 \end{bmatrix}
 \]
-
+ 
 \textbf{Analisis:} Kedua metode menghasilkan matriks balikan yang identik. Perbedaan hanya muncul pada galat pembulatan komputer.
-
+ 
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari berkas \texttt{inverse\_kasus2.txt}.
-
+\[
+A = \begin{bmatrix}
+     5 &  7 &  9 & 11 & 13 & 15 \\
+    10 & 14 & 18 & 22 & 26 & 30 \\
+    15 & 21 & 27 & 33 & 39 & 45 \\
+    20 & 28 & 36 & 44 & 52 & 60 \\
+    25 & 35 & 45 & 55 & 65 & 75 \\
+    30 & 42 & 54 & 66 & 78 & 90
+\end{bmatrix}
+\]
+ 
 \begin{table}[H]
     \centering
     \caption{Hasil pengujian invers matriks Kasus Uji 2}
@@ -244,8 +278,362 @@ A^{-1} = \begin{bmatrix}
         \hline
     \end{tabular}
 \end{table}
-
+ 
 \textbf{Analisis:} Matriks Kasus Uji 2 bersifat \emph{singular} karena $\det(A) = 0$, sehingga tidak memiliki invers. Kedua metode mendeteksi kondisi ini dan program menampilkan pesan kesalahan tanpa \emph{crash}.
+ 
+\section{Sistem Persamaan Linear $Ax = b$}
+ 
+\subsection{Kasus Uji 1}
+\textbf{Input:}
+\[
+A = \begin{bmatrix} 1 & 1 & -1 & -1 \\ 2 & 5 & -7 & -5 \\ 2 & -1 & 1 & 3 \\ 5 & 2 & -4 & 2 \end{bmatrix},
+\quad
+b = \begin{bmatrix} 1 \\ -2 \\ 4 \\ 6 \end{bmatrix}
+\]
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL $Ax=b$ Kasus Uji 1}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
+        \hline
+        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
+        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
+        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Bandingkan solusi tiap metode.
+ 
+\subsection{Kasus Uji 2}
+\textbf{Input:}
+\[
+A = \begin{bmatrix} 1 & -1 & 0 & 0 & 1 \\ 1 & 1 & 0 & -3 & 0 \\ 2 & -1 & 0 & 1 & -1 \\ -1 & 2 & 0 & -2 & -1 \end{bmatrix},
+\quad
+b = \begin{bmatrix} 3 \\ 6 \\ 5 \\ -1 \end{bmatrix}
+\]
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL $Ax=b$ Kasus Uji 2}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
+        \hline
+        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
+        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
+        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Analisis.
+ 
+\subsection{Kasus Uji 3}
+\textbf{Input:}
+\[
+A = \begin{bmatrix} 0 & 1 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 & 1 & 1 \\ 0 & 1 & 0 & 0 & 0 & 1 \end{bmatrix},
+\quad
+b = \begin{bmatrix} 2 \\ -1 \\ 1 \end{bmatrix}
+\]
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL $Ax=b$ Kasus Uji 3}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
+        \hline
+        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
+        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
+        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Jika tak hingga solusi, tuliskan bentuk parametriknya.
+ 
+\subsection{Kasus Uji 4: Matriks Hilbert}
+\textbf{Input:} Matriks Hilbert $H$ untuk $n = 6$ dan $n = 10$, dengan $b = [1, 0, \dots, 0]^T$.
+ 
+\[
+H = \begin{bmatrix}
+1 & \frac{1}{2} & \frac{1}{3} & \cdots & \frac{1}{n} \\
+\frac{1}{2} & \frac{1}{3} & \frac{1}{4} & \cdots & \frac{1}{n+1} \\
+\frac{1}{3} & \frac{1}{4} & \frac{1}{5} & \cdots & \frac{1}{n+2} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+\frac{1}{n} & \frac{1}{n+1} & \frac{1}{n+2} & \cdots & \frac{1}{2n-1}
+\end{bmatrix},
+\quad
+b = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \\ 0 \end{bmatrix}
+\]
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL dengan matriks Hilbert}
+    \begin{tabular}{|c|c|l|l|}
+        \hline
+        \textbf{n} & \textbf{Metode} & \textbf{Solusi} & \textbf{Status} \\
+        \hline
+        6 & Eliminasi Gauss & solusi & valid/tidak \\
+        6 & Gauss-Jordan & solusi & valid/tidak \\
+        6 & Cramer & solusi & valid/tidak \\
+        6 & Matriks Balikan & solusi & valid/tidak \\
+        \hline
+        10 & Eliminasi Gauss & solusi & valid/tidak \\
+        10 & Gauss-Jordan & solusi & valid/tidak \\
+        10 & Cramer & solusi & valid/tidak \\
+        10 & Matriks Balikan & solusi & valid/tidak \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Jelaskan pengaruh kondisi matriks Hilbert yang ill-conditioned terhadap galat numerik.
+ 
+\section{Sistem Persamaan Linear Berbentuk Matriks Augmented}
+ 
+\subsection{Kasus Uji 1}
+\textbf{Input:}
+\[
+\left[\begin{array}{cccc|c}
+     1 & -1 &  2 & -1 & -1 \\
+     2 &  1 & -2 & -2 & -2 \\
+    -1 &  2 & -4 &  1 &  1 \\
+     3 &  0 &  0 & -3 & -3
+\end{array}\right]
+\]
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL augmented Kasus Uji 1}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
+        \hline
+        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
+        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
+        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Analisis.
+ 
+\subsection{Kasus Uji 2}
+\textbf{Input:}
+\[
+\left[\begin{array}{cccc|c}
+     2 &  0 &  8 &  0 &  8 \\
+     0 &  1 &  0 &  4 &  4 \\
+    -4 &  0 &  6 &  0 &  6 \\
+     0 & -2 &  0 &  3 & -1 \\
+     2 &  0 & -4 &  0 & -4 \\
+     0 &  1 &  0 & -2 &  0
+\end{array}\right]
+\]
+ 
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL augmented Kasus Uji 2}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
+        \hline
+        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
+        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
+        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Analisis.
+ 
+\section{Sistem Persamaan Linear Berbentuk Umum}
+ 
+\subsection{Kasus Uji 1}
+\textbf{Input:}
+\begin{align*}
+8x_1 + x_2 + 3x_3 + 2x_4 &= 0 \\
+2x_1 + 9x_2 - x_3 - 2x_4 &= 1 \\
+x_1 + 3x_2 + 2x_3 - x_4 &= 2 \\
+x_1 + 6x_3 + 4x_4 &= 3
+\end{align*}
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL umum Kasus Uji 1}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
+        \hline
+        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
+        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
+        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Analisis.
+ 
+\subsection{Kasus Uji 2}
+\textbf{Input:}
+\begin{align*}
+x_7 + x_8 + x_9 &= 13.00 \\
+x_4 + x_5 + x_6 &= 15.00 \\
+x_1 + x_2 + x_3 &= 8.00 \\
+0.04289(x_3 + x_5 + x_7) + 0.75(x_6 + x_8) + 0.61396x_9 &= 14.79 \\
+0.91421(x_3 + x_5 + x_7) + 0.25(x_2 + x_4 + x_6 + x_8) &= 14.31 \\
+0.04289(x_3 + x_5 + x_7) + 0.75(x_2 + x_4) + 0.61396x_1 &= 3.81 \\
+x_3 + x_6 + x_9 &= 18.00 \\
+x_2 + x_5 + x_8 &= 12.00 \\
+x_1 + x_4 + x_7 &= 6.00 \\
+0.04289(x_1 + x_5 + x_9) + 0.75(x_2 + x_6) + 0.61396x_3 &= 10.51 \\
+0.91421(x_1 + x_5 + x_9) + 0.25(x_2 + x_4 + x_6 + x_8) &= 16.13 \\
+0.04289(x_1 + x_5 + x_9) + 0.75(x_4 + x_8) + 0.61396x_7 &= 7.04
+\end{align*}
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL umum Kasus Uji 2}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
+        \hline
+        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
+        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
+        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Analisis.
+ 
+\section{Aplikasi Sistem Persamaan Linear: Reaktor}
+ 
+\textbf{Input:} Parameter $Q_{AB}=40$, $Q_{AC}=80$, $Q_{BA}=60$, $Q_{BC}=20$, $Q_{C_{\text{out}}}=150$, $m_{A_{\text{in}}}=1300$, $m_{C_{\text{in}}}=200$.
+ 
+\begin{table}[H]
+    \centering
+    \caption{Hasil aplikasi SPL pada model reaktor}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Variabel} & \textbf{Nilai} \\
+        \hline
+        $x_A$ & nilai \\
+        $x_B$ & nilai \\
+        $x_C$ & nilai \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Interpretasi hasil dalam konteks konservasi massa.
+ 
+\section{Interpolasi Polinomial}
+ 
+\subsection{Studi Kasus 1}
+\textbf{Input:} Titik data pada tabel Studi Kasus 1.
+ 
+\textbf{Hasil:}
+\begin{itemize}
+    \item Persamaan interpolasi: \(y(x) = persamaan\)
+    \item Evaluasi:
+    \begin{itemize}
+        \item $x = 0.2 \Rightarrow f(x) = nilai$
+        \item $x = 0.55 \Rightarrow f(x) = nilai$
+        \item $x = 0.85 \Rightarrow f(x) = nilai$
+        \item $x = 1.28 \Rightarrow f(x) = nilai$
+    \end{itemize}
+\end{itemize}
+ 
+\textbf{Analisis:} Bandingkan dengan nilai ekspektasi/domain interpolasi.
+ 
+\subsection{Studi Kasus 2}
+\textbf{Input:} Data kasus Covid-19 pada tabel Studi Kasus 2.
+ 
+\textbf{Hasil prediksi:}
+\begin{table}[H]
+    \centering
+    \caption{Hasil prediksi jumlah kasus baru Covid-19}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Tanggal} & \textbf{Prediksi Jumlah Kasus} \\
+        \hline
+        16/07/2022 & nilai \\
+        10/08/2022 & nilai \\
+        05/09/2022 & nilai \\
+        tanggal lain & nilai \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Analisis tren dan keterbatasan ekstrapolasi.
+ 
+\section{Interpolasi Splina Bézier Kubik}
+ 
+\textbf{Input:} Titik-titik \((0,0), (3,11), (6,-4), (8,0), (11,-10), (17,0)\).
+ 
+\begin{table}[H]
+    \centering
+    \caption{Titik kontrol tiap segmen splina Bézier kubik}
+    \begin{tabular}{|c|c|l|}
+        \hline
+        \textbf{Segmen} & \textbf{Titik Kontrol} & \textbf{Nilai} \\
+        \hline
+        0 & $B_0, B_1, B_2, B_3$ & koordinat \\
+        1 & $B_3, B_4, B_5, B_6$ & koordinat \\
+        \dots & \dots & \dots \\
+        \hline
+    \end{tabular}
+\end{table}
+ 
+\textbf{Analisis:} Periksa apakah kurva melewati titik interpolasi.
+ 
+\section{Regresi Polinomial Berganda}
+ 
+\textbf{Input:} 50 sampel pertumbuhan alga dengan variabel cahaya, suhu, dan pH; derajat polinomial 3.
+ 
+\textbf{Hasil:}
+\[
+y = persamaan\ regresi
+\]
+ 
+\textbf{Evaluasi:} Untuk \(x_{t,1}=..., x_{t,2}=..., x_{t,3}=...\), diperoleh \(y_t = nilai\).
+ 
+\textbf{Analisis:} Analisis kualitas regresi, galat, dan interpretasi koefisien.
+ 
+\section{Rekapitulasi Hasil}
+ 
+\begin{table}[H]
+    \centering
+    \caption{Rekapitulasi hasil seluruh kasus uji}
+    \begin{tabular}{|l|l|c|l|}
+        \hline
+        \textbf{Fitur} & \textbf{Kasus} & \textbf{Status} & \textbf{Catatan} \\
+        \hline
+        Determinan & Kasus 1 & berhasil/gagal & catatan \\
+        Determinan & Kasus 2 & berhasil/gagal & catatan \\
+        Invers & Kasus 1 & berhasil/gagal & catatan \\
+        Invers & Kasus 2 & berhasil/gagal & catatan \\
+        SPL $Ax=b$ & Kasus 1--4 & berhasil/gagal & catatan \\
+        SPL Augmented & Kasus 1--2 & berhasil/gagal & catatan \\
+        SPL Umum & Kasus 1--2 & berhasil/gagal & catatan \\
+        Aplikasi SPL & Reaktor & berhasil/gagal & catatan \\
+        Interpolasi Polinomial & Studi Kasus 1--2 & berhasil/gagal & catatan \\
+        Splina Bézier Kubik & 6 titik & berhasil/gagal & catatan \\
+        Regresi Berganda & 50 sampel & berhasil/gagal & catatan \\
+        \hline
+    \end{tabular}
+\end{table}
 
 
 
