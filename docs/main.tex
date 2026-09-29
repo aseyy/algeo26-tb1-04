@@ -638,37 +638,26 @@ Lakukan pengujian pada nilai - nilai berikut
  
 \section{Interpolasi Splina Bézier Kubik}
  
-\textbf{Input:} Titik-titik \((0,0), (3,11), (6,-4), (8,0), (11,-10), (17,0)\).
+Konstruksikan kurva natural cubic spline yang melewati 5 titik data berikut.
  
-\begin{table}[H]
-    \centering
-    \caption{Titik kontrol tiap segmen splina Bézier kubik}
-    \begin{tabular}{|c|c|l|}
-        \hline
-        \textbf{Segmen} & \textbf{Titik Kontrol} & \textbf{Nilai} \\
-        \hline
-        0 & $B_0, B_1, B_2, B_3$ & koordinat \\
-        1 & $B_3, B_4, B_5, B_6$ & koordinat \\
-        \dots & \dots & \dots \\
-        \hline
-    \end{tabular}
-\end{table}
  
-\textbf{Analisis:} Periksa apakah kurva melewati titik interpolasi.
- 
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $i$ & 0 & 1 & 2 & 3 & 4 \\
+    \hline
+    $x_i$ & 1 & 2 & 3 & 4 & 5 \\
+    \hline
+    $y_i$ & 2 & 3 & 4 & 5 & 6 \\
+    \hline
+\end{tabular}
+\end{center}
+
 \section{Regresi Polinomial Berganda}
  
-\textbf{Input:} 50 sampel pertumbuhan alga dengan variabel cahaya, suhu, dan pH; derajat polinomial 3.
- 
-\textbf{Hasil:}
-\[
-y = persamaan\ regresi
-\]
- 
-\textbf{Evaluasi:} Untuk \(x_{t,1}=..., x_{t,2}=..., x_{t,3}=...\), diperoleh \(y_t = nilai\).
- 
-\textbf{Analisis:} Analisis kualitas regresi, galat, dan interpretasi koefisien.
- 
+Konstruksikan kurva spline linear yang secara tepat melalui 3 titik data : (1, 2), (3, 6), dan (5, 4).
+
+
 \section{Rekapitulasi Hasil}
  
 \begin{table}[H]
