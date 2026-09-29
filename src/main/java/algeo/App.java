@@ -224,7 +224,7 @@ public class App {
         StringBuilder sb = new StringBuilder();
         sb.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(matrix)).append("\n");
-        sb.append("Determinan:\n").append(String.format("%f", det)).append("\n");
+        sb.append("Determinan:\n").append(String.format("%.3f", det)).append("\n");
         
         // Print output dulu ke terminal
         System.out.println();
@@ -436,7 +436,7 @@ public class App {
 
         sb.append("\nNilai turunan kedua tiap titik:\n");
         for (int i = 0; i < knots.length; i++)
-            sb.append(String.format("- k%d = %.6f%n", i, knots[i]));
+            sb.append(String.format("- k%d = %.3f%n", i, knots[i]));
 
         clearScreen();
         System.out.println("------------ Interpolasi Cubic Spline ------------");
@@ -525,10 +525,10 @@ public class App {
         StringBuilder sb = new StringBuilder();
         sb.append("Koefisien Regresi:\n");
         for(int i = 0; i < coeffs.length; ++i)
-            sb.append(String.format("- B%d = %.6f\n", i, coeffs[i]));
+            sb.append(String.format("- B%d = %.3f\n", i, coeffs[i]));
         sb.append("\nPosisi knot:\n");
         for(int i = 0; i < knots.length; ++i)
-            sb.append(String.format("- k%d = (%.6f, %.6f)\n", i, knots[i], Regression.CubicSplinalEvaluate(coeffs, knots, knots[i])));
+            sb.append(String.format("- k%d = (%.3f, %.3f)\n", i, knots[i], Regression.CubicSplinalEvaluate(coeffs, knots, knots[i])));
         sb.append("\nPersamaan:\ny = ").append(equation).append("\n");
 
         // Presentate hasilnya secara beaotipul
@@ -589,7 +589,7 @@ public class App {
         sb.append("Ukuran gambar: ").append(result.width).append(" x ").append(result.height).append("\n");
         sb.append("Jumlah pixel hole: ").append(result.holeCount).append("\n");
         sb.append("Jumlah iterasi: ").append(result.iterations).append("\n");
-        sb.append("Error akhir: ").append(String.format("%.6f", result.finalError)).append("\n");
+        sb.append("Error akhir: ").append(String.format("%.3f", result.finalError)).append("\n");
         sb.append("Output disimpan di: ").append(result.outputPath).append("\n");
  
         // Tampil output
@@ -853,10 +853,9 @@ public class App {
     static String formatMatrix(double[][] matrix) {
         StringBuilder sb = new StringBuilder();
         for (double[] row : matrix) {
-            sb.append("[ ");
             for (double v : row)
-                sb.append(String.format("%12.7g ", v));
-            sb.append("]\n");
+                sb.append(String.format("%.3f ", v));
+            sb.append("\n");
         }
         return sb.toString();
     }
