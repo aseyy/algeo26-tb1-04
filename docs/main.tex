@@ -287,7 +287,7 @@ A = \begin{bmatrix}
     1 &2 &0 &-1 &3 \\
     2 &-1 &4 &0 &1 \\ 
     0 &3 &1 &2 &-2 \\ 
-    4 &0 &5 &1 &2 \\
+    4 &0 &5 &1 &2 \\    
     3 &1 &4 &-1 &4
 \end{bmatrix}
 \]
@@ -312,9 +312,9 @@ A = \begin{bmatrix}
 \subsection{Kasus Uji 1}
 \textbf{Input:}
 \[
-A = \begin{bmatrix} 1 & 1 & -1 & -1 \\ 2 & 5 & -7 & -5 \\ 2 & -1 & 1 & 3 \\ 5 & 2 & -4 & 2 \end{bmatrix},
+A = \begin{bmatrix} 0 & 2 & -1 & -1 \\ 1 & -1 & 2 & 3 \\ 2 & 1 & 1 & -1 \\ -1 & 3 & 0 & 2 \end{bmatrix},
 \quad
-b = \begin{bmatrix} 1 \\ -2 \\ 4 \\ 6 \end{bmatrix}
+b = \begin{bmatrix} -5 \\ 15 \\ 1 \\ -3 \end{bmatrix}
 \]
  
 \begin{table}[H]
@@ -337,9 +337,9 @@ b = \begin{bmatrix} 1 \\ -2 \\ 4 \\ 6 \end{bmatrix}
 \subsection{Kasus Uji 2}
 \textbf{Input:}
 \[
-A = \begin{bmatrix} 1 & -1 & 0 & 0 & 1 \\ 1 & 1 & 0 & -3 & 0 \\ 2 & -1 & 0 & 1 & -1 \\ -1 & 2 & 0 & -2 & -1 \end{bmatrix},
+A = \begin{bmatrix} 1 & 2 & -1 & 0 & 3 \\ 2 & 4 & 1 & -1 & 5 \\ -1 & -2 & 2 & 3 & -1\end{bmatrix},
 \quad
-b = \begin{bmatrix} 3 \\ 6 \\ 5 \\ -1 \end{bmatrix}
+b = \begin{bmatrix}  2 \\ 10 \\ -1\end{bmatrix}
 \]
  
 \begin{table}[H]
@@ -362,10 +362,11 @@ b = \begin{bmatrix} 3 \\ 6 \\ 5 \\ -1 \end{bmatrix}
 \subsection{Kasus Uji 3}
 \textbf{Input:}
 \[
-A = \begin{bmatrix} 0 & 1 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 & 1 & 1 \\ 0 & 1 & 0 & 0 & 0 & 1 \end{bmatrix},
+A = \begin{bmatrix} 1 & -2 & 3 & 1  \\ 2 & 1 & -1 & 4 \\ 0 & 3 & 2 & -2 \\ 3 & -1 & 2 & 5 \end{bmatrix},
 \quad
-b = \begin{bmatrix} 2 \\ -1 \\ 1 \end{bmatrix}
+b = \begin{bmatrix}  4 \\ -1 \\ 3 \\4\end{bmatrix}
 \]
+ 
  
 \begin{table}[H]
     \centering
@@ -389,14 +390,14 @@ b = \begin{bmatrix} 2 \\ -1 \\ 1 \end{bmatrix}
  
 \[
 H = \begin{bmatrix}
-1 & \frac{1}{2} & \frac{1}{3} & \cdots & \frac{1}{n} \\
-\frac{1}{2} & \frac{1}{3} & \frac{1}{4} & \cdots & \frac{1}{n+1} \\
-\frac{1}{3} & \frac{1}{4} & \frac{1}{5} & \cdots & \frac{1}{n+2} \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-\frac{1}{n} & \frac{1}{n+1} & \frac{1}{n+2} & \cdots & \frac{1}{2n-1}
+    2 & -1 & 0 & \cdots & 0 \\
+    -1 & 2 & -1 & \cdots & \vdots \\
+    0 & -1 & 2 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & -1 \\
+    0 & \cdots & 0 & -1 & 2
 \end{bmatrix},
 \quad
-b = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \\ 0 \end{bmatrix}
+b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
 \]
  
 \begin{table}[H]
