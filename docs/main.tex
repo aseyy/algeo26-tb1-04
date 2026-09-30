@@ -724,18 +724,49 @@ x_1 - 3x_2 + 2x_3 + x_4 &= -4 \\
 4x_1 + x_2 + 5x_3 - 2x_4 &= 7 \\
 2x_1 - x_3 + 3x_4 + x_4&= 3
 \end{align*}
- 
+
 \begin{table}[H]
     \centering
     \caption{Hasil SPL umum Kasus Uji 1}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Kaidah Cramer & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Matriks Balikan & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
         \hline
     \end{tabular}
 \end{table}
@@ -755,18 +786,53 @@ x_1 + x_5 + x_9 &= 11.00 \\
 x_2 + x_4 + x_8 &= 8.50 \\
 x_3 + x_6 + x_7 &= 11.50
 \end{align*}
- 
+
+
+
+
+
 \begin{table}[H]
     \centering
     \caption{Hasil SPL umum Kasus Uji 2}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 5.781 - 0.462a0$
+            \item $x_1 = 4.399 - 0.387a0$
+            \item $x_2 = -0.180 + 0.849a0$
+            \item $x_3 = -0.725 + 0.971a0$
+            \item $x_4 = 5.219 - 0.538a0$
+            \item $x_5 = 7.506 - 0.433a0$
+            \item $x_6 = 4.174 - 0.416a0$
+            \item $x_7 = 4.826 - 0.584a0$
+            \item $x_8 = a0$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 5.781 - 0.462a0$
+            \item $x_1 = 4.399 - 0.387a0$
+            \item $x_2 = -0.180 + 0.849a0$
+            \item $x_3 = -0.725 + 0.971a0$
+            \item $x_4 = 5.219 - 0.538a0$
+            \item $x_5 = 7.506 - 0.433a0$
+            \item $x_6 = 4.174 - 0.416a0$
+            \item $x_7 = 4.826 - 0.584a0$
+            \item $x_8 = a0$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Kaidah Cramer & 
+        Error: SPLSolver.byCramer: Matriks persamaan tidak mempunyai determinan!
+        & tidak ada \\
+        \hline
+        Matriks Balikan & 
+        Error: Matrix.ginv: Matriks tidak punya invers!
+        & tidak ada \\
         \hline
     \end{tabular}
 \end{table}
