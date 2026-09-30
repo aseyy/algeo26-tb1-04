@@ -876,6 +876,20 @@ Dengan demikian, kita mendapatkan sistem persamaan:
 (x_1 + x_2 + x_3)\theta_0 + (x_1^2 + x_2^2 + x_3^2)\theta_1 &= x_1y_1 + x_2y_2 + x_3y_3
 \end{align*}
 Tentukan nilai \(\theta_0\) dan \(\theta_1\) yang memenuhi persamaan linear tersebut.
+\\ \\
+Persamaan tersebut dapat kita ubah dengan menginputkan masing masing x dan y pada tabel ke x dan y pada persamaan sehingga diperoleh
+
+\begin{align*}
+3\theta_0 + 6 \theta_1 = 14 \\
+6\theta_0 + 14\theta_1 = 31
+\end{align*}
+
+Sehingga diperoleh hasil akhir menggunakan metode Gauss
+
+\begin{align*}
+\theta_0 = 1.667 \\
+\theta_1 = 1.500
+\end{align*}
 
 \textbf{Analisis:} Interpretasi hasil dalam konteks konservasi massa.
  
@@ -903,7 +917,15 @@ Kemudian, tentukan juga nilai-nilai dari $f(x)$ dari polinomial yang telah dikon
     \item $x = 0.95$
     \item $x = 1.38$
 \end{itemize}
-
+\begin{center}
+\begin{tabular}{|l|cccc|}
+    \hline
+    $x$    & 0.3  & 0.55   & 0.95   & 1.38   \\
+    \hline
+    $f(x)$ & 0.262 & 0.438 & 0.668 & 0.867 \\
+    \hline
+\end{tabular}
+\end{center}
 \textbf{Analisis:} Bandingkan dengan nilai ekspektasi/domain interpolasi.
  
 \subsection{Studi Kasus 2}
@@ -929,12 +951,13 @@ t dan menghitung perkiraan nilai T menggunakan interpolasi polinomial.
 Lakukan pengujian pada nilai - nilai berikut
 
 \begin{itemize}
-    \item $t = 1$ $T =$
-    \item $t = 3.5$ $T =$
-    \item $t = 7$ $T =$
-    \item $t = 9.2$ $T =$
+    \item $t = 1$ $T = 27.981$
+    \item $t = 3.5$ $T = 36.617$
+    \item $t = 7$ $T = 52.571$
+    \item $t = 9.2$ $T = 65.426$
 \end{itemize} 
- 
+
+
 \section{Interpolasi Splina Bézier Kubik}
  
 Konstruksikan kurva natural cubic spline yang melewati 5 titik data berikut.
@@ -949,6 +972,31 @@ Konstruksikan kurva natural cubic spline yang melewati 5 titik data berikut.
     \hline
     $y_i$ & 2 & 3 & 4 & 5 & 6 \\
     \hline
+\end{tabular}
+\end{center}
+
+Turunan kedua:
+$M_0 = M_1 = M_2 = M_3 = M_4 = 0.000$
+
+Persamaan tiap segmen (setelah disederhanakan):
+\[
+S_0(x) = S_1(x) = S_2(x) = S_3(x) = x + 1
+\]
+
+Domain:
+$[1,2),\ [2,3),\ [3,4),\ [4,5]$
+
+Evaluasi:
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$x$ & $S(x)$ \\
+\hline
+1.5 & 2.5 \\
+2.5 & 3.5 \\
+3.5 & 4.5 \\
+4.5 & 5.5 \\
+\hline
 \end{tabular}
 \end{center}
 
@@ -971,6 +1019,58 @@ Diberikan 7 titik data observasi
 
 Konstruksikan model kurva regresi spline kubik untuk memetakan hubungan antara variabel x dan
 y dengan menetapkan satu titik simpul (knot) internal pada $\xi_1 = 0$.
+
+
+
+Hasil perhitungan program:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Koefisien & Nilai \\
+\hline
+$\beta_0$ & 2.000 \\
+$\beta_1$ & 3.000 \\
+$\beta_2$ & 0.000 \\
+$\beta_3$ & -1.000 \\
+$\beta_4$ & 2.000 \\
+\hline
+\end{tabular}
+\end{center}
+
+Posisi knot internal: $\xi_1 = 0$, dengan nilai prediksi di knot
+$\hat{y}(0) = 2.000$.
+
+Model regresi spline kubik yang terbentuk:
+\[
+y = 2.000 + 3.000x + 0.000x^2 - 1.000x^3 + 2.000(x-0)_+^3.
+\]
+Karena $(x-0)_+ = \max(0,x)$, model dapat dituliskan secara \emph{piecewise}:
+\[
+y =
+\begin{cases}
+2 + 3x - x^3, & x \le 0,\\[4pt]
+2 + 3x + x^3, & x > 0.
+\end{cases}
+\]
+
+Perbandingan nilai aktual dan nilai prediksi:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$x_i$ & $y_i$ (aktual) & $\hat{y}_i$ (prediksi) & Galat \\
+\hline
+-3 & 19.9 & 20.0 & 0.1 \\
+-2 &  4.4 &  4.0 & -0.4 \\
+-1 & -0.5 &  0.0 & 0.5 \\
+ 0 &  2.0 &  2.0 & 0.0 \\
+ 1 &  6.5 &  6.0 & -0.5 \\
+ 2 & 15.6 & 16.0 & 0.4 \\
+ 3 & 38.1 & 38.0 & -0.1 \\
+\hline
+\end{tabular}
+\end{center}
 
 \section{Rekapitulasi Hasil}
  
