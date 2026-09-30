@@ -611,18 +611,50 @@ b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
     1 &-1 &2& 0 &9
 \end{array}\right]
 \]
- 
+
+
 \begin{table}[H]
     \centering
     \caption{Hasil SPL augmented Kasus Uji 1}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Kaidah Cramer & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Matriks Balikan & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
         \hline
     \end{tabular}
 \end{table}
@@ -640,18 +672,42 @@ b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
 \end{array}\right]
 \]
  
- 
 \begin{table}[H]
     \centering
     \caption{Hasil SPL augmented Kasus Uji 2}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 5.800 - a0 - 1.600a1$
+            \item $x_1 = 2.600 - a0 - 0.200a1$
+            \item $x_2 = -3.400 + a0 + 0.800a1$
+            \item $x_3 = a0$
+            \item $x_4 = a1$
+            \item $x_5 = -2.000$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 5.800 - 1.600a0 - a1$
+            \item $x_1 = 2.600 - 0.200a0 - a1$
+            \item $x_2 = -3.400 + 0.800a1 + a1 $
+            \item $x_3 = a1$
+            \item $x_4 = a0$
+            \item $x_5 = -2.000$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Kaidah Cramer & 
+        Error: SPLSolver.byCramer: Jumlah persamaan tidak sama dengan jumlah variabel!
+        & tidak ada  \\
+        \hline
+        Matriks Balikan & 
+        Error: SPLSolver.byInverse: Jumlah persamaan tidak sama dengan jumlah variabel!
+        & tidak ada  \\
         \hline
     \end{tabular}
 \end{table}
@@ -831,9 +887,24 @@ Konstruksikan kurva natural cubic spline yang melewati 5 titik data berikut.
 \end{center}
 
 \section{Regresi Polinomial Berganda}
- 
-Konstruksikan kurva spline linear yang secara tepat melalui 3 titik data : (1, 2), (3, 6), dan (5, 4).
 
+Diberikan 7 titik data observasi
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+    \hline
+    $x_i$ & -3 & -2 & -1 & 0 & 1 & 2 & 3 \\
+    \hline
+    $y_i$ & 19,9 & 4,4 & -0,5 & 2 & 6,5 & 15,6 & 38,1 \\
+    \hline
+\end{tabular}
+\end{center}
+
+
+Konstruksikan model kurva regresi spline kubik untuk memetakan hubungan antara variabel x dan
+y dengan menetapkan satu titik simpul (knot) internal pada $\xi_1 = 0$.
 
 \section{Rekapitulasi Hasil}
  
