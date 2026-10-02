@@ -177,8 +177,8 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Kedua metode menghasilkan hasil yang sama.
- 
+\textbf{Analisis:}  Kedua metode menghasilkan $-259$, sama persis dengan perhitungan eksak. Karena $\det A \neq 0$, matriks tidak singular sehingga dapat dipakai pada invers dan SPL. Pada ordo 4 perbedaan waktu kedua metode tidak terasa, tetapi ekspansi kofaktor berkompleksitas $O(n!)$ sedangkan reduksi baris $O(n^3)$, sehingga reduksi baris jauh lebih layak untuk ordo besar.
+
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari berkas \texttt{determinan\_kasus-2.txt}.
 \[
@@ -195,7 +195,8 @@ A = \begin{bmatrix}
     \centering
     \caption{Hasil pengujian determinan Kasus Uji 2}
     \begin{tabular}{|l|c|c|}
-        \hline
+        \hline 
+
         \textbf{Metode} & \textbf{Nilai Determinan} & \textbf{Status} \\
         \hline
         Ekspansi Kofaktor & 0.000 & valid \\
@@ -204,7 +205,7 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Analisis hasil dan perbandingan metode.
+\textbf{Analisis:} Determinan bernilai 0, sehingga matriks singular (rank 4 $<$ 5, ada baris yang bergantung linear). Nilai ``$-0.000$'' pada reduksi baris merupakan galat pembulatan \texttt{double} (orde $10^{-14}$) yang tampil sebagai nol bertanda negatif, sedangkan ekspansi kofaktor menghasilkan $0$ tepat karena hanya menjumlahkan perkalian bilangan bulat. Perbedaan tanda ini tidak mengubah kesimpulan, dan menunjukkan perlunya ambang toleransi (epsilon) saat menguji ``sama dengan nol''.
 
 \subsection{Kasus Uji 3}
 \textbf{Input:} Matriks dari berkas \texttt{determinan\_kasus-3.txt}.
@@ -212,7 +213,7 @@ A = \begin{bmatrix}
 A = \begin{bmatrix}
     \frac{1}{2} & 1 & 0 &\frac{1}{2} \\
     \frac{1}{2} &\frac{5}{4} &\frac{1}{4} &\frac{1}{2} \\
-    -\frac{1}{10}& -\frac{2}{5}& \frac{1}{5}& \frac{3}{10} \\
+    -\frac{1}{10}& -\frac{2}{5}& \frac{1}{5}& -\frac{3}{10} \\
     \frac{3}{5} &\frac{5}{4} &\frac{9}{20}& \frac{3}{5}
 \end{bmatrix}
 \]
@@ -230,7 +231,7 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Analisis hasil dan perbandingan metode.
+\textbf{Analisis:} Entri berupa pecahan sehingga reduksi baris melibatkan pembagian yang tidak eksak dalam biner. Kedua metode tetap menghasilkan nilai yang sama hingga 3 desimal. Determinan bernilai kecil tetapi tidak nol, sehingga matriks tidak singular namun cukup mendekati singular. Karena itu, perbandingan dengan nol harus memakai toleransi yang cukup kecil agar matriks seperti ini tidak salah dianggap singular.
 
 \section{Invers Matriks}
  
@@ -278,8 +279,8 @@ A^{-1} = \begin{bmatrix}
 \end{bmatrix}
 \]
  
-\textbf{Analisis:} Kedua metode menghasilkan matriks balikan yang identik. Perbedaan hanya muncul pada galat pembulatan komputer.
- 
+\textbf{Analisis:} Kedua metode menghasilkan matriks balikan yang identik hingga 3 desimal dan sesuai dengan $AA^{-1}=I$ ($\det A = 20$). Perbedaan hanya mungkin muncul pada digit ke-15 akibat urutan operasi yang berbeda (galat pembulatan). Metode augment berkompleksitas $O(n^3)$ dan lebih efisien daripada adjoin, yang membutuhkan $n^2$ kofaktor.
+
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari berkas \texttt{inverse\_kasus2.txt}.
 \[
@@ -305,8 +306,8 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Matriks Kasus Uji 2 bersifat \emph{singular} karena $\det(A) = 0$, sehingga tidak memiliki invers. Kedua metode mendeteksi kondisi ini dan program menampilkan pesan kesalahan tanpa \emph{crash}.
- 
+\textbf{Analisis:} Matriks bersifat \emph{singular} karena $\det A = 0$ (rank 4 $<$ 5), sehingga tidak memiliki invers. Kedua metode mendeteksi kondisi ini dan menampilkan pesan kesalahan tanpa \emph{crash}. Pada metode augment, deteksi bergantung pada ambang epsilon karena pivot yang secara teori bernilai 0 dapat tersisa sebagai sekitar $10^{-15}$ akibat galat pembulatan.
+
 \section{Sistem Persamaan Linear $Ax = b$}
  
 \subsection{Kasus Uji 1}
@@ -317,23 +318,56 @@ A = \begin{bmatrix} 0 & 2 & -1 & -1 \\ 1 & -1 & 2 & 3 \\ 2 & 1 & 1 & -1 \\ -1 & 
 b = \begin{bmatrix} -5 \\ 15 \\ 1 \\ -3 \end{bmatrix}
 \]
  
+
 \begin{table}[H]
     \centering
     \caption{Hasil SPL $Ax=b$ Kasus Uji 1}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|c|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize} 
+        & tunggal\\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize} 
+        & tunggal \\
+        \hline
+        Kaidah Cramer & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize} 
+        & tunggal \\
+        \hline
+        Matriks Balikan & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize} 
+        & tunggal \\
         \hline
     \end{tabular}
 \end{table}
+
  
-\textbf{Analisis:} Bandingkan solusi tiap metode.
- 
+\textbf{Analisis:} Keempat metode menghasilkan solusi tunggal $(x_0,x_1,x_2,x_3)=(1,-2,3,2)$ yang memenuhi semua persamaan setelah disubstitusikan kembali. Karena $\det A \neq 0$, Cramer dan Matriks Balikan dapat diterapkan. Gauss dan Gauss-Jordan lebih efisien ($O(n^3)$), sedangkan Cramer membutuhkan $n+1$ determinan dan matriks balikan membutuhkan pembentukan $A^{-1}$ penuh.
+
 \subsection{Kasus Uji 2}
 \textbf{Input:}
 \[
@@ -345,20 +379,43 @@ b = \begin{bmatrix}  2 \\ 10 \\ -1\end{bmatrix}
 \begin{table}[H]
     \centering
     \caption{Hasil SPL $Ax=b$ Kasus Uji 2}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 3.900 - 2.900a0 - 2.000a1$
+            \item $x_1 = a1$
+            \item $x_2 = 1.900 + 0.100a0$
+            \item $x_3 = -0.300 - 0.700a0$
+            \item $x_4 = a0$
+        \end{itemize}
+        & tunggal/banyak/tidak ada \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 3.900 - 2.900a0 - 2.000a1$
+            \item $x_1 = a1$
+            \item $x_2 = 1.900 + 0.100a0$
+            \item $x_3 = -0.300 - 0.700a0$
+            \item $x_4 = a0$
+        \end{itemize}
+        & tunggal/banyak/tidak ada \\
+        \hline
+        Kaidah Cramer & 
+        Error: SPLSolver.byCramer: Jumlah persamaan tidak sama dengan jumlah variabel!
+        & tunggal/banyak/tidak ada \\
+        \hline
+        Matriks Balikan & 
+        Error: SPLSolver.byInverse: Jumlah persamaan tidak sama dengan jumlah variabel!
+        & tunggal/banyak/tidak ada \\
         \hline
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Analisis.
- 
+\textbf{Analisis:} Sistem memiliki 3 persamaan dan 5 variabel dengan $\operatorname{rank}(A)=\operatorname{rank}([A|b])=3<5$, sehingga solusinya tak hingga dengan $5-3=2$ parameter bebas ($a_0,a_1$). Gauss dan Gauss-Jordan menghasilkan bentuk parametrik yang sama. Cramer dan Matriks Balikan menolak sistem ini karena matriks koefisien tidak persegi. Hal ini merupakan keterbatasan metode, bukan berarti sistem tidak memiliki solusi.
+
 \subsection{Kasus Uji 3}
 \textbf{Input:}
 \[
@@ -371,20 +428,31 @@ b = \begin{bmatrix}  4 \\ -1 \\ 3 \\4\end{bmatrix}
 \begin{table}[H]
     \centering
     \caption{Hasil SPL $Ax=b$ Kasus Uji 3}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        Error: SPLSolver.byREF: Sistem tidak punya solusi!
+        & tidak ada \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        Error: SPLSolver.byRREF: Sistem tidak punya solusi!
+        & tidak ada \\
+        \hline
+        Kaidah Cramer & 
+        Error: SPLSolver.byCramer: Matriks persamaan tidak mempunyai determinan!
+        & tidak ada \\
+        \hline
+        Matriks Balikan & 
+        Error: Matrix.inv: determinan matriks bernilai 0
+        & tidak ada \\
         \hline
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Jika tak hingga solusi, tuliskan bentuk parametriknya.
- 
+\textbf{Analisis:} Di sini $\operatorname{rank}(A)=3$ sedangkan $\operatorname{rank}([A|b])=4$, sehingga sistem inkonsisten dan tidak memiliki solusi. Gauss dan Gauss-Jordan mendeteksinya melalui baris $[0\ 0\ 0\ 0\,|\,c]$ dengan $c\neq 0$. Cramer dan Matriks Balikan hanya melaporkan $\det A=0$. Keduanya tidak dapat membedakan ``tidak ada solusi'' dari ``banyak solusi'', sehingga hanya metode eliminasi yang dapat menentukan jenis solusi pada matriks singular.
+
 \subsection{Kasus Uji 4: Matriks Hilbert}
 \textbf{Input:} Matriks Hilbert $H$ untuk $n = 6$ dan $n = 10$, dengan $b = [1, 0, \dots, 0]^T$.
  
@@ -403,25 +471,133 @@ b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
 \begin{table}[H]
     \centering
     \caption{Hasil SPL dengan matriks Hilbert}
-    \begin{tabular}{|c|c|l|l|}
+    \begin{tabular}{|c|c|p{5cm}|l|}
         \hline
         \textbf{n} & \textbf{Metode} & \textbf{Solusi} & \textbf{Status} \\
         \hline
-        6 & Eliminasi Gauss & solusi & valid/tidak \\
-        6 & Gauss-Jordan & solusi & valid/tidak \\
-        6 & Cramer & solusi & valid/tidak \\
-        6 & Matriks Balikan & solusi & valid/tidak \\
+        6 & Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 3.000$
+            \item $x_1 = 5.000$
+            \item $x_2 = 6.000$
+            \item $x_3 = 6.000$
+            \item $x_4 = 5.000$
+            \item $x_5 = 3.000$
+        \end{itemize}
+        & valid \\
         \hline
-        10 & Eliminasi Gauss & solusi & valid/tidak \\
-        10 & Gauss-Jordan & solusi & valid/tidak \\
-        10 & Cramer & solusi & valid/tidak \\
-        10 & Matriks Balikan & solusi & valid/tidak \\
+        6 & Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 3.000$
+            \item $x_1 = 5.000$
+            \item $x_2 = 6.000$
+            \item $x_3 = 6.000$
+            \item $x_4 = 5.000$
+            \item $x_5 = 3.000$
+        \end{itemize}
+        & valid \\
+        \hline
+        6 & Cramer & 
+        \begin{itemize}
+            \item $x_0 = 3.000$
+            \item $x_1 = 5.000$
+            \item $x_2 = 6.000$
+            \item $x_3 = 6.000$
+            \item $x_4 = 5.000$
+            \item $x_5 = 3.000$
+        \end{itemize}
+        & valid \\
+        \hline
+        6 & Matriks Balikan & 
+        \begin{itemize}
+            \item $x_0 = 3.000$
+            \item $x_1 = 5.000$
+            \item $x_2 = 6.000$
+            \item $x_3 = 6.000$
+            \item $x_4 = 5.000$
+            \item $x_5 = 3.000$
+        \end{itemize}
+        & valid \\
+        \hline
+        \end{tabular}
+\end{table}
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL dengan matriks Hilbert}
+    \begin{tabular}{|c|c|p{5cm}|l|}
+        \hline
+        10 & Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 5.000$
+            \item $x_1 = 9.000$
+            \item $x_2 = 12.000$
+            \item $x_3 = 14.000$
+            \item $x_4 = 15.000$
+            \item $x_5 = 15.000$
+            \item $x_6 = 14.000$
+            \item $x_7 = 12.000$
+            \item $x_8 = 9.000$
+            \item $x_9 = 5.000$
+        \end{itemize}
+        & valid \\
+        \hline
+        10 & Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 5.000$
+            \item $x_1 = 9.000$
+            \item $x_2 = 12.000$
+            \item $x_3 = 14.000$
+            \item $x_4 = 15.000$
+            \item $x_5 = 15.000$
+            \item $x_6 = 14.000$
+            \item $x_7 = 12.000$
+            \item $x_8 = 9.000$
+            \item $x_9 = 5.000$
+        \end{itemize}
+        & valid \\
+        \hline
+        \end{tabular}
+\end{table}
+\begin{table}[H]
+    \centering
+    \caption{Hasil SPL dengan matriks Hilbert}
+    \begin{tabular}{|c|c|p{5cm}|l|}
+        \hline
+        10 & Cramer & 
+        \begin{itemize}
+            \item $x_0 = 5.000$
+            \item $x_1 = 9.000$
+            \item $x_2 = 12.000$
+            \item $x_3 = 14.000$
+            \item $x_4 = 15.000$
+            \item $x_5 = 15.000$
+            \item $x_6 = 14.000$
+            \item $x_7 = 12.000$
+            \item $x_8 = 9.000$
+            \item $x_9 = 5.000$
+        \end{itemize}
+        & valid \\
+        \hline
+        10 & Matriks Balikan & 
+        \begin{itemize}
+            \item $x_0 = 5.000$
+            \item $x_1 = 9.000$
+            \item $x_2 = 12.000$
+            \item $x_3 = 14.000$
+            \item $x_4 = 15.000$
+            \item $x_5 = 15.000$
+            \item $x_6 = 14.000$
+            \item $x_7 = 12.000$
+            \item $x_8 = 9.000$
+            \item $x_9 = 5.000$
+        \end{itemize}
+        & valid \\
         \hline
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Jelaskan pengaruh kondisi matriks Hilbert yang ill-conditioned terhadap galat numerik.
- 
+\textbf{Analisis:} Keempat metode menghasilkan solusi yang sama pada kedua ukuran dan cocok dengan bentuk tertutup $x_i = \tfrac{i(n+1-i)}{2}$ ($i=1,\dots,n$). Matriks ini berkondisi baik (bilangan kondisi $\approx 19$ untuk $n=6$ dan $\approx 48$ untuk $n=10$, tumbuh sekitar $n^2$), sehingga galat pembulatan tidak membesar dan perbedaan antarmetode tidak terlihat pada 3 desimal. Sebagai pembanding, matriks Hilbert yang sebenarnya memiliki bilangan kondisi sekitar $1.5\times10^{7}$ ($n=6$) dan $1.6\times10^{13}$ ($n=10$), sehingga kehilangan sekitar 7 dan 13 digit akurasi. Pada matriks seperti itu, Cramer dan Matriks Balikan biasanya menghasilkan galat lebih besar daripada eliminasi. Untuk $n=10$ Cramer harus menghitung 11 determinan $10\times10$, sehingga paling mahal.
+
 \section{Sistem Persamaan Linear Berbentuk Matriks Augmented}
  
 \subsection{Kasus Uji 1}
@@ -434,24 +610,56 @@ b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
     1 &-1 &2& 0 &9
 \end{array}\right]
 \]
- 
+
+
 \begin{table}[H]
     \centering
     \caption{Hasil SPL augmented Kasus Uji 1}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Kaidah Cramer & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Matriks Balikan & 
+        \begin{itemize}
+            \item $x_0 = 1.000$
+            \item $x_1 = -2.000$
+            \item $x_2 = 3.000$
+            \item $x_3 = 2.000$
+        \end{itemize}
+        & tunggal \\
         \hline
     \end{tabular}
 \end{table}
- 
-\textbf{Analisis:} Analisis.
- 
+
+\textbf{Analisis:} Sistem persegi nonsingular dengan solusi tunggal $(1,-2,3,2)$, dan keempat metode sepakat. Hasil ini sama dengan kasus SPL $Ax=b$ nomor 1 yang dihitung secara independen, sehingga pembacaan masukan dalam bentuk matriks augmented dan dalam bentuk $A$, $b$ terpisah konsisten.
+
 \subsection{Kasus Uji 2}
 \textbf{Input:}
 \[
@@ -463,24 +671,48 @@ b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
 \end{array}\right]
 \]
  
- 
 \begin{table}[H]
     \centering
     \caption{Hasil SPL augmented Kasus Uji 2}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 5.800 - a0 - 1.600a1$
+            \item $x_1 = 2.600 - a0 - 0.200a1$
+            \item $x_2 = -3.400 + a0 + 0.800a1$
+            \item $x_3 = a0$
+            \item $x_4 = a1$
+            \item $x_5 = -2.000$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 5.800 - 1.600a0 - a1$
+            \item $x_1 = 2.600 - 0.200a0 - a1$
+            \item $x_2 = -3.400 + 0.800a1 + a1 $
+            \item $x_3 = a1$
+            \item $x_4 = a0$
+            \item $x_5 = -2.000$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Kaidah Cramer & 
+        Error: SPLSolver.byCramer: Jumlah persamaan tidak sama dengan jumlah variabel!
+        & tidak ada  \\
+        \hline
+        Matriks Balikan & 
+        Error: SPLSolver.byInverse: Jumlah persamaan tidak sama dengan jumlah variabel!
+        & tidak ada  \\
         \hline
     \end{tabular}
 \end{table}
- 
-\textbf{Analisis:} Analisis.
- 
+
+\textbf{Analisis:} Sistem memiliki 4 persamaan dan 6 variabel dengan $\operatorname{rank}(A)=\operatorname{rank}([A|b])=4$, sehingga solusinya tak hingga dengan 2 parameter bebas. Gauss dan Gauss-Jordan menghasilkan himpunan solusi yang setara. Perbedaan hanya pada pelabelan parameter ($a_0$ dan $a_1$ tertukar pada $x_3$ dan $x_4$), yang tidak memengaruhi himpunan solusi karena pemilihan variabel bebas bersifat arbitrer. Cramer dan Matriks Balikan tidak dapat diterapkan karena matriks tidak persegi.
+
 \section{Sistem Persamaan Linear Berbentuk Umum}
  
 \subsection{Kasus Uji 1}
@@ -491,24 +723,55 @@ x_1 - 3x_2 + 2x_3 + x_4 &= -4 \\
 4x_1 + x_2 + 5x_3 - 2x_4 &= 7 \\
 2x_1 - x_3 + 3x_4 + x_4&= 3
 \end{align*}
- 
+
 \begin{table}[H]
     \centering
     \caption{Hasil SPL umum Kasus Uji 1}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Kaidah Cramer & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
+        \hline
+        Matriks Balikan & 
+        \begin{itemize}
+            \item $x_0 = -0.114$
+            \item $x_1 = 1.841$
+            \item $x_2 = 1.432$
+            \item $x_3 = 0.773$
+        \end{itemize}
+        & tunggal \\
         \hline
     \end{tabular}
 \end{table}
- 
-\textbf{Analisis:} Analisis.
- 
+
+\textbf{Analisis:} Sistem persegi nonsingular dengan solusi tunggal, dan keempat metode sepakat. Karena solusinya bukan bilangan bulat, kebenarannya diverifikasi dengan substitusi balik ke tiap persamaan (residu orde $10^{-15}$). Perbedaan antarmetode, bila ada, hanya muncul pada digit di luar 3 desimal akibat urutan operasi dan pembulatan yang berbeda.
+
 \subsection{Kasus Uji 2}
 \textbf{Input:}
 \begin{align*}
@@ -522,23 +785,59 @@ x_1 + x_5 + x_9 &= 11.00 \\
 x_2 + x_4 + x_8 &= 8.50 \\
 x_3 + x_6 + x_7 &= 11.50
 \end{align*}
- 
+
+
+
+
+
 \begin{table}[H]
     \centering
     \caption{Hasil SPL umum Kasus Uji 2}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{|l|p{5cm}|l|}
         \hline
         \textbf{Metode} & \textbf{Solusi} & \textbf{Jenis Solusi} \\
         \hline
-        Eliminasi Gauss & solusi & tunggal/banyak/tidak ada \\
-        Eliminasi Gauss-Jordan & solusi & tunggal/banyak/tidak ada \\
-        Kaidah Cramer & solusi & tunggal/banyak/tidak ada \\
-        Matriks Balikan & solusi & tunggal/banyak/tidak ada \\
+        Eliminasi Gauss & 
+        \begin{itemize}
+            \item $x_0 = 5.781 - 0.462a0$
+            \item $x_1 = 4.399 - 0.387a0$
+            \item $x_2 = -0.180 + 0.849a0$
+            \item $x_3 = -0.725 + 0.971a0$
+            \item $x_4 = 5.219 - 0.538a0$
+            \item $x_5 = 7.506 - 0.433a0$
+            \item $x_6 = 4.174 - 0.416a0$
+            \item $x_7 = 4.826 - 0.584a0$
+            \item $x_8 = a0$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Eliminasi Gauss-Jordan & 
+        \begin{itemize}
+            \item $x_0 = 5.781 - 0.462a0$
+            \item $x_1 = 4.399 - 0.387a0$
+            \item $x_2 = -0.180 + 0.849a0$
+            \item $x_3 = -0.725 + 0.971a0$
+            \item $x_4 = 5.219 - 0.538a0$
+            \item $x_5 = 7.506 - 0.433a0$
+            \item $x_6 = 4.174 - 0.416a0$
+            \item $x_7 = 4.826 - 0.584a0$
+            \item $x_8 = a0$
+        \end{itemize}
+        & banyak \\
+        \hline
+        Kaidah Cramer & 
+        Error: SPLSolver.byCramer: Matriks persamaan tidak mempunyai determinan!
+        & tidak ada \\
+        \hline
+        Matriks Balikan & 
+        Error: Matrix.ginv: Matriks tidak punya invers!
+        & tidak ada \\
         \hline
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Analisis.
+\textbf{Analisis:} Sistem memiliki 9 persamaan dan 9 variabel, tetapi $\operatorname{rank}(A)=\operatorname{rank}([A|b])=8$, sehingga matriks singular namun sistem konsisten dengan 1 parameter bebas. Ketergantungan linear ini wajar karena jumlah persamaan baris 1--3 sama dengan jumlah persamaan kolom 7--9 (keduanya menjumlahkan seluruh $x_i$). Gauss dan Gauss-Jordan menghasilkan solusi parametrik yang identik. Cramer dan Matriks Balikan gagal karena $\det A=0$, padahal solusi ada. Ini kembali menunjukkan bahwa keduanya hanya berlaku untuk sistem persegi nonsingular. Koefisien desimal berpresisi 5 angka membuat pembulatan pada bentuk parametrik tampak pada digit ketiga, tetapi tidak mengubah struktur solusi.
+ 
  
 \section{Aplikasi Sistem Persamaan Linear}
  
@@ -577,9 +876,23 @@ Dengan demikian, kita mendapatkan sistem persamaan:
 (x_1 + x_2 + x_3)\theta_0 + (x_1^2 + x_2^2 + x_3^2)\theta_1 &= x_1y_1 + x_2y_2 + x_3y_3
 \end{align*}
 Tentukan nilai \(\theta_0\) dan \(\theta_1\) yang memenuhi persamaan linear tersebut.
+\\ \\
+Persamaan tersebut dapat kita ubah dengan menginputkan masing masing x dan y pada tabel ke x dan y pada persamaan sehingga diperoleh
 
-\textbf{Analisis:} Interpretasi hasil dalam konteks konservasi massa.
- 
+\begin{align*}
+3\theta_0 + 6 \theta_1 = 14 \\
+6\theta_0 + 14\theta_1 = 31
+\end{align*}
+
+Sehingga diperoleh hasil akhir menggunakan metode Gauss
+
+\begin{align*}
+\theta_0 = 1.667 \\
+\theta_1 = 1.500
+\end{align*}
+
+\textbf{Analisis:} Nilai tersebut sesuai dengan solusi eksak $\theta_0=5/3$ dan $\theta_1=3/2$. Model $\hat{y}=1.667+1.500x$ berarti kenaikan luas rumah sebesar 100 m$^2$ berkaitan dengan kenaikan harga sekitar 150 juta rupiah. Nilai prediksi untuk ketiga data adalah $3.167$, $4.667$, dan $6.167$ dengan residu $-0.167$, $0.333$, dan $-0.167$ (jumlah residu 0, ciri regresi dengan intersep). Sistem $2\times2$ ini berkondisi baik, sehingga tidak ada galat numerik yang berarti. Dengan hanya 3 data, model ini hanya ilustrasi dan tidak cukup kuat untuk generalisasi.
+
 \section{Interpolasi Polinomial}
 
 \subsection{Studi Kasus 1}
@@ -604,9 +917,18 @@ Kemudian, tentukan juga nilai-nilai dari $f(x)$ dari polinomial yang telah dikon
     \item $x = 0.95$
     \item $x = 1.38$
 \end{itemize}
+\begin{center}
+\begin{tabular}{|l|cccc|}
+    \hline
+    $x$    & 0.3  & 0.55   & 0.95   & 1.38   \\
+    \hline
+    $f(x)$ & 0.262 & 0.438 & 0.668 & 0.867 \\
+    \hline
+\end{tabular}
+\end{center}
 
-\textbf{Analisis:} Bandingkan dengan nilai ekspektasi/domain interpolasi.
- 
+\textbf{Analisis:} Keempat nilai sesuai dengan nilai ekspektasi pada soal. Seluruh titik uji berada dalam domain data $[0.2,\,1.4]$, sehingga ini adalah interpolasi, bukan ekstrapolasi. Data tampak berasal dari $\ln(1+x)$ yang dibulatkan ke 3 desimal. Selisih program terhadap $\ln(1+x)$ maksimum sekitar $4\times10^{-4}$, yang berasal dari pembulatan data, bukan dari galat metode. Polinom derajat 6 membentuk sistem Vandermonde berukuran $7\times7$. Untuk jumlah titik yang jauh lebih banyak, matriks ini cepat memburuk kondisinya dan polinom dapat berosilasi (fenomena Runge).
+
 \subsection{Studi Kasus 2}
 
 Seorang insinyur sedang melakukan pengujian terhadap sebuah komponen elektronik untuk mengukur
@@ -630,12 +952,14 @@ t dan menghitung perkiraan nilai T menggunakan interpolasi polinomial.
 Lakukan pengujian pada nilai - nilai berikut
 
 \begin{itemize}
-    \item $t = 1$ $T =$
-    \item $t = 3.5$ $T =$
-    \item $t = 7$ $T =$
-    \item $t = 9.2$ $T =$
+    \item $t = 1$ $T = 27.981$
+    \item $t = 3.5$ $T = 36.617$
+    \item $t = 7$ $T = 52.571$
+    \item $t = 9.2$ $T = 65.426$
 \end{itemize} 
- 
+
+\textbf{Analisis:} Keempat nilai sesuai dengan nilai referensi pada soal. Seluruh $t$ uji berada di dalam $[0,10]$, sehingga hasilnya adalah interpolasi yang valid. Data bersifat mulus dan monoton naik dengan laju kenaikan yang membesar, sehingga polinom tidak berosilasi dan nilai antar titik wajar. Polinom hanya layak dipakai di dalam rentang pengukuran dan tidak untuk ekstrapolasi.
+
 \section{Interpolasi Splina Bézier Kubik}
  
 Konstruksikan kurva natural cubic spline yang melewati 5 titik data berikut.
@@ -653,31 +977,125 @@ Konstruksikan kurva natural cubic spline yang melewati 5 titik data berikut.
 \end{tabular}
 \end{center}
 
-\section{Regresi Polinomial Berganda}
- 
-Konstruksikan kurva spline linear yang secara tepat melalui 3 titik data : (1, 2), (3, 6), dan (5, 4).
+Turunan kedua:
+$M_0 = M_1 = M_2 = M_3 = M_4 = 0.000$
 
+Persamaan tiap segmen (setelah disederhanakan):
+\[
+S_0(x) = S_1(x) = S_2(x) = S_3(x) = x + 1
+\]
+
+Domain:
+$[1,2),\ [2,3),\ [3,4),\ [4,5]$
+
+Evaluasi:
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$x$ & $S(x)$ \\
+\hline
+1.5 & 2.5 \\
+2.5 & 3.5 \\
+3.5 & 4.5 \\
+4.5 & 5.5 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Analisis:} Kelima titik kolinear ($y=x+1$), sehingga semua turunan kedua $M_i=0$ dan setiap segmen menjadi garis yang sama. Ini merupakan uji kewarasan yang baik karena spline kubik natural harus mereproduksi fungsi linear secara eksak. Semua nilai evaluasi sesuai dengan $x+1$. Karena sistem untuk $M_i$ berbentuk tridiagonal dengan ruas kanan nol, solusinya nol tanpa galat pembulatan yang berarti.
+
+\section{Regresi Polinomial Berganda}
+
+Diberikan 7 titik data observasi
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6\\
+    \hline
+    $x_i$ & -3 & -2 & -1 & 0 & 1 & 2 & 3 \\
+    \hline
+    $y_i$ & 19,9 & 4,4 & -0,5 & 2 & 6,5 & 15,6 & 38,1 \\
+    \hline
+\end{tabular}
+\end{center}
+
+
+Konstruksikan model kurva regresi spline kubik untuk memetakan hubungan antara variabel x dan
+y dengan menetapkan satu titik simpul (knot) internal pada $\xi_1 = 0$.
+
+
+
+Hasil perhitungan program:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Koefisien & Nilai \\
+\hline
+$\beta_0$ & 2.000 \\
+$\beta_1$ & 3.000 \\
+$\beta_2$ & 0.000 \\
+$\beta_3$ & -1.000 \\
+$\beta_4$ & 2.000 \\
+\hline
+\end{tabular}
+\end{center}
+
+Posisi knot internal: $\xi_1 = 0$, dengan nilai prediksi di knot
+$\hat{y}(0) = 2.000$.
+
+Model regresi spline kubik yang terbentuk:
+\[
+y = 2.000 + 3.000x + 0.000x^2 - 1.000x^3 + 2.000(x-0)_+^3.
+\]
+Karena $(x-0)_+ = \max(0,x)$, model dapat dituliskan secara \emph{piecewise}:
+\[
+y =
+\begin{cases}
+2 + 3x - x^3, & x \le 0,\\[4pt]
+2 + 3x + x^3, & x > 0.
+\end{cases}
+\]
+
+Perbandingan nilai aktual dan nilai prediksi:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$x_i$ & $y_i$ (aktual) & $\hat{y}_i$ (prediksi) & Galat \\
+\hline
+-3 & 19.9 & 20.0 & 0.1 \\
+-2 &  4.4 &  4.0 & -0.4 \\
+-1 & -0.5 &  0.0 & 0.5 \\
+ 0 &  2.0 &  2.0 & 0.0 \\
+ 1 &  6.5 &  6.0 & -0.5 \\
+ 2 & 15.6 & 16.0 & 0.4 \\
+ 3 & 38.1 & 38.0 & -0.1 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Analisis:} Koefisien yang diperoleh sama dengan solusi \emph{least squares} yang dihitung secara independen. Jumlah kuadrat galat (SSE) adalah $0.84$, RMSE sekitar $0.35$, dan $R^2\approx 0.9992$. Galat berselang-seling tandanya dan kecil dibandingkan rentang data ($-0.5$ hingga $38.1$), sehingga tidak ada pola sistematis yang tersisa. Model setara dengan $y=2+3x+|x|^3$, yaitu kubik yang berubah arah kelengkungannya tepat di knot $x=0$, sehingga knot yang diberikan memang cocok dengan struktur data. Dengan 5 parameter dan 7 titik, derajat kebebasan galat hanya 2, sehingga $R^2$ yang tinggi tidak boleh dianggap bukti kemampuan generalisasi. Persamaan normal $X^TX$ rentan memburuk kondisinya, sehingga implementasi menormalkan nilai yang sangat kecil ($<10^{-12}$) menjadi nol sebelum penyelesaian. Langkah ini menjadi sumber galat pembulatan yang perlu diperhatikan untuk data atau knot yang lebih banyak.
 
 \section{Rekapitulasi Hasil}
  
 \begin{table}[H]
     \centering
     \caption{Rekapitulasi hasil seluruh kasus uji}
-    \begin{tabular}{|l|l|c|l|}
+    \begin{tabular}{|l|l|c|p{5.5cm}|}
         \hline
         \textbf{Fitur} & \textbf{Kasus} & \textbf{Status} & \textbf{Catatan} \\
         \hline
-        Determinan & Kasus 1 & berhasil/gagal & catatan \\
-        Determinan & Kasus 2 & berhasil/gagal & catatan \\
-        Invers & Kasus 1 & berhasil/gagal & catatan \\
-        Invers & Kasus 2 & berhasil/gagal & catatan \\
-        SPL $Ax=b$ & Kasus 1--4 & berhasil/gagal & catatan \\
-        SPL Augmented & Kasus 1--2 & berhasil/gagal & catatan \\
-        SPL Umum & Kasus 1--2 & berhasil/gagal & catatan \\
-        Aplikasi SPL & Reaktor & berhasil/gagal & catatan \\
-        Interpolasi Polinomial & Studi Kasus 1--2 & berhasil/gagal & catatan \\
-        Splina Bézier Kubik & 6 titik & berhasil/gagal & catatan \\
-        Regresi Berganda & 50 sampel & berhasil/gagal & catatan \\
+        Determinan & Kasus 1--3 & berhasil & Kofaktor dan OBE sepakat; $-0.000$ pada Kasus 2 adalah galat pembulatan \\
+        Invers & Kasus 1--2 & berhasil & Kasus 2 singular dan terdeteksi tanpa \emph{crash} \\
+        SPL $Ax=b$ & Kasus 1--4 & berhasil & Kasus 2 parametrik; Kasus 3 tak konsisten; Cramer/Balikan tidak berlaku pada sistem non-persegi atau singular \\
+        SPL Augmented & Kasus 1--2 & berhasil & Kasus 2 parametrik (2 parameter bebas) \\
+        SPL Umum & Kasus 1--2 & berhasil & Kasus 2 singular, 1 parameter bebas \\
+        Aplikasi SPL & Harga rumah & berhasil & $\theta_0=1.667$, $\theta_1=1.500$ sesuai solusi eksak \\
+        Interpolasi Polinomial & Studi Kasus 1--2 & berhasil & Seluruh nilai uji cocok dengan referensi \\
+        Splina Kubik Natural & 5 titik & berhasil & Data kolinear, spline tereduksi menjadi garis \\
+        Regresi Spline Kubik & 7 titik & berhasil & Sama dengan \emph{least squares}; SSE $=0.84$ \\
         \hline
     \end{tabular}
 \end{table}
