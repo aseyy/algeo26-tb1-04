@@ -149,7 +149,7 @@ menjadi perangkat lunak nyata yang lolos berbagai skenario uji
 \chapter{Implementasi}
 \section{Struktur}
 
-Terdapat 7 berkas (2 berkas utama dan 5 berkas modul) dengan rincian sebagai berikut.
+Terdapat 6 berkas (1 berkas utama dan 5 berkas modul) dengan rincian sebagai berikut.
 
 \begin{itemize}
     \item \verb|Matrix.java|: Memuat fungsi adisi dan multiplikasi matriks, 
@@ -170,23 +170,7 @@ Terdapat 7 berkas (2 berkas utama dan 5 berkas modul) dengan rincian sebagai ber
         langsung ke fungsi pembenahan, tidak diabstraksikan seperti yang ada di \verb|Matrix.java|.
     \item \verb|App.java|: Memuat segala hal yang berhubungan dengan I/O, terutama printing
         dan formatting matriks, persamaan, dan solusi atas SPL, beserta tampilan dan alur CLI.
-    \item \verb|GUI.java|: Versi GUI dari App.java menggunakan JavaFX. Fungsi-fungsi tetap persis sama.
 \end{itemize}
-
-\section{Building}
-Maven digunakan untuk membangun bytecode keseluruhan program secara otomatis. Perintah 
-\verb|mvn clean package| akan menghasilkan folder baru bernama 'target'. Folder tersebut terdiri atas
-bytecode dalam bentuk \verb|.jar| dan segala berkas-berkas yang relevan, sehingga ada 2 opsi untuk menjalankan
-program: \verb|mvn exec:java| ataupun \verb|java -jar [file.jar]|.
-
-\section{Alur program}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{assets/Alur_Pakai.png}
-    \caption{Garis Besar Alur Penggunaan}
-    \label{fig:garis_besar_alur}
-\end{figure}
 
 \section{Arsitektur}
 
@@ -202,11 +186,19 @@ yang bersamaan untuk meningkatkan efisiensi.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{assets/Dependensi.png}
-    \caption{Jalur Dependensi}
-    \label{fig:jalur_dep}
+    \includegraphics[width=0.4\textwidth]{assets/Mitya.jpg}
+    \caption{Berkenalan dengan Mitya}
+    \label{fig:mitya}
 \end{figure}
 
+\section{Alur program}
+Alur program dibuat sederhana lengkap dengan error-handling dan konfirmasi ("Tekan enter untuk lanjut").
+
+\section{Building}
+Maven digunakan untuk membangun bytecode keseluruhan program secara otomatis. Perintah 
+\verb|mvn clean package| akan menghasilkan folder baru bernama 'target'. Folder tersebut terdiri atas
+bytecode dalam bentuk \verb|.jar| dan segala berkas-berkas yang relevan, sehingga ada 2 opsi untuk menjalankan
+program: \verb|mvn exec:java| ataupun \verb|java -jar [file.jar]|.
 
 \chapter{Eksperimen}
 
