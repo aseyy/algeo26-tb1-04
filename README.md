@@ -4,6 +4,8 @@ Mesin andal dan tangguh yang dapat melakukan kalkulasi aljabar linear secara man
 
 Filosofi kami adalah *"Keep It Simple"*. Segala algoritma dan tipe data bentukan yang digunakan di program ini dibuat sesederhana mungkin.
 
+Penjelasan lebih lanjut dapat dilihat di [video ini](https://youtu.be/it1JFK8Qt5o).
+
 ## Requirements
 Pastikan di sistem Anda sudah terpasang:
 - Java 17 atau lebih baru
@@ -84,3 +86,9 @@ Program ini dapat melakukan hal-hal keren sebagai berikut.
 Silakan lihat `Matrix.java` untuk melihat fitur-fitur mendasar lainnya (seperti Operasi Baris Elementer, pembentukan Matriks Baris Eselon, dsb).
 
 > Catatan: batasan ordo matriks adalah 1200x1200, dan batasan jumlah titik interpolasi/regresi adalah 20.
+
+## Program Flow
+<p align="center">
+  <img src="docs/assets/Alur_Pakai.png" alt="Alt text"><br>
+  (Alur ini sangat disederhanakan)
+</p>
