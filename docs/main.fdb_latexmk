@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1790934781.97772 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790934784.88555 0
+["pdflatex"] 1790941587.0487 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790941589.43107 0
   "/etc/texmf/web2c/texmf.cnf" 1787075751.84451 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790934778.12545 44671 a6bfc9b41bfce34b9ce4b4338b7c5e4a ""
+  "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790941583.88848 63183 1756a8e6e72034b330c53afd5b41e3da ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
@@ -40,6 +40,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb" 1136849748 44656 0cbca70e0534538582128f6b54593cca ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb" 1136849748 46026 6dab18b61c907687b520c72847215a68 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb" 1136849748 45458 a3faba884469519614ca56ba5f6b1de1 ""
+  "/usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf" 1136768653 1372 788387fea833ef5963f4c5bffe33eb89 ""
   "/usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmb8t.vf" 1136768653 2340 df9c920cc5688ebbf16a93f45ce7bdd3 ""
   "/usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmbi8t.vf" 1136768653 2324 51908dae6e03953a90119973962f0e4d ""
   "/usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmr8c.vf" 1136768653 3556 8a9a6dcbcd146ef985683f677f4758a6 ""
@@ -133,9 +134,9 @@
   "assets/Alur_Pakai.png" 1790932403.15383 74621 2fcca9c1fe2a1389aaa44edf870c2026 ""
   "assets/Dependensi.png" 1790932403.15495 42846 a7c417685b483e92d08bd1c336f9d9f7 ""
   "assets/Mitya.jpg" 1790932403.1571 116627 e75244d1a8392983db384254e706015e ""
-  "main.aux" 1790934784.66715 8759 97895e2dfa194ab3e82ec91e246230fd "pdflatex"
-  "main.out" 1790934784.66915 5605 a23f7c89e51db1b1e8e36cdaf2448cfa "pdflatex"
-  "main.tex" 1790934778.12545 44671 a6bfc9b41bfce34b9ce4b4338b7c5e4a ""
+  "main.aux" 1790941589.20157 12607 2816d6686bc72e5e24924585e2caf43d "pdflatex"
+  "main.out" 1790941589.20357 9406 d30b38da7d909d4426e2dd51594ec127 "pdflatex"
+  "main.tex" 1790941583.88848 63183 1756a8e6e72034b330c53afd5b41e3da ""
   (generated)
   "main.aux"
   "main.log"

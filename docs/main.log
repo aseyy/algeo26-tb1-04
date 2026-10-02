@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.9.27)  2 OCT 2026 16:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.9.27)  2 OCT 2026 18:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -454,7 +454,7 @@ Package hyperref Info: Link coloring ON on input line 56.
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-<assets/3_Pria_Hebat.jpg, id=164, 1204.5pt x 1606.0pt>
+<assets/3_Pria_Hebat.jpg, id=249, 1204.5pt x 1606.0pt>
 File: assets/3_Pria_Hebat.jpg Graphic file (type jpg)
 <use assets/3_Pria_Hebat.jpg>
 Package pdftex.def Info: assets/3_Pria_Hebat.jpg  used on input line 68.
@@ -463,12 +463,12 @@ Package pdftex.def Info: assets/3_Pria_Hebat.jpg  used on input line 68.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} <./assets/3_Pria_Hebat.jpg>]
 Bab 1.
-<assets/Mitya.jpg, id=172, 1174.3875pt x 1093.08376pt>
+<assets/Mitya.jpg, id=257, 1174.3875pt x 1093.08376pt>
 File: assets/Mitya.jpg Graphic file (type jpg)
 <use assets/Mitya.jpg>
 Package pdftex.def Info: assets/Mitya.jpg  used on input line 86.
 (pdftex.def)             Requested size: 176.40439pt x 164.189pt.
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 115.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 116.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
@@ -483,7 +483,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.118     \item M
+l.119     \item M
                  elakukan Interpolasi Polinomial, Natural Cubic Spline Inter... [1
 
  <./assets/Mitya.jpg>]
@@ -496,6 +496,37 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [2]
 Bab 2.
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 155.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 155.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 155.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 155.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 155.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 155.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 155.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 155.
+
+Overfull \hbox (6.0738pt too wide) in paragraph at lines 186--191
+\T1/ptm/m/n/12 (OBE) pa-da ma-triks \T1/ptm/m/it/12 au-gmen-ted \T1/ptm/m/n/12 sam-pai di-pe-ro-leh \T1/ptm/m/it/12 row eche-lon form \T1/ptm/m/n/12 (REF). Pa-da REF, elemen-
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -506,19 +537,63 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [3
 
 ]
+Overfull \hbox (6.81766pt too wide) in paragraph at lines 207--213
+\T1/ptm/m/n/12 OBE di-te-rapk-an pa-da ma-triks \T1/ptm/m/it/12 au-gmen-ted \T1/ptm/m/n/12 sam-pai di-pe-ro-leh \T1/ptm/m/it/12 re-du-ced row eche-lon form \T1/ptm/m/n/12 (RREF).
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[4]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[5]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[6]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[7]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[8]
 Bab 3.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 155.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 412.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-Overfull \hbox (5.03049pt too wide) in paragraph at lines 168--171
+Overfull \hbox (5.03049pt too wide) in paragraph at lines 425--428
 \T1/ptm/m/n/12 lang-sung ke fung-si pem-be-nah-an, ti-dak di-abs-trak-sik-an se-per-ti yang ada di [][]\T1/cmtt/m/n/12 Matrix.java[]\T1/ptm/m/n/12 . 
  []
 
-<assets/Alur_Pakai.png, id=186, 579.16376pt x 1030.85126pt>
+<assets/Alur_Pakai.png, id=359, 579.16376pt x 1030.85126pt>
 File: assets/Alur_Pakai.png Graphic file (type png)
 <use assets/Alur_Pakai.png>
-Package pdftex.def Info: assets/Alur_Pakai.png  used on input line 186.
+Package pdftex.def Info: assets/Alur_Pakai.png  used on input line 443.
 (pdftex.def)             Requested size: 264.61333pt x 470.98851pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -527,13 +602,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[4
+[9
 
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
-<assets/Dependensi.png, id=194, 554.07pt x 533.995pt>
+<assets/Dependensi.png, id=366, 554.07pt x 533.995pt>
 File: assets/Dependensi.png Graphic file (type png)
 <use assets/Dependensi.png>
-Package pdftex.def Info: assets/Dependensi.png  used on input line 205.
+Package pdftex.def Info: assets/Dependensi.png  used on input line 462.
 (pdftex.def)             Requested size: 220.50887pt x 212.51866pt.
 
 
@@ -543,7 +618,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[5 <./assets/Alur_Pakai.png>]
+[10 <./assets/Alur_Pakai.png>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -551,35 +626,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[6 <./assets/Dependensi.png>]
+[11 <./assets/Dependensi.png>]
 Bab 4.
-LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 219.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
-File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 219.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
-File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 219.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
-File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 219.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
-File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 219.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
-File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
-)
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 219.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 219.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 219.
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -587,7 +635,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[7
+[12
 
 ]
 
@@ -597,77 +645,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[8]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 372.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 372.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 372.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 372.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[9]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[10]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 497--498
-[]|\T1/ptm/m/n/12 Error: SPL-So-lver.byREF:
- []
-
-
-Underfull \hbox (badness 2384) in paragraph at lines 501--502
-[]|\T1/ptm/m/n/12 Error: SPL-So-lver.byRREF:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 505--506
-\T1/ptm/m/n/12 Ma-triks per-sa-ma-an ti-dak
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[12]
-Overfull \vbox (25.96234pt too high) has occurred while \output is active []
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
 [13]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 629.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 629.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 629.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 629.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -684,10 +675,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [15]
-Overfull \hbox (0.87965pt too wide) in paragraph at lines 662--662
-[]\T1/ptm/b/n/17.28 Sistem Per-sa-ma-an Li-ne-ar Ber-ben-tuk Ma-triks Au-gmen-
- []
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -696,6 +683,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [16]
+Underfull \hbox (badness 10000) in paragraph at lines 754--755
+[]|\T1/ptm/m/n/12 Error: SPL-So-lver.byREF:
+ []
+
+
+Underfull \hbox (badness 2384) in paragraph at lines 758--759
+[]|\T1/ptm/m/n/12 Error: SPL-So-lver.byRREF:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 762--763
+\T1/ptm/m/n/12 Ma-triks per-sa-ma-an ti-dak
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -704,24 +705,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 744--745
-[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = 5\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 800 \OMS/ztmcm/m/n/12 ^^@ \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 \OMS/ztmcm/m/n/12 ^^@
- []
+Overfull \vbox (25.96234pt too high) has occurred while \output is active []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 745--746
-[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = 2\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 600 \OMS/ztmcm/m/n/12 ^^@ \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 \OMS/ztmcm/m/n/12 ^^@
- []
-
-
-Underfull \hbox (badness 5924) in paragraph at lines 746--747
-[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = \OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 3\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 400 + \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 +
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 757--758
-[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = \OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 3\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 400 +
- []
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -747,8 +732,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [20]
-Underfull \hbox (badness 10000) in paragraph at lines 890--891
-\T1/ptm/m/n/12 Ma-triks per-sa-ma-an ti-dak
+Overfull \hbox (0.87965pt too wide) in paragraph at lines 919--919
+[]\T1/ptm/b/n/17.28 Sistem Per-sa-ma-an Li-ne-ar Ber-ben-tuk Ma-triks Au-gmen-
  []
 
 
@@ -767,8 +752,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 938--942
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1002
+[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = 5\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 800 \OMS/ztmcm/m/n/12 ^^@ \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 \OMS/ztmcm/m/n/12 ^^@
+ []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1002--1003
+[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = 2\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 600 \OMS/ztmcm/m/n/12 ^^@ \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 \OMS/ztmcm/m/n/12 ^^@
+ []
+
+
+Underfull \hbox (badness 5924) in paragraph at lines 1003--1004
+[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = \OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 3\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 400 + \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1014--1015
+[]$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = \OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 3\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 400 +
  []
 
 
@@ -795,13 +795,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [25]
-Underfull \hbox (badness 10000) in paragraph at lines 1151--1152
-[]|\T1/ptm/m/n/12 Kofaktor dan OBE se-pa-kat;
- []
-
-
-Underfull \hbox (badness 1701) in paragraph at lines 1151--1152
-\OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 0\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 000$ \T1/ptm/m/n/12 pa-da Ka-sus 2 ada-lah
+Underfull \hbox (badness 10000) in paragraph at lines 1147--1148
+\T1/ptm/m/n/12 Ma-triks per-sa-ma-an ti-dak
  []
 
 
@@ -820,6 +815,59 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [27]
+Underfull \hbox (badness 10000) in paragraph at lines 1195--1199
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[28]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[29]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[30]
+Underfull \hbox (badness 10000) in paragraph at lines 1408--1409
+[]|\T1/ptm/m/n/12 Kofaktor dan OBE se-pa-kat;
+ []
+
+
+Underfull \hbox (badness 1701) in paragraph at lines 1408--1409
+\OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 0\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 000$ \T1/ptm/m/n/12 pa-da Ka-sus 2 ada-lah
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[31]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[32]
 Bab 5.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -828,9 +876,163 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[28
+[33
 
 ]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 1500--1502
+[]\T1/ptm/m/n/12 R. Mu-nir, ``Ma-triks Ese-lon,'' Bah-an Ku-li-ah IF2123 Alja-bar Li-ni-er dan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1500--1502
+\T1/ptm/m/n/12 Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #2, 2025. [][]$\T1/cmtt/m/n/12 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1500--1502
+\T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
+ []
+
+
+Underfull \hbox (badness 6412) in paragraph at lines 1503--1505
+[]\T1/ptm/m/n/12 R. Mu-nir, ``Sis-tem Per-sa-ma-an Li-ni-er (SPL),'' Bah-an Ku-li-ah IF2123 Alja-
+ []
+
+
+Underfull \hbox (badness 4940) in paragraph at lines 1503--1505
+\T1/ptm/m/n/12 bar Li-ni-er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #3, 2023.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1503--1505
+[][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
+ []
+
+
+Underfull \hbox (badness 7238) in paragraph at lines 1506--1508
+[]\T1/ptm/m/n/12 R. Mu-nir, ``Ti-ga Ke-mung-kin-an So-lu-si SPL,'' Bah-an Ku-li-ah IF2123 Alja-
+ []
+
+
+Underfull \hbox (badness 4940) in paragraph at lines 1506--1508
+\T1/ptm/m/n/12 bar Li-ni-er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #4, 2025.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1506--1508
+[][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
+ []
+
+
+Underfull \hbox (badness 2073) in paragraph at lines 1509--1511
+[]\T1/ptm/m/n/12 R. Mu-nir, ``Sis-tem Per-sa-ma-an Li-ni-er (SPL): Me-to-de Eli-mi-na-si Gauss-Jordan,''
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1509--1511
+\T1/ptm/m/n/12 Al-geo #5, 2025. [][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1509--1511
+\T1/cmtt/m/n/12 AljabarGeometri / 2025-[]2026 / Algeo-[]05-[]Sistem-[]Persamaan-[]Linier-[]2-[]2025 .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1514
+[]\T1/ptm/m/n/12 R. Mu-nir, ``De-ter-min-an Ba-gi-an 1,'' Bah-an Ku-li-ah IF2123 Alja-bar Li-ni-
+ []
+
+
+Underfull \hbox (badness 4582) in paragraph at lines 1512--1514
+\T1/ptm/m/n/12 er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #8, 2025. [][]$\T1/cmtt/m/n/12 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1512--1514
+\T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1515--1517
+[]\T1/ptm/m/n/12 R. Mu-nir, ``De-ter-min-an Ba-gi-an 2,'' Bah-an Ku-li-ah IF2123 Alja-bar Li-ni-
+ []
+
+
+Underfull \hbox (badness 4582) in paragraph at lines 1515--1517
+\T1/ptm/m/n/12 er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #9, 2025. [][]$\T1/cmtt/m/n/12 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1515--1517
+\T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1518--1520
+[]\T1/ptm/m/n/12 R. Mu-nir, \T1/ptm/m/it/12 Me-to-de Nu-me-rik\T1/ptm/m/n/12 , Bab 4, ``So-lu-si Sis-tem Per-sa-ma-an Lan-jar.''
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1518--1520
+[][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir / Buku / Metode %
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1521--1523
+[]\T1/ptm/m/n/12 R. Mu-nir, \T1/ptm/m/it/12 Me-to-de Nu-me-rik\T1/ptm/m/n/12 , Bab 5, ``In-ter-po-la-si dan Re-gre-si.'' [][]$\T1/cmtt/m/n/12 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1521--1523
+\T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / Buku / Metode % 20Numerik /
+ []
+
+
+Underfull \hbox (badness 7613) in paragraph at lines 1528--1530
+[]\T1/ptm/m/n/12 L. Le-al, ``Nu-me-ri-cal In-ter-po-la-tion: Na-tu-ral Cu-bic Spli-ne,'' \T1/ptm/m/it/12 To-wa-rds Da-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1528--1530
+\T1/ptm/m/it/12 ta Sci-en-ce Ar-chi-ve\T1/ptm/m/n/12 , Dec. 2, 2018. [][]$\T1/cmtt/m/n/12 https : / / medium . com / data-[]science /
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[35
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1540--1542
+[]\T1/ptm/m/n/12 S. Eddins, ``Re-gion fi-lling and La-pla-ce's equ-a-tion,'' \T1/ptm/m/it/12 Ma-th-Works Blo-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1540--1542
+\T1/ptm/m/it/12 gs\T1/ptm/m/n/12 , Jun. 17, 2015. [][]$\T1/cmtt/m/n/12 https : / / blogs . mathworks . com / steve / 2015 / 06 / 17 /
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[36]
 Bab 6.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -839,18 +1041,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[29
-
-]
-Bab 7.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[30
+[37
 
 ] (./main.aux)
  ***********
@@ -858,21 +1049,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A23F7C89E51DB1B1E8E36CDAF2448CFA;5605.
+(rerunfilecheck)             Checksum: D30B38DA7D909D4426E2DD51594EC127;9406.
  ) 
 Here is how much of TeX's memory you used:
- 12621 strings out of 474222
- 193103 string characters out of 5748733
+ 12718 strings out of 474222
+ 194550 string characters out of 5748733
  1949975 words of memory out of 5000000
- 34571 multiletter control sequences out of 15000+600000
- 611032 words of font info for 121 fonts, out of 8000000 for 9000
+ 34613 multiletter control sequences out of 15000+600000
+ 613800 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1035b,526s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (31 pages, 482073 bytes).
+ 75i,12n,79p,1035b,583s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (38 pages, 521243 bytes).
 PDF statistics:
- 401 PDF objects out of 1000 (max. 8388607)
- 338 compressed objects within 4 object streams
- 91 named destinations out of 1000 (max. 500000)
- 341 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 625 PDF objects out of 1000 (max. 8388607)
+ 551 compressed objects within 6 object streams
+ 145 named destinations out of 1000 (max. 500000)
+ 509 words of extra memory for PDF output out of 10000 (max. 10000000)
 

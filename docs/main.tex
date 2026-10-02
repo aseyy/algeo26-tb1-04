@@ -1460,6 +1460,37 @@ Persamaan Laplace dengan metode Gauss-Seidel sebagai fitur bonus.
           kompilasi dan eksekusi dengan satu perintah (\verb|mvn clean package|).
 \end{itemize}
 
+\subsection{Kekurangan Sistem}
+
+\begin{itemize}
+    \item \textbf{Presisi Data}
+        Karena presisi tipe data double mentok di 15-17 angka di belakang desimal, beberapa algoritma (seperti SPLSolver.byInverse) akan hancur untuk matriks besar ataupun matriks ill-conditioned
+    \item \textbf{Tampilan GUI sederhana.}
+        GUI yang dibuat dimaksimalkan untuk fungsi, sehingga menggunakan desain yang simpel
+    \item \textbf{Pembulatan}
+        Output hasil yang diberikan dibulatkan 3 titik di belakang koma, sehingga tidak terlalu presisi
+    \item \textbf{Kerapihan}
+        Output matriks tidak terlalu rapi. Ini dilakukan untuk meningkatkan konsistensi
+        
+\end{itemize}
+
+
+\section{Refleksi Anggota Kelompok}
+ 
+\subsection{Rionaldo Casey Pandhitha (13525030)}
+oop dan java adalah pengalaman baru yang menyenangkan
+
+
+\subsection{Raffi Fauzi Hermawan (13525054)}
+ Tubes yang lumayan asik, meski banyak debugging karena bahasa yang baru pertama kali dipakai, cuma karena sintaksnya mirip c mayan lancar dan juga ilmu baru mengenai error handling dan input handling. Setelah itu goat Fachry Azriel aka Forreal jago bagi tugas yang membuat tidak ada terjadi momen "saling nunggu." Last but also least, 5 poin untuk latex tidak se-worth it itu karena sangat "nguli"
+
+ 
+\subsection{Fachry Azriel Fajdwani (13525110)}
+sejauh ini, ini tubes ngoding yang paling asik, nggak kayak alpro yang terlalu "komputer". pengerjaan SPLSolver juga bikin aku terpaku depan laptop sampe jam 3, muter otak gimana caranya representasiin output splsolver ini tanpa harus pake HashMap, Map, dan tipe bentukan lain kayak sebelah
+
+\subsection{Refleksi Bersama}
+ 
+Kami belajar mengenai cara pembagian tugas yang baik dan benar, selain itu kami juga belajar bahasa baru dan untuk mengerjakan tugas jauh sebelum deadline. Sebenarnya, hari Rabu kemarin kami bisa mengumpulkan tugasnya, namun karena extend maka kami menambahkan GUI
 
 \renewcommand{\bibname}{Daftar Pustaka}
 
