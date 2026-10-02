@@ -560,7 +560,7 @@ public class App {
         if (!input.equalsIgnoreCase("skip")) {
             double xt = parseNumber(input);
             // acc twin
-            double yt = Regression.CubicSplinalEvaluate(knots, knots, xt);
+            double yt = Regression.CubicSplinalEvaluate(coeffs, knots, xt);
             String evalLine = String.format("y(%.3f) = %.3f%n", xt, yt);
             System.out.println(evalLine);
             sb.append(evalLine);
