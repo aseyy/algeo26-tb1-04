@@ -1173,39 +1173,40 @@ $x_i$ & $y_i$ (aktual) & $\hat{y}_i$ (prediksi) & Galat \\
 
 \chapter{Penutup}
 
-% Di Bawah Template Buat Dokumen Ges
+\section{Kesimpulan}
 
-\chapter{Introduction}
-This is a simple paragraph of text. LaTeX automatically handles spacing, indentation, and line breaks.
+Tugas besar ini berhasil menghasilkan pustaka aljabar linier mandiri berbasis Java
+bernama NurEngine, yang dibangun tanpa \textit{library} perhitungan matriks,
+regresi, atau interpolasi instan. Pustaka terdiri atas lima modul inti
+(\verb|Matrix|, \verb|SPLSolver|, \verb|Interpolation|, \verb|Regression|, dan
+\verb|ImageHoleFill|) serta dua antarmuka, yaitu CLI (\verb|App.java|) dan GUI
+berbasis JavaFX (\verb|GUI.java|). Seluruh fitur yang dipersyaratkan telah
+diimplementasikan, yaitu penyelesaian SPL dengan empat metode (Eliminasi Gauss,
+Gauss-Jordan, Kaidah Cramer, dan Matriks Balikan), determinan (ekspansi
+kofaktor dan reduksi baris), invers matriks (augment dan adjoin), interpolasi
+polinomial, Natural Cubic Spline Interpolation, regresi spline kubik dengan
+\textit{truncated power basis}, serta \textit{Image Inpainting} berbasis
+Persamaan Laplace dengan metode Gauss-Seidel sebagai fitur bonus.
 
-\section{Formatting}
-You can make text \textbf{bold}, \textit{italic}, or \underline{underlined}. Inline math like $E = mc^2$ works too.
+\subsection{Kelebihan Sistem}
 
-\chapter{Lists}
-Here is a bullet list:
 \begin{itemize}
-  \item First item
-  \item Second item
-  \item Third item
+    \item \textbf{Arsitektur modular dengan dependensi yang jelas.}
+          \verb|Matrix| dan \verb|ImageHoleFill| berdiri sendiri, sedangkan
+          \verb|SPLSolver|, \verb|Interpolation|, dan \verb|Regression|
+          tersusun berlapis. Struktur ini memudahkan pengujian per modul dan
+          pengerjaan paralel oleh anggota kelompok.
+    \item \textbf{Dua antarmuka dengan logika yang sama.} CLI dan GUI JavaFX
+          memakai fungsi pustaka yang sama, sehingga perilaku keduanya
+          konsisten.
+    \item \textbf{Proses \textit{build} yang otomatis.} Maven memungkinkan
+          kompilasi dan eksekusi dengan satu perintah (\verb|mvn clean package|).
 \end{itemize}
 
-And here is a numbered list:
-\begin{enumerate}
-  \item Step one
-  \item Step two
-  \item Step three
-\end{enumerate}
 
-\chapter{Math}
-Inline math: $a^2 + b^2 = c^2$.
 
-Display math:
-\begin{equation}
-  \int_0^\infty e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}
-\end{equation}
+\chapter{Daftar Pustaka}
 
-\chapter{Conclusion}
-That's it! Save the file and compile it to see the PDF.
-
+\chapter{Lampiran}
 
 \end{document}
