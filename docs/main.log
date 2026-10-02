@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.9.27)  2 OCT 2026 20:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.9.27)  2 OCT 2026 20:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1019,18 +1019,21 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [34]
 Bab 6.
-File: assets/3_Pria_Hebat.jpg Graphic file (type jpg)
-<use assets/3_Pria_Hebat.jpg>
-Package pdftex.def Info: assets/3_Pria_Hebat.jpg  used on input line 1585.
-(pdftex.def)             Requested size: 109.15173pt x 145.51398pt.
-File: assets/3_Pria_Hebat.jpg Graphic file (type jpg)
-<use assets/3_Pria_Hebat.jpg>
-Package pdftex.def Info: assets/3_Pria_Hebat.jpg  used on input line 1593.
-(pdftex.def)             Requested size: 109.15173pt x 145.51398pt.
-File: assets/3_Pria_Hebat.jpg Graphic file (type jpg)
-<use assets/3_Pria_Hebat.jpg>
-Package pdftex.def Info: assets/3_Pria_Hebat.jpg  used on input line 1603.
-(pdftex.def)             Requested size: 109.15173pt x 145.51398pt.
+<assets/Aldo.png, id=530, 286.06876pt x 199.74625pt>
+File: assets/Aldo.png Graphic file (type png)
+<use assets/Aldo.png>
+Package pdftex.def Info: assets/Aldo.png  used on input line 1585.
+(pdftex.def)             Requested size: 109.15173pt x 76.21524pt.
+<assets/Jo.png, id=531, 286.06876pt x 199.74625pt>
+File: assets/Jo.png Graphic file (type png)
+<use assets/Jo.png>
+Package pdftex.def Info: assets/Jo.png  used on input line 1593.
+(pdftex.def)             Requested size: 109.15173pt x 76.21524pt.
+<assets/Real.png, id=532, 534.99875pt x 469.755pt>
+File: assets/Real.png Graphic file (type png)
+<use assets/Real.png>
+Package pdftex.def Info: assets/Real.png  used on input line 1603.
+(pdftex.def)             Requested size: 109.15173pt x 95.83449pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1040,7 +1043,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [35
 
-]
+ <./assets/Aldo.png> <./assets/Jo.png>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1048,7 +1051,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[36] (./main.aux)
+[36 <./assets/Real.png>] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -1057,18 +1060,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D30B38DA7D909D4426E2DD51594EC127;9406.
  ) 
 Here is how much of TeX's memory you used:
- 12721 strings out of 474222
- 194621 string characters out of 5748733
+ 12742 strings out of 474222
+ 195066 string characters out of 5748733
  1946975 words of memory out of 5000000
- 34616 multiletter control sequences out of 15000+600000
+ 34637 multiletter control sequences out of 15000+600000
  616603 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,79p,680b,583s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (37 pages, 518940 bytes).
+Output written on main.pdf (37 pages, 569651 bytes).
 PDF statistics:
- 622 PDF objects out of 1000 (max. 8388607)
+ 628 PDF objects out of 1000 (max. 8388607)
  549 compressed objects within 6 object streams
  144 named destinations out of 1000 (max. 500000)
- 509 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 524 words of extra memory for PDF output out of 10000 (max. 10000000)
 

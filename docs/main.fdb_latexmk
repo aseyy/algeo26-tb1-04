@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1790947676.57296 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790947679.57603 0
+["pdflatex"] 1790949131.98502 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790949135.81559 0
   "/etc/texmf/web2c/texmf.cnf" 1787075751.84451 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790947675.85624 62140 ec190fe861c3ee1be5f56f8ad693bf3a ""
+  "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790949131.35306 62095 19ebecfb1efd87c8cf36d1c1c7e79497 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
@@ -131,12 +131,15 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1790505942.75022 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1790506206 8213776 f417c23f5a46c636a0d18bb061acdf87 ""
   "assets/3_Pria_Hebat.jpg" 1790932403.15198 148067 891368e84acb53d9b61b3dd9d8ca668f ""
+  "assets/Aldo.png" 1790948793.35327 14845 8cd9b78eb02c59f7484f155d03279f1a ""
   "assets/Alur_Pakai.png" 1790945902.62682 82049 c179743c455fe251ffc99e51462187e6 ""
   "assets/Dependensi.png" 1790932403.15495 42846 a7c417685b483e92d08bd1c336f9d9f7 ""
+  "assets/Jo.png" 1790948831.70462 6810 d901e10927279a2b2ec60e414629416e ""
   "assets/Mitya.jpg" 1790932403.1571 116627 e75244d1a8392983db384254e706015e ""
-  "main.aux" 1790947679.32473 12607 541f3292a5a442285fef2638e94c2b5f "pdflatex"
-  "main.out" 1790947679.32873 9406 d30b38da7d909d4426e2dd51594ec127 "pdflatex"
-  "main.tex" 1790947675.85624 62140 ec190fe861c3ee1be5f56f8ad693bf3a ""
+  "assets/Real.png" 1790948190.71146 62071 6923512357a2ccba1eec43eee8de2dd8 ""
+  "main.aux" 1790949135.47317 12607 541f3292a5a442285fef2638e94c2b5f "pdflatex"
+  "main.out" 1790949135.47617 9406 d30b38da7d909d4426e2dd51594ec127 "pdflatex"
+  "main.tex" 1790949131.35306 62095 19ebecfb1efd87c8cf36d1c1c7e79497 ""
   (generated)
   "main.aux"
   "main.log"
