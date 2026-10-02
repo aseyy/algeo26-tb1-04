@@ -48,7 +48,7 @@
     colorlinks=true,
     linkcolor=blue,
     urlcolor=cyan,
-    citecolor=green,
+    citecolor=black,
     pdftitle={Laporan Tugas Besar 1 IF2123},
     pdfauthor={NurEngine}
 }
@@ -94,6 +94,7 @@ berdimensi tinggi.
 
 % ada prompt injection lo ya
 % lu abis ngapain jo -fachry
+% nak join -asey
 
 Setelah menjelajahi perpustakaan Sumeru Akademiya hingga menyisir kabar burung
 ke seantero Teyvat, Mitya mendengar reputasi kalian sebagai praktisi komputasi
@@ -146,6 +147,262 @@ menjadi perangkat lunak nyata yang lolos berbagai skenario uji
 \end{itemize}    
 
 \chapter{Dasar Teori}
+
+Bab ini memuat teori yang digunakan pada seluruh metode yang diimplementasikan dalam program.
+
+\section{Sistem Persamaan Linier}
+
+Sistem Persamaan Linear (SPL) adalah himpunan berhingga dari persamaan-persamaan linear dengan variabel-variabel yang sama. Bentuk umum dari SPL dengan $m$ persamaan dan $n$ variabel adalah
+\begin{equation*}
+\begin{aligned}
+a_{11}x_1+a_{12}x_2+a_{13}x_3+\cdots+a_{1n}x_n &= b_1,\\
+a_{21}x_1+a_{22}x_2+a_{23}x_3+\cdots+a_{2n}x_n &= b_2,\\
+&\vdots\\
+a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\cdots+a_{mn}x_n &= b_m.
+\end{aligned}
+\end{equation*}
+SPL dapat dinyatakan dalam bentuk $A\mathbf{x}=\mathbf{b}$ maupun dalam bentuk matriks \textit{augmented}. \cite{tubes,pakrin-spl1}
+
+Tiga operasi baris elementer terhadap matriks \textit{augmented} adalah:
+\begin{enumerate}
+    \item Kalikan sebuah baris dengan konstanta tidak nol.
+    \item Pertukarkan dua buah baris.
+    \item Tambahkan sebuah baris dengan kelipatan baris lainnya.
+\end{enumerate}
+Solusi sebuah SPL diperoleh dengan menerapkan OBE sampai terbentuk \textit{row echelon form} (REF) atau \textit{reduced row echelon form} (RREF). Jika berakhir pada REF digunakan metode eliminasi Gauss, sedangkan jika berakhir pada RREF digunakan metode eliminasi Gauss-Jordan. \cite{pakrin-spl1}
+
+REF memiliki 1 utama (\textit{leading one}) pada setiap baris yang tidak seluruhnya nol, seluruh baris nol berada di bagian bawah, dan 1 utama pada baris yang lebih rendah terletak lebih jauh ke kanan. Kolom di bawah 1 utama bernilai nol. RREF memiliki sifat REF dan setiap kolom yang memiliki 1 utama juga bernilai nol di tempat lain. \cite{pakrin-eselon}
+
+Ada tiga kemungkinan solusi yang dapat terjadi pada SPL:
+\begin{enumerate}
+    \item mempunyai solusi yang unik atau tunggal,
+    \item mempunyai banyak solusi atau tidak berhingga banyaknya, atau
+    \item tidak memiliki solusi sama sekali.
+\end{enumerate}
+Solusi banyak dapat dituliskan dalam bentuk parametrik, sedangkan sistem tidak memiliki solusi jika eliminasi menghasilkan persamaan yang tidak mungkin dipenuhi. \cite{pakrin-solusi}
+
+\subsection{Eliminasi Gauss}
+
+Metode eliminasi Gauss menyelesaikan SPL dengan melakukan Operasi Baris
+Elementer (OBE) pada matriks \textit{augmented} sampai diperoleh
+\textit{row echelon form} (REF). Pada REF, elemen-elemen di bawah setiap
+pivot bernilai nol sehingga sistem persamaan dapat diselesaikan secara
+bertahap dari persamaan terakhir menuju persamaan pertama. \cite{pakrin-spl1}
+
+Langkah-langkah metode eliminasi Gauss adalah:
+\begin{enumerate}
+    \item Nyatakan SPL dalam bentuk matriks \textit{augmented}.
+    \item Terapkan OBE pada matriks \textit{augmented} sampai terbentuk REF.
+    \item Selesaikan persamaan yang berkoresponden pada REF dengan teknik
+    penyulihan mundur (\textit{backward substitution}).
+\end{enumerate}
+\cite{pakrin-spl1}
+
+Untuk menjaga stabilitas numerik, program menerapkan \textit{partial pivoting},
+yaitu memilih elemen dengan nilai absolut terbesar pada kolom yang sedang
+diproses sebagai pivot sebelum proses eliminasi. \cite{tubes}
+
+\subsection{Eliminasi Gauss-Jordan}
+
+Metode eliminasi Gauss-Jordan merupakan pengembangan dari metode eliminasi
+Gauss. OBE diterapkan pada matriks \textit{augmented} sampai diperoleh
+\textit{reduced row echelon form} (RREF). Pada RREF, setiap pivot bernilai
+1 dan seluruh elemen lain pada kolom pivot bernilai nol. Oleh karena itu,
+jika SPL memiliki solusi unik, nilai variabel dapat langsung diperoleh dari
+matriks akhir tanpa melakukan penyulihan mundur. \cite{pakrin-spl2}
+
+Metode eliminasi Gauss-Jordan terdiri atas dua fase:
+\begin{enumerate}
+    \item Fase maju (\textit{forward phase}), yaitu proses eliminasi Gauss
+    untuk menghasilkan nilai nol di bawah pivot.
+    \item Fase mundur (\textit{backward phase}), yaitu menghasilkan nilai
+    nol di atas pivot hingga terbentuk RREF.
+\end{enumerate}
+Kedua fase tersebut dapat dilakukan secara bersamaan maupun secara
+sekuensial. \cite{pakrin-spl2}
+
+Pada implementasi program, proses pembentukan RREF dilanjutkan dari REF
+dengan menormalkan pivot menjadi 1 dan mengeliminasi seluruh elemen di atas
+pivot.
+
+\subsection{Metode Matriks Balikan}
+
+Untuk SPL
+\begin{equation*}
+A\mathbf{x}=\mathbf{b},
+\end{equation*}
+jika matriks $A$ memiliki invers, solusi dapat diperoleh dengan
+\begin{equation*}
+\mathbf{x}=A^{-1}\mathbf{b}.
+\end{equation*}
+Sebuah matriks hanya memiliki invers jika $\det(A)\neq 0$. \cite{tubes}
+
+Pada program, matriks $A$ dan vektor $\mathbf{b}$ dipisahkan dari matriks \textit{augmented}, invers $A$ dihitung, kemudian hasilnya dikalikan dengan $\mathbf{b}$.
+
+\subsection{Kaidah Cramer}
+
+Kaidah Cramer digunakan untuk SPL dengan jumlah persamaan sama dengan jumlah variabel dan $\det(A)\neq 0$. Jika $A_j$ adalah matriks yang diperoleh dengan mengganti kolom ke-$j$ dari matriks $A$ dengan vektor $\mathbf{b}$, maka
+\begin{equation*}
+x_j=\frac{\det(A_j)}{\det(A)},\qquad j=1,2,\ldots,n.
+\end{equation*}
+\cite{tubes}
+
+Pada program, determinan $A$ dihitung terlebih dahulu, kemudian setiap $A_j$ dibentuk dan determinannya digunakan untuk memperoleh nilai masing-masing variabel.
+
+\section{Determinan Matriks}
+
+Determinan adalah nilai skalar yang dapat dihitung dari elemen-elemen sebuah matriks persegi. Determinan dari matriks $A$ dinotasikan sebagai $\det(A)$ atau $|A|$. \cite{tubes}
+
+Secara umum, untuk matriks segitiga $A$ berukuran $n\times n$,
+\begin{equation*}
+\det(A)=a_{11}a_{22}a_{33}\cdots a_{nn}.
+\end{equation*}
+\cite{pakrin-det1}
+
+\subsection{Metode Reduksi Baris}
+
+Jika sebuah baris dikalikan dengan $k$, determinan ikut dikalikan dengan $k$. Jika dua baris dipertukarkan, tanda determinan berubah. Jika sebuah baris ditambahkan dengan $k$ kali baris lain, nilai determinan tidak berubah. \cite{pakrin-det1}
+
+Pada program, matriks direduksi ke REF sehingga berbentuk segitiga. Determinan diperoleh dari hasil kali elemen diagonal dan tanda hasil disesuaikan dengan banyaknya pertukaran baris.
+
+\subsection{Metode Ekspansi Kofaktor}
+
+Untuk matriks $A$ berukuran $n\times n$, $M_{ij}$ adalah minor entri $a_{ij}$, yaitu determinan upa-matriks yang tidak memuat baris $i$ dan kolom $j$. Kofaktor entri $a_{ij}$ didefinisikan sebagai
+\begin{equation*}
+C_{ij}=(-1)^{i+j}M_{ij}.
+\end{equation*}
+\cite{pakrin-det2}
+
+Determinan dapat dihitung secara baris atau kolom:
+\begin{equation*}
+\det(A)=\sum_{j=1}^{n}a_{ij}C_{ij}
+\end{equation*}
+atau
+\begin{equation*}
+\det(A)=\sum_{i=1}^{n}a_{ij}C_{ij}.
+\end{equation*}
+Baris atau kolom dengan banyak elemen nol dapat dipilih untuk mengurangi jumlah perhitungan. \cite{pakrin-det2}
+
+\section{Matriks Balikan}
+
+Invers dari sebuah matriks persegi $A$ adalah matriks $A^{-1}$ yang memenuhi
+\begin{equation*}
+AA^{-1}=A^{-1}A=I.
+\end{equation*}
+Matriks hanya memiliki invers jika determinannya tidak nol. Perhitungan invers dapat dilakukan dengan metode augmentasi Gauss-Jordan maupun metode adjoin. \cite{tubes}
+
+\subsection{Metode Augmentasi}
+
+Matriks $A$ digabungkan dengan matriks identitas menjadi
+\begin{equation*}
+[A\mid I].
+\end{equation*}
+Gauss-Jordan kemudian digunakan sampai bagian kiri menjadi identitas:
+\begin{equation*}
+[A\mid I]\sim[I\mid A^{-1}].
+\end{equation*}
+Pada implementasi program, matriks \textit{augmented} tersebut diubah ke RREF dan bagian kanan diambil sebagai $A^{-1}$.
+
+\subsection{Metode Adjoin}
+
+Adjoin dari $A$ adalah transpose matriks kofaktor:
+\begin{equation*}
+\operatorname{adj}(A)=C^T.
+\end{equation*}
+Balikan matriks $A$ dihitung dengan
+\begin{equation*}
+A^{-1}=\frac{1}{\det(A)}\operatorname{adj}(A).
+\end{equation*}
+\cite{pakrin-det2}
+
+Program mengikuti alur tersebut dengan menghitung determinan dan adjoin, lalu mengalikan setiap elemen adjoin dengan $1/\det(A)$.
+
+\section{Interpolasi Polinomial}
+
+Bila fungsi cocokan yang digunakan berbentuk polinom, polinom tersebut dinamakan polinom interpolasi. Pekerjaan menginterpolasi titik data dengan sebuah polinom disebut interpolasi dengan polinom. \cite{pakrin-interpolasi}
+
+Diberikan $n+1$ titik berbeda
+\begin{equation*}
+(x_0,y_0),(x_1,y_1),\ldots,(x_n,y_n),
+\end{equation*}
+dicari polinom $p_n(x)$ yang melewati seluruh titik tersebut sehingga
+\begin{equation*}
+y_i=p_n(x_i),\qquad i=0,1,2,\ldots,n.
+\end{equation*}
+\cite{pakrin-interpolasi}
+
+Secara umum,
+\begin{equation*}
+P_n(x)=a_0+a_1x+a_2x^2+\cdots+a_nx^n.
+\end{equation*}
+Koefisien $a_0,a_1,\ldots,a_n$ dapat dicari dengan menyulihkan seluruh titik data ke dalam polinom sehingga terbentuk SPL. \cite{tubes}
+
+Pada implementasi program, SPL tersebut disusun dalam bentuk matriks dengan kolom $1,x,x^2,\ldots,x^n$, kemudian koefisien polinom diperoleh dengan menyelesaikannya menggunakan RREF.
+
+\section{\textit{Natural Cubic Spline Interpolation}}
+
+Interpolasi Spline Kubik adalah metode interpolasi yang mengonstruksi kurva mulus melalui sekumpulan titik data menggunakan potongan polinomial kubik pada setiap interval. Kurva dibuat kontinu hingga turunan kedua. \cite{tubes}
+
+Untuk \textit{natural cubic spline}, nilai fungsi, turunan pertama, dan turunan kedua harus kontinu pada simpul interior, serta berlaku
+\begin{equation*}
+S''(x_0)=S''(x_n)=0.
+\end{equation*}
+Syarat batas tersebut menghasilkan sistem linear tridiagonal untuk menentukan nilai turunan kedua pada titik-titik data. \cite{tubes,mathworld-spline}
+
+Alur implementasi mengikuti proses tersebut. Titik data terlebih dahulu diurutkan berdasarkan absis. Program membentuk SPL tridiagonal hanya untuk titik interior, sedangkan nilai turunan kedua pada kedua ujung dibiarkan nol. SPL tersebut diselesaikan dengan REF. Nilai interpolasi kemudian dihitung menggunakan segmen yang memuat nilai $x$ yang dicari. Alur pengurutan titik, penyelesaian nilai knot interior, dan evaluasi per segmen juga sejalan dengan referensi yang digunakan pada kode. \cite{medium-spline}
+
+\section{Regresi Spline Kubik}
+
+\textit{Splines Regression} memodelkan hubungan non-linear antara variabel prediktor $x$ dan respons $y$ menggunakan potongan polinomial yang terhubung pada \textit{knots}. Pada \textit{truncated power basis}, fungsi regresi dapat ditulis sebagai
+\begin{equation*}
+f(x)=\beta_0+\beta_1x+\beta_2x^2+\beta_3x^3+
+\sum_{k=1}^{K}\beta_{3+k}(x-\xi_k)^3_+,
+\end{equation*}
+dengan
+\begin{equation*}
+(u)_+=\max(0,u).
+\end{equation*}
+\cite{tubes}
+
+Untuk $N$ data dan $K$ \textit{knots}, program membentuk matriks desain $X$ dengan kolom
+\begin{equation*}
+1,\ x,\ x^2,\ x^3,\ (x-\xi_1)^3_+,\ldots,(x-\xi_K)^3_+.
+\end{equation*}
+Koefisien dicari menggunakan Persamaan Normal
+\begin{equation*}
+(X^TX)\hat{\boldsymbol{\beta}}=X^T\mathbf{y}.
+\end{equation*}
+Persamaan normal merupakan bentuk standar untuk menyelesaikan masalah kuadrat terkecil melalui sistem linear. \cite{tubes,eth-normal}
+
+Pada implementasi program, $X^TX$ dan $X^T\mathbf{y}$ dihitung terlebih dahulu, digabungkan menjadi SPL, direduksi ke REF untuk membantu normalisasi nilai numerik, lalu koefisien akhirnya diperoleh melalui RREF. Jumlah data juga harus memenuhi $N\geq K+4$.
+
+\section{\textit{Image Inpainting} dengan Persamaan Laplace}
+
+\textit{Image inpainting} digunakan untuk merekonstruksi area citra yang ditandai oleh \textit{mask}. Pada spesifikasi tugas, piksel putih pada \textit{mask} merupakan piksel yang perlu diestimasi, sedangkan piksel lainnya menjadi bagian citra yang dipertahankan. Nilai piksel yang hilang dimodelkan dengan diskritisasi Persamaan Laplace:
+\begin{equation*}
+4f_{i,j}-f_{i-1,j}-f_{i+1,j}-f_{i,j-1}-f_{i,j+1}=0.
+\end{equation*}
+Dengan demikian, nilai sebuah piksel pada daerah yang diisi dapat diperoleh dari rata-rata tetangga atas, bawah, kiri, dan kanan. \cite{tubes,mathworks-inpainting}
+
+Implementasi program membaca gambar asli dan \textit{mask}, memeriksa format, kesamaan ukuran, dan batas maksimum $512\times512$ piksel, lalu memetakan piksel putih $(255,255,255)$ sebagai \textit{hole}. Kanal merah, hijau, dan biru diproses secara terpisah. Nilai awal pada piksel \textit{hole} dibuat nol, kemudian piksel diperbarui berurutan menggunakan rata-rata tetangga yang masih berada di dalam citra. Nilai baru langsung digunakan untuk perhitungan piksel berikutnya sehingga proses tersebut mengikuti prinsip Gauss-Seidel. \cite{pakrin-iteratif}
+
+Iterasi berhenti ketika perubahan absolut maksimum dari seluruh kanal dan seluruh piksel \textit{hole} sudah tidak melebihi toleransi $10^{-5}$. Setelah konvergen, nilai RGB hasil iterasi dibulatkan, digabungkan kembali dengan piksel asli yang tidak di-\textit{mask}, lalu gambar disimpan sebagai keluaran. Secara matematis proses ini ekuivalen dengan menyelesaikan SPL dari diskritisasi Laplace, tetapi implementasi tidak membentuk matriks $N\times N$ secara eksplisit.
+
+\subsection{Metode Gauss-Seidel}
+
+Pada metode Gauss-Seidel, nilai baru yang sudah dihitung langsung dipakai untuk menghitung komponen berikutnya. \cite{pakrin-iteratif} Secara umum,
+\begin{equation*}
+x_i^{(k+1)}
+=
+\frac{1}{a_{ii}}
+\left(
+b_i
+-\sum_{j=1}^{i-1}a_{ij}x_j^{(k+1)}
+-\sum_{j=i+1}^{n}a_{ij}x_j^{(k)}
+\right).
+\end{equation*}
+Urutan pembaruan berpengaruh pada Gauss-Seidel karena komponen yang telah diperbarui segera digunakan pada iterasi yang sama. \cite{berkeley-gs}
+
 \chapter{Implementasi}
 \section{Struktur}
 
@@ -1204,8 +1461,59 @@ Persamaan Laplace dengan metode Gauss-Seidel sebagai fitur bonus.
 \end{itemize}
 
 
+\renewcommand{\bibname}{Daftar Pustaka}
 
-\chapter{Daftar Pustaka}
+\begin{thebibliography}{99}
+
+\bibitem{pakrin-eselon}
+R. Munir, ``Matriks Eselon,'' Bahan Kuliah IF2123 Aljabar Linier dan Geometri, STEI-ITB, Seri Bahan Kuliah Algeo \#2, 2025.
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/AljabarGeometri/2025-2026/Algeo-02-Matriks-Eselon-2025.pdf}
+\bibitem{pakrin-spl1}
+R. Munir, ``Sistem Persamaan Linier (SPL),'' Bahan Kuliah IF2123 Aljabar Linier dan Geometri, STEI-ITB, Seri Bahan Kuliah Algeo \#3, 2023.
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/AljabarGeometri/2025-2026/Algeo-03-Sistem-Persamaan-Linier-2025.pdf}
+\bibitem{pakrin-solusi}
+R. Munir, ``Tiga Kemungkinan Solusi SPL,'' Bahan Kuliah IF2123 Aljabar Linier dan Geometri, STEI-ITB, Seri Bahan Kuliah Algeo \#4, 2025.
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/AljabarGeometri/2025-2026/Algeo-04-Tiga-Kemungkinan-Solusi-SPL-2025.pdf}
+\bibitem{pakrin-spl2}
+R. Munir, ``Sistem Persamaan Linier (SPL): Metode Eliminasi Gauss-Jordan,'' Bahan Kuliah IF2123 Aljabar Linier dan Geometri, STEI-ITB, Seri Bahan Kuliah Algeo \#5, 2025.
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/AljabarGeometri/2025-2026/Algeo-05-Sistem-Persamaan-Linier-2-2025.pdf}
+\bibitem{pakrin-det1}
+R. Munir, ``Determinan Bagian 1,'' Bahan Kuliah IF2123 Aljabar Linier dan Geometri, STEI-ITB, Seri Bahan Kuliah Algeo \#8, 2025.
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/AljabarGeometri/2025-2026/Algeo-08-Determinan-bagian1-2025.pdf}
+\bibitem{pakrin-det2}
+R. Munir, ``Determinan Bagian 2,'' Bahan Kuliah IF2123 Aljabar Linier dan Geometri, STEI-ITB, Seri Bahan Kuliah Algeo \#9, 2025.
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/AljabarGeometri/2025-2026/Algeo-09-Determinan-bagian2-2025.pdf}
+\bibitem{pakrin-iteratif}
+R. Munir, \textit{Metode Numerik}, Bab 4, ``Solusi Sistem Persamaan Lanjar.''
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/Buku/Metode\%20Numerik/pdf/BAb-\%2004\%20Solusi\%20Sistem\%20Persamaan\%20Lanjar.pdf}
+\bibitem{pakrin-interpolasi}
+R. Munir, \textit{Metode Numerik}, Bab 5, ``Interpolasi dan Regresi.''
+\url{https://informatika.stei.itb.ac.id/~rinaldi.munir/Buku/Metode\%20Numerik/pdf/BAb-\%2005\%20Interpolasi\%20Polinom.pdf}
+\bibitem{tubes}
+Laboratorium Ilmu dan Rekayasa Komputasi, ``Spesifikasi Tugas Besar 1 IF2123 Aljabar Linier dan Geometri: Sistem Persamaan Linier, Determinan, dan Penerapannya,'' ver. 1.1, Institut Teknologi Bandung, 2026.
+
+
+\bibitem{medium-spline}
+L. Leal, ``Numerical Interpolation: Natural Cubic Spline,'' \textit{Towards Data Science Archive}, Dec. 2, 2018.
+\url{https://medium.com/data-science/numerical-interpolation-natural-cubic-spline-52c1157b98ac}
+
+\bibitem{mathworld-spline}
+E. W. Weisstein, ``Cubic Spline,'' \textit{MathWorld - A Wolfram Web Resource}.
+\url{https://mathworld.wolfram.com/CubicSpline.html}
+
+\bibitem{eth-normal}
+R. Hiptmair, ``Normal Equation Methods,'' \textit{Numerical Methods for Computational Science and Engineering}, ETH Zurich, 2025.
+\url{https://people.math.ethz.ch/~grsam/NumMeth/Parts/NCSEFL_handout_chapter_3.pdf}
+
+\bibitem{mathworks-inpainting}
+S. Eddins, ``Region filling and Laplace's equation,'' \textit{MathWorks Blogs}, Jun. 17, 2015.
+\url{https://blogs.mathworks.com/steve/2015/06/17/region-filling-and-laplaces-equation/}
+
+\bibitem{berkeley-gs}
+J. Demmel, ``MA221 Lecture 12: Jacobi and Gauss-Seidel,'' University of California, Berkeley, 2022.
+\url{https://people.eecs.berkeley.edu/~demmel/ma221_Spr22/Lectures/Lecture_12.pdf}
+
+\end{thebibliography}
 
 \chapter{Lampiran}
 
