@@ -213,12 +213,12 @@ public class SPLSolver {
                         // misal x1 (pivot) + 4x2 = 2
                         // nanti ini bakal menghitung x1 = 2 - 4a_n, dengan x2 = a_n.
                         double mul = -sp.src[i][nzeroloc[j]];
-                        if(dbg) System.out.printf("  - Substitusi x%d\n", nzeroloc[0]);
                         for(int k = 0; k < sp.cols; ++k)
                             r[nzeroloc[0]][k] += r[nzeroloc[j]][k] * mul;
                     }
                 }
-            }      
+            }    
+            if(dbg) System.out.printf("  - Substitusi x%d\n", nzeroloc[0]);  
         }
 
         // lah terus klo ada yg belum diassign gimana?

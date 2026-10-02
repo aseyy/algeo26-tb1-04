@@ -646,6 +646,11 @@ public class Matrix {
         if(!m.square)
             throw new IllegalArgumentException("Matrix.ginv: matriks yang diberikan bukanlah matriks persegi!");
 
+        // Aish tambahin cek invers di awal
+        double det = Matrix.gdet(m, false);
+        if(swithin(det, 1e-9))
+            throw new RuntimeException("Matrix.ginv: Matriks tidak punya invers!");
+
         // Bikin matriks augmented
         // Bagian kanan matriksnya, bagian kiri matriks identitas seukuran
         if(dbg) System.out.println("- (Membentuk matriks [A|I])");
@@ -674,7 +679,7 @@ public class Matrix {
     // untuk operasi yang berhubungan dengan tipe data double
     
     /** Toleransi galat untuk komputasi. */
-    public final static double CEPSILON = 1e-15;
+    public final static double CEPSILON = 1e-12;
 
     /** Toleransi galat untuk normalisasi. */
     public final static double NEPSILON = 1e-12;

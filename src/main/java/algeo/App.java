@@ -140,16 +140,22 @@ public class App {
 
         // Formatting output
         StringBuilder sb = new StringBuilder();
+        StringBuilder sbt = new StringBuilder();
         sb.append("Metode:\n").append(methodName).append("\n\n");
+        sbt.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(augmented)).append("\n");
+        if (s.rows > 50 && s.cols > 25) sbt.append("Input:\n").append("(Ordo matrix melebihi 50x25. Hanya bisa dilihat di file!)\n\n");
+        else sbt.append("Input:\n").append(formatMatrix(augmented)).append("\n");
         sb.append("Solusi:\n").append(formatSPLSolution(sol));
+        if (s.cols > 25) sbt.append("Solusi:\n").append("(Jumlah variabel melebihi 24. Hanya bisa dilihat di file!)\n\n");
+        else sbt.append("Solusi:\n").append(formatSPLSolution(sol));
         
         // Print output dulu ke terminal
         System.out.println();
-        String out = sb.toString();
-        System.out.println(out);
+        System.out.println(sbt.toString());
 
         // Simpan
+        String out = sb.toString();
         askSaveToFile(out);
     }
 
@@ -222,16 +228,21 @@ public class App {
 
         // Format output
         StringBuilder sb = new StringBuilder();
+        StringBuilder sbt = new StringBuilder();
         sb.append("Metode:\n").append(methodName).append("\n\n");
+        sbt.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(matrix)).append("\n");
+        if(matrix.length > 25) sbt.append("Input:\n").append("(Ordo matrix melebihi 25x25. Hanya bisa dilihat di file!)\n\n");
+        else sbt.append("Input:\n").append(formatMatrix(matrix)).append("\n");
         sb.append("Determinan:\n").append(String.format("%.3f", det)).append("\n");
+        sbt.append("Determinan:\n").append(String.format("%.3f", det)).append("\n");
         
         // Print output dulu ke terminal
         System.out.println();
-        String out = sb.toString();
-        System.out.println(out);
+        System.out.println(sbt.toString());
 
         // Simpan
+        String out = sb.toString();
         askSaveToFile(out);
     }
 
@@ -301,16 +312,22 @@ public class App {
     
         // Formatting output
         StringBuilder sb = new StringBuilder();
+        StringBuilder sbt = new StringBuilder();
         sb.append("Metode:\n").append(methodName).append("\n\n");
+        sbt.append("Metode:\n").append(methodName).append("\n\n");
         sb.append("Input:\n").append(formatMatrix(matrix)).append("\n");
+        if(matrix.length > 25) sbt.append("Input:\n").append("(Ordo matrix melebihi 25x25. Hanya bisa dilihat di file!)\n\n");
+        else sbt.append("Input:\n").append(formatMatrix(matrix)).append("\n");
         sb.append("Matriks Balikan:\n").append(formatMatrix(inverse)).append("\n");
+        if(matrix.length > 25) sbt.append("Matriks Balikan:\n").append("(Ordo matrix melebihi 25x25. Hanya bisa dilihat di file!)\n\n");
+        else sbt.append("Matriks Balikan:\n").append(formatMatrix(inverse)).append("\n");
        
         // Print output dulu ke terminal
         System.out.println();
-        String out = sb.toString();
-        System.out.println(out);
+        System.out.println(sbt.toString());
 
         // Simpan
+        String out = sb.toString();
         askSaveToFile(out);
     }
 
