@@ -500,7 +500,7 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:}  Kedua metode menghasilkan $-259$, sama persis dengan perhitungan eksak. Karena $\det A \neq 0$, matriks tidak singular sehingga dapat dipakai pada invers dan SPL. Pada ordo 4 perbedaan waktu kedua metode tidak terasa, tetapi ekspansi kofaktor berkompleksitas $O(n!)$ sedangkan reduksi baris $O(n^3)$, sehingga reduksi baris jauh lebih layak untuk ordo besar.
+\textbf{Analisis:}  Kedua metode menghasilkan $-259$, sama persis dengan perhitungan eksak. Karena $\det A \neq 0$, matriks tidak singular sehingga dapat dipakai pada invers dan SPL. 
 
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari berkas \texttt{test\textbackslash det\_kasus-2.txt}.
@@ -528,7 +528,7 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Determinan bernilai 0, sehingga matriks singular (rank 4 $<$ 5, ada baris yang bergantung linear). Nilai ``$-0.000$'' pada reduksi baris merupakan galat pembulatan \texttt{double} (orde $10^{-14}$) yang tampil sebagai nol bertanda negatif, sedangkan ekspansi kofaktor menghasilkan $0$ tepat karena hanya menjumlahkan perkalian bilangan bulat. Perbedaan tanda ini tidak mengubah kesimpulan, dan menunjukkan perlunya ambang toleransi (epsilon) saat menguji ``sama dengan nol''.
+\textbf{Analisis:} Determinan bernilai 0, sehingga matriks singular. Nilai ``$-0.000$'' pada reduksi baris merupakan galat pembulatan yang tampil sebagai nol bertanda negatif, sedangkan ekspansi kofaktor menghasilkan $0$ tepat karena hanya menjumlahkan perkalian bilangan bulat.
 
 \subsection{Kasus Uji 3}
 \textbf{Input:} Matriks dari berkas \texttt{test\textbackslash det\_kasus-3.txt}.
@@ -554,7 +554,7 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Entri berupa pecahan sehingga reduksi baris melibatkan pembagian yang tidak eksak dalam biner. Kedua metode tetap menghasilkan nilai yang sama hingga 3 desimal. Determinan bernilai kecil tetapi tidak nol, sehingga matriks tidak singular namun cukup mendekati singular. Karena itu, perbandingan dengan nol harus memakai toleransi yang cukup kecil agar matriks seperti ini tidak salah dianggap singular.
+\textbf{Analisis:} Entri berupa pecahan sehingga reduksi baris melibatkan pembagian yang tidak eksak dalam biner. Kedua metode tetap menghasilkan nilai yang sama hingga 3 desimal. Determinan bernilai kecil tetapi tidak nol, sehingga matriks tidak singular namun cukup mendekati singular. 
 
 \section{Invers Matriks}
  
@@ -602,7 +602,7 @@ A^{-1} = \begin{bmatrix}
 \end{bmatrix}
 \]
  
-\textbf{Analisis:} Kedua metode menghasilkan matriks balikan yang identik hingga 3 desimal dan sesuai dengan $AA^{-1}=I$ ($\det A = 20$). Perbedaan hanya mungkin muncul pada digit ke-15 akibat urutan operasi yang berbeda (galat pembulatan). Metode augment berkompleksitas $O(n^3)$ dan lebih efisien daripada adjoin, yang membutuhkan $n^2$ kofaktor.
+\textbf{Analisis:} Kedua metode menghasilkan matriks balikan yang identik hingga 3 desimal dan sesuai dengan $AA^{-1}=I$ . 
 
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari berkas \texttt{test\textbackslash inverse\_kasus2.txt}.
@@ -629,7 +629,7 @@ A = \begin{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Matriks bersifat \emph{singular} karena $\det A = 0$ (rank 4 $<$ 5), sehingga tidak memiliki invers. Kedua metode mendeteksi kondisi ini dan menampilkan pesan kesalahan tanpa \emph{crash}. Pada metode augment, deteksi bergantung pada ambang epsilon karena pivot yang secara teori bernilai 0 dapat tersisa sebagai sekitar $10^{-15}$ akibat galat pembulatan.
+\textbf{Analisis:} Matriks bersifat \emph{singular} karena $\det A = 0$, sehingga tidak memiliki invers. Kedua metode mendeteksi kondisi ini dan menampilkan pesan kesalahan tanpa \emph{crash}. 
 
 \section{Sistem Persamaan Linear $Ax = b$}
  
@@ -689,7 +689,7 @@ b = \begin{bmatrix} -5 \\ 15 \\ 1 \\ -3 \end{bmatrix}
 \end{table}
 
  
-\textbf{Analisis:} Keempat metode menghasilkan solusi tunggal $(x_0,x_1,x_2,x_3)=(1,-2,3,2)$ yang memenuhi semua persamaan setelah disubstitusikan kembali. Karena $\det A \neq 0$, Cramer dan Matriks Balikan dapat diterapkan. Gauss dan Gauss-Jordan lebih efisien ($O(n^3)$), sedangkan Cramer membutuhkan $n+1$ determinan dan matriks balikan membutuhkan pembentukan $A^{-1}$ penuh.
+\textbf{Analisis:} Keempat metode menghasilkan solusi tunggal $(x_0,x_1,x_2,x_3)=(1,-2,3,2)$ yang memenuhi semua persamaan setelah disubstitusikan kembali. Karena $\det A \neq 0$, Cramer dan Matriks Balikan dapat diterapkan. .
 
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari \texttt{test\textbackslash spl\_kasus-2.txt}.
@@ -737,7 +737,7 @@ b = \begin{bmatrix}  2 \\ 10 \\ -1\end{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Sistem memiliki 3 persamaan dan 5 variabel dengan $\operatorname{rank}(A)=\operatorname{rank}([A|b])=3<5$, sehingga solusinya tak hingga dengan $5-3=2$ parameter bebas ($a_0,a_1$). Gauss dan Gauss-Jordan menghasilkan bentuk parametrik yang sama. Cramer dan Matriks Balikan menolak sistem ini karena matriks koefisien tidak persegi. Hal ini merupakan keterbatasan metode, bukan berarti sistem tidak memiliki solusi.
+\textbf{Analisis:} Sistem memiliki 3 persamaan dan 5 variabel, sehingga solusinya tak hingga dengan $5-3=2$ parameter bebas ($a_0,a_1$). Gauss dan Gauss-Jordan menghasilkan bentuk parametrik yang sama. Cramer dan Matriks Balikan menolak sistem ini karena matriks koefisien tidak persegi. Hal ini merupakan keterbatasan metode, bukan berarti sistem tidak memiliki solusi.
 
 \subsection{Kasus Uji 3}
 \textbf{Input:} Matriks dari \texttt{test\textbackslash spl\_kasus-3.txt}.
@@ -774,7 +774,7 @@ b = \begin{bmatrix}  4 \\ -1 \\ 3 \\4\end{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Di sini $\operatorname{rank}(A)=3$ sedangkan $\operatorname{rank}([A|b])=4$, sehingga sistem inkonsisten dan tidak memiliki solusi. Gauss dan Gauss-Jordan mendeteksinya melalui baris $[0\ 0\ 0\ 0\,|\,c]$ dengan $c\neq 0$. Cramer dan Matriks Balikan hanya melaporkan $\det A=0$. Keduanya tidak dapat membedakan ``tidak ada solusi'' dari ``banyak solusi'', sehingga hanya metode eliminasi yang dapat menentukan jenis solusi pada matriks singular.
+\textbf{Analisis:} Gauss dan Gauss-Jordan mendeteksinya melalui baris $[0\ 0\ 0\ 0\,|\,c]$ dengan $c\neq 0$. Cramer dan Matriks Balikan hanya melaporkan $\det A=0$. Keduanya tidak dapat membedakan ``tidak ada solusi'' dari ``banyak solusi'', sehingga hanya metode eliminasi yang dapat menentukan jenis solusi pada matriks singular.
 
 \subsection{Kasus Uji 4: Matriks Hilbert}
 \textbf{Input:} Matriks Hilbert $H$ untuk $n = 6$ dan $n = 10$, dengan $b = [1, 0, \dots, 0]^T$.
@@ -919,7 +919,7 @@ b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Keempat metode menghasilkan solusi yang sama pada kedua ukuran dan cocok dengan bentuk tertutup $x_i = \tfrac{i(n+1-i)}{2}$ ($i=1,\dots,n$). Matriks ini berkondisi baik (bilangan kondisi $\approx 19$ untuk $n=6$ dan $\approx 48$ untuk $n=10$, tumbuh sekitar $n^2$), sehingga galat pembulatan tidak membesar dan perbedaan antarmetode tidak terlihat pada 3 desimal. Sebagai pembanding, matriks Hilbert yang sebenarnya memiliki bilangan kondisi sekitar $1.5\times10^{7}$ ($n=6$) dan $1.6\times10^{13}$ ($n=10$), sehingga kehilangan sekitar 7 dan 13 digit akurasi. Pada matriks seperti itu, Cramer dan Matriks Balikan biasanya menghasilkan galat lebih besar daripada eliminasi. Untuk $n=10$ Cramer harus menghitung 11 determinan $10\times10$, sehingga paling mahal.
+\textbf{Analisis:} Keempat metode menghasilkan solusi yang sama pada kedua ukuran dan cocok dengan bentuk tertutup $x_i = \tfrac{i(n+1-i)}{2}$ ($i=1,\dots,n$).Pada matriks seperti itu, Cramer dan Matriks Balikan biasanya menghasilkan galat lebih besar daripada eliminasi. Untuk $n=10$ Cramer harus menghitung 11 determinan $10\times10$, sehingga paling mahal.
 
 \section{Sistem Persamaan Linear Berbentuk Matriks Augmented}
  
@@ -1034,7 +1034,7 @@ b = \begin{bmatrix} 1 \\1 \\ \vdots \\ 1 \\ 1 \end{bmatrix}
     \end{tabular}
 \end{table}
 
-\textbf{Analisis:} Sistem memiliki 4 persamaan dan 6 variabel dengan $\operatorname{rank}(A)=\operatorname{rank}([A|b])=4$, sehingga solusinya tak hingga dengan 2 parameter bebas. Gauss dan Gauss-Jordan menghasilkan himpunan solusi yang setara. Perbedaan hanya pada pelabelan parameter ($a_0$ dan $a_1$ tertukar pada $x_3$ dan $x_4$), yang tidak memengaruhi himpunan solusi karena pemilihan variabel bebas bersifat arbitrer. Cramer dan Matriks Balikan tidak dapat diterapkan karena matriks tidak persegi.
+\textbf{Analisis:} Sistem memiliki 4 persamaan dan 6 variabel, sehingga solusinya tak hingga dengan 2 parameter bebas. Gauss dan Gauss-Jordan menghasilkan himpunan solusi yang setara. Perbedaan hanya pada pelabelan parameter ($a_0$ dan $a_1$ tertukar pada $x_3$ dan $x_4$), yang tidak memengaruhi himpunan solusi karena pemilihan variabel bebas bersifat arbitrer. Cramer dan Matriks Balikan tidak dapat diterapkan karena matriks tidak persegi.
 
 \section{Sistem Persamaan Linear Berbentuk Umum}
  
@@ -1093,7 +1093,7 @@ x_1 - 3x_2 + 2x_3 + x_4 &= -4 \\
     \end{tabular}
 \end{table}
 
-\textbf{Analisis:} Sistem persegi nonsingular dengan solusi tunggal, dan keempat metode sepakat. Karena solusinya bukan bilangan bulat, kebenarannya diverifikasi dengan substitusi balik ke tiap persamaan (residu orde $10^{-15}$). Perbedaan antarmetode, bila ada, hanya muncul pada digit di luar 3 desimal akibat urutan operasi dan pembulatan yang berbeda.
+\textbf{Analisis:} Sistem persegi nonsingular dengan solusi tunggal, dan keempat metode sepakat. Karena solusinya bukan bilangan bulat, kebenarannya diverifikasi dengan substitusi balik ke tiap persamaan. Perbedaan antarmetode, bila ada, hanya muncul pada digit di luar 3 desimal akibat urutan operasi dan pembulatan yang berbeda.
 
 \subsection{Kasus Uji 2}
 \textbf{Input:} Matriks dari \texttt{test\textbackslash spl\_kasus-8.txt}.
@@ -1159,7 +1159,7 @@ x_3 + x_6 + x_7 &= 11.50
     \end{tabular}
 \end{table}
  
-\textbf{Analisis:} Sistem memiliki 9 persamaan dan 9 variabel, tetapi $\operatorname{rank}(A)=\operatorname{rank}([A|b])=8$, sehingga matriks singular namun sistem konsisten dengan 1 parameter bebas. Ketergantungan linear ini wajar karena jumlah persamaan baris 1--3 sama dengan jumlah persamaan kolom 7--9 (keduanya menjumlahkan seluruh $x_i$). Gauss dan Gauss-Jordan menghasilkan solusi parametrik yang identik. Cramer dan Matriks Balikan gagal karena $\det A=0$, padahal solusi ada. Ini kembali menunjukkan bahwa keduanya hanya berlaku untuk sistem persegi nonsingular. Koefisien desimal berpresisi 5 angka membuat pembulatan pada bentuk parametrik tampak pada digit ketiga, tetapi tidak mengubah struktur solusi.
+\textbf{Analisis:} Gauss dan Gauss-Jordan menghasilkan solusi parametrik yang identik. Cramer dan Matriks Balikan gagal karena $\det A=0$, padahal solusi ada. Ini kembali menunjukkan bahwa keduanya hanya berlaku untuk sistem persegi nonsingular. Koefisien desimal berpresisi 5 angka membuat pembulatan pada bentuk parametrik tampak pada digit ketiga, tetapi tidak mengubah struktur solusi.
  
  
 \section{Aplikasi Sistem Persamaan Linear}
@@ -1250,7 +1250,7 @@ Kemudian, tentukan juga nilai-nilai dari $f(x)$ dari polinomial yang telah dikon
 \end{tabular}
 \end{center}
 
-\textbf{Analisis:} Keempat nilai sesuai dengan nilai ekspektasi pada soal. Seluruh titik uji berada dalam domain data $[0.2,\,1.4]$, sehingga ini adalah interpolasi, bukan ekstrapolasi. Data tampak berasal dari $\ln(1+x)$ yang dibulatkan ke 3 desimal. Selisih program terhadap $\ln(1+x)$ maksimum sekitar $4\times10^{-4}$, yang berasal dari pembulatan data, bukan dari galat metode. Polinom derajat 6 membentuk sistem Vandermonde berukuran $7\times7$. Untuk jumlah titik yang jauh lebih banyak, matriks ini cepat memburuk kondisinya dan polinom dapat berosilasi (fenomena Runge).
+\textbf{Analisis:} Keempat nilai sesuai dengan nilai ekspektasi pada soal. Seluruh titik uji berada dalam domain data $[0.2,\,1.4]$, sehingga ini adalah interpolasi, bukan ekstrapolasi. Polinom derajat 6 membentuk sistem Vandermonde berukuran $7\times7$. Untuk jumlah titik yang jauh lebih banyak, matriks ini cepat memburuk kondisinya dan polinom dapat berosilasi.
 
 \subsection{Studi Kasus 2}
 
@@ -1552,5 +1552,60 @@ J. Demmel, ``MA221 Lecture 12: Jacobi and Gauss-Seidel,'' University of Californ
 \end{thebibliography}
 
 \chapter{Lampiran}
+
+
+\begin{itemize}
+    \item \textbf{Repositori GitHub Kelompok:} \\
+          \href{https://github.com/username/nama-repositori}
+               {NurEngine's Repo}
+          
+    \item \textbf{Bonus Video (YouTube):} \\
+          \href{https://youtu.be/xxxxxxxxxxx}
+               {Video Penjelasan}
+          
+    \item \textbf{Bonus \LaTeX:} \\
+          \href{https://github.com/username/nama-repositori/blob/main/laporan/laporan.tex}
+               {LaTeX}
+\end{itemize}
+
+\noindent Kami yang bertanda tangan di bawah ini menyatakan bahwa seluruh pekerjaan Tugas Besar 1
+IF2123 Aljabar Linier dan Geometri ini, termasuk kode program, laporan, analisis, dokumentasi,
+dan seluruh berkas pendukung lainnya, diselesaikan secara mandiri oleh anggota kelompok tanpa
+pemanfaatan kecerdasan buatan generatif (\emph{Generative AI}). Kami tidak menggunakan
+\emph{Generative AI} untuk menghasilkan kode, teks laporan, analisis, maupun bagian mana pun dari
+pekerjaan ini. Apabila di kemudian hari terbukti terdapat pelanggaran, kami bersedia menerima
+sanksi akademik sesuai ketentuan yang berlaku.
+
+\vspace{1.5cm}
+
+\begin{center}
+\begin{minipage}[t]{0.45\textwidth}
+    \centering
+    Tanda tangan,\\[0.3cm]
+    \includegraphics[width=0.55\textwidth]{assets/3_Pria_Hebat.jpg}\\[0.2cm]
+    \underline{Rionaldo Casey Pandhitha}\\
+    NIM: 13525030
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \centering
+    Tanda tangan,\\[0.3cm]
+    \includegraphics[width=0.55\textwidth]{assets/3_Pria_Hebat.jpg}\\[0.2cm]
+    \underline{Raffi Fauzi Hermawan}\\
+    NIM: 13525054
+\end{minipage}
+
+\vspace{1.5cm}
+
+\begin{minipage}[t]{0.45\textwidth}
+    \centering
+    Tanda tangan,\\[0.3cm]
+    \includegraphics[width=0.55\textwidth]{assets/3_Pria_Hebat.jpg}\\[0.2cm]
+    \underline{Fachry Azriel Fajdwani}\\
+    NIM: 13525110
+\end{minipage}
+\end{center}
+
+
 
 \end{document}
