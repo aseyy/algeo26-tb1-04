@@ -1,7 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1790945903.49463 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790945906.88117 0
+["pdflatex"] 1790946215.07527 "main.tex" "main.pdf" "main" 1790946217.91301 0
   "/etc/texmf/web2c/texmf.cnf" 1787075751.84451 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790945688.58611 62562 98b389d6ec3125378bce9df6de267a34 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
@@ -134,9 +133,9 @@
   "assets/Alur_Pakai.png" 1790945902.62682 82049 c179743c455fe251ffc99e51462187e6 ""
   "assets/Dependensi.png" 1790932403.15495 42846 a7c417685b483e92d08bd1c336f9d9f7 ""
   "assets/Mitya.jpg" 1790932403.1571 116627 e75244d1a8392983db384254e706015e ""
-  "main.aux" 1790945906.56668 12607 2816d6686bc72e5e24924585e2caf43d "pdflatex"
-  "main.out" 1790945906.56968 9406 d30b38da7d909d4426e2dd51594ec127 "pdflatex"
-  "main.tex" 1790945688.58611 62562 98b389d6ec3125378bce9df6de267a34 ""
+  "main.aux" 1790946217.48575 12607 2816d6686bc72e5e24924585e2caf43d "pdflatex"
+  "main.out" 1790946217.48875 9406 d30b38da7d909d4426e2dd51594ec127 "pdflatex"
+  "main.tex" 1790946075.71616 62640 933399dd67a451c6a20958a5d923bd65 ""
   (generated)
   "main.aux"
   "main.log"
