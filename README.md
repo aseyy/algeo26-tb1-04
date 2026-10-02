@@ -88,7 +88,7 @@ Silakan lihat `Matrix.java` untuk melihat fitur-fitur mendasar lainnya (seperti 
 > Catatan: batasan ordo matriks adalah 1200x1200, dan batasan jumlah titik interpolasi/regresi adalah 20.
 
 ## Program Flow
-<p style="text-align: center;">
+<p align="center">
   <img src="docs/assets/Alur_Pakai.png" alt="Alt text"><br>
   (Alur ini sangat disederhanakan)
 </p>
