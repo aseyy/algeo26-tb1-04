@@ -44,7 +44,7 @@ mvn clean package
 Perintah tersebut akan mengotomasi proses kompilasi menggunakan Maven.
 
 ## Running
-Ada 2 opsi dalam menjalankan program ini, yakni menggunakan bytecode prebuilt lewat java atau menggunakan hasil *build* sendiri lewat Maven.
+Ada 2 opsi dalam menjalankan program CLI ini, yakni menggunakan bytecode prebuilt lewat java atau menggunakan hasil *build* sendiri lewat Maven.
 
 ### Dengan Java
 ```bash
@@ -54,6 +54,13 @@ java -jar ./bin/nurengine-1.0.jar
 ### Dengan Maven
 ```bash
 mvn -q exec:java
+```
+
+Juga tersedia opsi untuk menjalankan program dalam mode GUI. Ingat, mode ini menjalankan hasil *build* sendiri!
+
+### Dengan Maven (GUI)
+```bash
+mvn javafx:run
 ```
 
 > Catatan: program tidak menerima argumen dari luar.
