@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.30)  2 OCT 2026 19:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.30)  2 OCT 2026 19:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -605,7 +605,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <assets/Alur_Pakai.png, id=364, 581.17125pt x 1030.85126pt>
 File: assets/Alur_Pakai.png Graphic file (type png)
 <use assets/Alur_Pakai.png>
-Package pdftex.def Info: assets/Alur_Pakai.png  used on input line 446.
+Package pdftex.def Info: assets/Alur_Pakai.png  used on input line 447.
 (pdftex.def)             Requested size: 264.61333pt x 469.35265pt.
 
 
@@ -619,7 +619,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <assets/Dependensi.png, id=372, 554.07pt x 533.995pt>
 File: assets/Dependensi.png Graphic file (type png)
 <use assets/Dependensi.png>
-Package pdftex.def Info: assets/Dependensi.png  used on input line 465.
+Package pdftex.def Info: assets/Dependensi.png  used on input line 466.
 (pdftex.def)             Requested size: 220.50887pt x 212.51866pt.
 
 
@@ -650,17 +650,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [13]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 632.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 633.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 632.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 633.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 632.
+(hyperref)                removing `math shift' on input line 633.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 632.
+(hyperref)                removing `math shift' on input line 633.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -678,17 +678,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 757--758
+Underfull \hbox (badness 10000) in paragraph at lines 758--759
 []|\T1/ptm/m/n/12 Error: SPL-So-lver.byREF:
  []
 
 
-Underfull \hbox (badness 2384) in paragraph at lines 761--762
+Underfull \hbox (badness 2384) in paragraph at lines 762--763
 []|\T1/ptm/m/n/12 Error: SPL-So-lver.byRREF:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 765--766
+Underfull \hbox (badness 10000) in paragraph at lines 766--767
 \T1/ptm/m/n/12 Ma-triks per-sa-ma-an ti-dak
  []
 
@@ -724,7 +724,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [19]
-Overfull \hbox (0.87965pt too wide) in paragraph at lines 922--922
+Overfull \hbox (0.87965pt too wide) in paragraph at lines 923--923
 []\T1/ptm/b/n/17.28 Sistem Per-sa-ma-an Li-ne-ar Ber-ben-tuk Ma-triks Au-gmen-
  []
 
@@ -744,22 +744,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 1004--1005
+Underfull \hbox (badness 10000) in paragraph at lines 1005--1006
 []$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = 5\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 800 \OMS/ztmcm/m/n/12 ^^@ \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 \OMS/ztmcm/m/n/12 ^^@
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1005--1006
+Underfull \hbox (badness 10000) in paragraph at lines 1006--1007
 []$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = 2\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 600 \OMS/ztmcm/m/n/12 ^^@ \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 \OMS/ztmcm/m/n/12 ^^@
  []
 
 
-Underfull \hbox (badness 5924) in paragraph at lines 1006--1007
+Underfull \hbox (badness 5924) in paragraph at lines 1007--1008
 []$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = \OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 3\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 400 + \OML/ztmcm/m/it/12 a\OT1/ztmcm/m/n/12 0 +
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1017--1018
+Underfull \hbox (badness 10000) in paragraph at lines 1018--1019
 []$\OML/ztmcm/m/it/12 x[] \OT1/ztmcm/m/n/12 = \OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 3\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 400 +
  []
 
@@ -787,7 +787,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [24]
-Underfull \hbox (badness 10000) in paragraph at lines 1150--1151
+Underfull \hbox (badness 10000) in paragraph at lines 1151--1152
 \T1/ptm/m/n/12 Ma-triks per-sa-ma-an ti-dak
  []
 
@@ -807,7 +807,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [26]
-Underfull \hbox (badness 10000) in paragraph at lines 1198--1202
+Underfull \hbox (badness 10000) in paragraph at lines 1199--1203
 
  []
 
@@ -835,12 +835,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [29]
-Underfull \hbox (badness 10000) in paragraph at lines 1411--1412
+Underfull \hbox (badness 10000) in paragraph at lines 1412--1413
 []|\T1/ptm/m/n/12 Kofaktor dan OBE se-pa-kat;
  []
 
 
-Underfull \hbox (badness 1701) in paragraph at lines 1411--1412
+Underfull \hbox (badness 1701) in paragraph at lines 1412--1413
 \OMS/ztmcm/m/n/12 ^^@\OT1/ztmcm/m/n/12 0\OML/ztmcm/m/it/12 :\OT1/ztmcm/m/n/12 000$ \T1/ptm/m/n/12 pa-da Ka-sus 2 ada-lah
  []
 
@@ -879,122 +879,122 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [33]
-Underfull \hbox (badness 10000) in paragraph at lines 1503--1505
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1506
 []\T1/ptm/m/n/12 R. Mu-nir, ``Ma-triks Ese-lon,'' Bah-an Ku-li-ah IF2123 Alja-bar Li-ni-er dan
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1503--1505
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1506
 \T1/ptm/m/n/12 Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #2, 2025. [][]$\T1/cmtt/m/n/12 https :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1503--1505
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1506
 \T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
  []
 
 
-Underfull \hbox (badness 6412) in paragraph at lines 1506--1508
+Underfull \hbox (badness 6412) in paragraph at lines 1507--1509
 []\T1/ptm/m/n/12 R. Mu-nir, ``Sis-tem Per-sa-ma-an Li-ni-er (SPL),'' Bah-an Ku-li-ah IF2123 Alja-
  []
 
 
-Underfull \hbox (badness 4940) in paragraph at lines 1506--1508
+Underfull \hbox (badness 4940) in paragraph at lines 1507--1509
 \T1/ptm/m/n/12 bar Li-ni-er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #3, 2023.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1506--1508
+Underfull \hbox (badness 10000) in paragraph at lines 1507--1509
 [][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
  []
 
 
-Underfull \hbox (badness 7238) in paragraph at lines 1509--1511
+Underfull \hbox (badness 7238) in paragraph at lines 1510--1512
 []\T1/ptm/m/n/12 R. Mu-nir, ``Ti-ga Ke-mung-kin-an So-lu-si SPL,'' Bah-an Ku-li-ah IF2123 Alja-
  []
 
 
-Underfull \hbox (badness 4940) in paragraph at lines 1509--1511
+Underfull \hbox (badness 4940) in paragraph at lines 1510--1512
 \T1/ptm/m/n/12 bar Li-ni-er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #4, 2025.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1509--1511
+Underfull \hbox (badness 10000) in paragraph at lines 1510--1512
 [][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 1512--1514
+Underfull \hbox (badness 2073) in paragraph at lines 1513--1515
 []\T1/ptm/m/n/12 R. Mu-nir, ``Sis-tem Per-sa-ma-an Li-ni-er (SPL): Me-to-de Eli-mi-na-si Gauss-Jordan,''
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1512--1514
+Underfull \hbox (badness 10000) in paragraph at lines 1513--1515
 \T1/ptm/m/n/12 Al-geo #5, 2025. [][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1512--1514
+Underfull \hbox (badness 10000) in paragraph at lines 1513--1515
 \T1/cmtt/m/n/12 AljabarGeometri / 2025-[]2026 / Algeo-[]05-[]Sistem-[]Persamaan-[]Linier-[]2-[]2025 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1515--1517
+Underfull \hbox (badness 10000) in paragraph at lines 1516--1518
 []\T1/ptm/m/n/12 R. Mu-nir, ``De-ter-min-an Ba-gi-an 1,'' Bah-an Ku-li-ah IF2123 Alja-bar Li-ni-
  []
 
 
-Underfull \hbox (badness 4582) in paragraph at lines 1515--1517
+Underfull \hbox (badness 4582) in paragraph at lines 1516--1518
 \T1/ptm/m/n/12 er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #8, 2025. [][]$\T1/cmtt/m/n/12 https :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1515--1517
+Underfull \hbox (badness 10000) in paragraph at lines 1516--1518
 \T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1518--1520
+Underfull \hbox (badness 10000) in paragraph at lines 1519--1521
 []\T1/ptm/m/n/12 R. Mu-nir, ``De-ter-min-an Ba-gi-an 2,'' Bah-an Ku-li-ah IF2123 Alja-bar Li-ni-
  []
 
 
-Underfull \hbox (badness 4582) in paragraph at lines 1518--1520
+Underfull \hbox (badness 4582) in paragraph at lines 1519--1521
 \T1/ptm/m/n/12 er dan Ge-o-me-tri, STEI-ITB, Se-ri Bah-an Ku-li-ah Al-geo #9, 2025. [][]$\T1/cmtt/m/n/12 https :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1518--1520
+Underfull \hbox (badness 10000) in paragraph at lines 1519--1521
 \T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / AljabarGeometri /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1521--1523
+Underfull \hbox (badness 10000) in paragraph at lines 1522--1524
 []\T1/ptm/m/n/12 R. Mu-nir, \T1/ptm/m/it/12 Me-to-de Nu-me-rik\T1/ptm/m/n/12 , Bab 4, ``So-lu-si Sis-tem Per-sa-ma-an Lan-jar.''
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1521--1523
+Underfull \hbox (badness 10000) in paragraph at lines 1522--1524
 [][]$\T1/cmtt/m/n/12 https : / / informatika . stei . itb . ac . id / ~rinaldi . munir / Buku / Metode %
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1524--1526
+Underfull \hbox (badness 10000) in paragraph at lines 1525--1527
 []\T1/ptm/m/n/12 R. Mu-nir, \T1/ptm/m/it/12 Me-to-de Nu-me-rik\T1/ptm/m/n/12 , Bab 5, ``In-ter-po-la-si dan Re-gre-si.'' [][]$\T1/cmtt/m/n/12 https :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1524--1526
+Underfull \hbox (badness 10000) in paragraph at lines 1525--1527
 \T1/cmtt/m/n/12 / / informatika . stei . itb . ac . id / ~rinaldi . munir / Buku / Metode % 20Numerik /
  []
 
 
-Underfull \hbox (badness 7613) in paragraph at lines 1531--1533
+Underfull \hbox (badness 7613) in paragraph at lines 1532--1534
 []\T1/ptm/m/n/12 L. Le-al, ``Nu-me-ri-cal In-ter-po-la-tion: Na-tu-ral Cu-bic Spli-ne,'' \T1/ptm/m/it/12 To-wa-rds Da-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1531--1533
+Underfull \hbox (badness 10000) in paragraph at lines 1532--1534
 \T1/ptm/m/it/12 ta Sci-en-ce Ar-chi-ve\T1/ptm/m/n/12 , Dec. 2, 2018. [][]$\T1/cmtt/m/n/12 https : / / medium . com / data-[]science /
  []
 
@@ -1008,12 +1008,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [34
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1543--1545
+Underfull \hbox (badness 10000) in paragraph at lines 1544--1546
 []\T1/ptm/m/n/12 S. Eddins, ``Re-gion fi-lling and La-pla-ce's equ-a-tion,'' \T1/ptm/m/it/12 Ma-th-Works Blo-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1543--1545
+Underfull \hbox (badness 10000) in paragraph at lines 1544--1546
 \T1/ptm/m/it/12 gs\T1/ptm/m/n/12 , Jun. 17, 2015. [][]$\T1/cmtt/m/n/12 https : / / blogs . mathworks . com / steve / 2015 / 06 / 17 /
  []
 
@@ -1052,7 +1052,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  74i,12n,79p,1006b,583s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb><c:/texlive/2026/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/texlive/2026/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (37 pages, 518924 bytes).
+Output written on main.pdf (37 pages, 518983 bytes).
 PDF statistics:
  619 PDF objects out of 1000 (max. 8388607)
  546 compressed objects within 6 object streams
