@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1790945689.10814 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790945691.71126 0
+["pdflatex"] 1790945903.49463 "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" "main.pdf" "main" 1790945906.88117 0
   "/etc/texmf/web2c/texmf.cnf" 1787075751.84451 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/wequra/wequra/teknologia/code/kuliah/algeo/tubes/algeo26-tb1-04/docs/main.tex" 1790945688.58611 62562 98b389d6ec3125378bce9df6de267a34 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -131,11 +131,11 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1790505942.75022 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1790506206 8213776 f417c23f5a46c636a0d18bb061acdf87 ""
   "assets/3_Pria_Hebat.jpg" 1790932403.15198 148067 891368e84acb53d9b61b3dd9d8ca668f ""
-  "assets/Alur_Pakai.png" 1790932403.15383 74621 2fcca9c1fe2a1389aaa44edf870c2026 ""
+  "assets/Alur_Pakai.png" 1790945902.62682 82049 c179743c455fe251ffc99e51462187e6 ""
   "assets/Dependensi.png" 1790932403.15495 42846 a7c417685b483e92d08bd1c336f9d9f7 ""
   "assets/Mitya.jpg" 1790932403.1571 116627 e75244d1a8392983db384254e706015e ""
-  "main.aux" 1790945691.48602 12607 2816d6686bc72e5e24924585e2caf43d "pdflatex"
-  "main.out" 1790945691.48802 9406 d30b38da7d909d4426e2dd51594ec127 "pdflatex"
+  "main.aux" 1790945906.56668 12607 2816d6686bc72e5e24924585e2caf43d "pdflatex"
+  "main.out" 1790945906.56968 9406 d30b38da7d909d4426e2dd51594ec127 "pdflatex"
   "main.tex" 1790945688.58611 62562 98b389d6ec3125378bce9df6de267a34 ""
   (generated)
   "main.aux"
